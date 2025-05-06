@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="SELFUNDR - Empowering you with modern, self-directed banking solutions." />
+    <meta name="author" content="SELFUNDR" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>SELFUNDR - Your Financial Freedom</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <!-- Font Awesome icons -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            background-color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #004d4d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #ff6f61;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Masthead */
+        .masthead {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('assets/img/banking-header.jpg') no-repeat center center/cover;
+            color: white;
+            padding: 12rem 2rem 8rem;
+            text-align: center;
+        }
+
+        .masthead-subheading {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .masthead-heading {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .btn-xl {
+            font-size: 1rem;
+            padding: 1rem 2rem;
+        }
+
+        /* Page Section */
+        .page-section {
+            padding: 4rem 2rem;
+        }
+
+        .bg-light {
+            background-color: #f8f9fa;
+        }
+
+        .section-heading {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .section-subheading {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Services */
+        .row.text-center {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .col-md-4 {
+            flex: 1 1 250px;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .fa-stack {
+            position: relative;
+            display: inline-block;
+            width: 2em;
+            height: 2em;
+        }
+
+        .fa-circle {
+            color: #ff6f61;
+        }
+
+        .fa-stack-1x {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .my-3 {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Portfolio Grid */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .col-lg-4 {
+            flex: 1 1 300px;
+        }
+
+        .portfolio-item {
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            transition: transform 0.3s;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-caption {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .portfolio-caption-heading {
+            font-weight: bold;
+        }
+
+        /* About Timeline */
+        .timeline {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-image {
+            position: absolute;
+            left: -60px;
+        }
+
+        .timeline-image img {
+            border-radius: 50%;
+            width: 100px;
+        }
+
+        .timeline-panel {
+            background: #f1f1f1;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .timeline-inverted .timeline-panel {
+            margin-right: 0;
+            margin-left: 150px;
+        }
+
+        /* Team */
+        .team-member {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        /* Clients */
+        .py-5 {
+            padding: 5rem 0;
+        }
+
+        .img-brand {
+            width: 150px;
+            height: auto;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .img-brand:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+        }
+
+        /* Contact Form */
+        #contactForm {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        #contactForm input,
+        #contactForm textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #contactForm button {
+            background-color: #ff6f61;
+            color: white;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #contactForm button:hover {
+            background-color: #004d4d;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1a1a1a;
+            color: #ccc;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #ccc;
+        }
+
+        .btn-dark.btn-social {
+            background-color: #222;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: #004d4d;
+                flex-direction: column;
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: white;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+    </style>
+</head>
+<body id="page-top">
+
+  <!-- Navigation -->
+<nav class="navbar navbar-dark fixed-top" id="mainNav">
+  <a class="navbar-brand" href="#page-top">
+    <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px; width: auto;" />
+</a>    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+<div class="nav-links" id="navbarResponsive">
+  <a class="nav-link text-uppercase" href="#contact">Bank Account</a>
+  <a class="nav-link text-uppercase hidden" href="#services">Credit</a>
+  <a class="nav-link text-uppercase" href="#services">Portfolio</a>
+  <a class="nav-link text-uppercase" href="#portfolio">Wallet</a>
+  <a class="nav-link text-uppercase hidden" href="#about">Contract</a>
+  <a class="nav-link text-uppercase hidden" href="#team">Guarantor</a>
+  <a class="nav-link text-uppercase" href="#contact">Transaction</a>
+  <a class="nav-link text-uppercase" href="/reclamation/add">Claim</a>
+</div>
+</nav>
+<!-- Masthead -->
+<header class="masthead">
+  <div class="container">
+      <div class="masthead-subheading">Empowering you with modern, self-directed banking solutions</div>
+  </div>
+</header>
+
+
+
+<footer class="footer py-4">
+  <div class="container">
+      <div class="row align-items-center">
+          <div class="col-lg-4 text-lg-start">© 2025 SELFUNDR. Member FDIC.</div>
+          <div class="col-lg-4 my-3 my-lg-0">
+              <a class="btn btn-dark btn-social mx-2" href="https://www.facebook.com/finease.2024?rdid=GFm2ABPyAk3IWw5I&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1C2gUg83TR#"><i class="fab fa-facebook-f"></i></a>
+              <a class="btn btn-dark btn-social mx-2" href="https://www.instagram.com/selfundr_/"><i class="fab fa-instagram"></i></a>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+              <a class="text-decoration-none me-3" href="#">Privacy Policy</a>
+              <a class="text-decoration-none me-3" href="#">Terms of Use</a>
+              <a class="text-decoration-none" href="#">Security Center</a>
+          </div>
+      </div>
+  </div>
+</footer>
