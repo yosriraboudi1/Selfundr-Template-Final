@@ -1,0 +1,652 @@
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+     <meta name="description" content="SELFUNDR - Empowering you with modern, self-directed banking solutions." />
+     <meta name="author" content="SELFUNDR" />
+     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+     <meta name="referrer" content="strict-origin-when-cross-origin" />
+     <title>SELFUNDR - Your Financial Freedom</title>
+ 
+     <!-- Favicon -->
+     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+ 
+     <!-- Font Awesome icons -->
+     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+ 
+     <!-- Google fonts -->
+     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+ 
+     <style>
+        .profile-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 168px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 20px;
+}
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #000;
+}
+
+.profile-sections {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.section {
+  flex: 1 1 30%;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.section h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+ 
+         a {
+             text-decoration: none;
+             color: inherit;
+         }
+ 
+         /* Navbar */
+         .navbar {
+             background-color: #004d4d;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             padding: 1rem 2rem;
+             position: fixed;
+             width: 100%;
+             top: 0;
+             z-index: 1000;
+         }
+ 
+         .navbar-brand img {
+             height: 40px;
+         }
+ 
+         .nav-links {
+             display: flex;
+             gap: 1.5rem;
+         }
+ 
+         .nav-link {
+             color: white;
+             text-transform: uppercase;
+             font-size: 0.9rem;
+         }
+ 
+         .btn {
+             padding: 0.5rem 1rem;
+             border-radius: 4px;
+             cursor: pointer;
+             border: none;
+             transition: background-color 0.3s;
+         }
+ 
+         .btn-primary {
+             background-color: #ff6f61;
+             color: white;
+         }
+ 
+         .btn-secondary {
+             background-color: #6c757d;
+             color: white;
+         }
+ 
+         .btn:hover {
+             opacity: 0.9;
+         }
+ 
+         /* Masthead */
+         .masthead {
+             background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('assets/img/banking-header.jpg') no-repeat center center/cover;
+             color: white;
+             padding: 12rem 2rem 8rem;
+             text-align: center;
+         }
+ 
+         .masthead-subheading {
+             font-size: 1.5rem;
+             margin-bottom: 1rem;
+         }
+ 
+         .masthead-heading {
+             font-size: 2.5rem;
+             font-weight: bold;
+             margin-bottom: 2rem;
+             text-transform: uppercase;
+         }
+ 
+         .btn-xl {
+             font-size: 1rem;
+             padding: 1rem 2rem;
+         }
+ 
+         /* Page Section */
+         .page-section {
+             padding: 4rem 2rem;
+         }
+ 
+         .bg-light {
+             background-color: #f8f9fa;
+         }
+ 
+         .section-heading {
+             font-size: 2rem;
+             font-weight: bold;
+             margin-bottom: 1rem;
+             text-transform: uppercase;
+             text-align: center;
+         }
+ 
+         .section-subheading {
+             font-size: 1rem;
+             color: #666;
+             margin-bottom: 2rem;
+             text-align: center;
+         }
+ 
+         /* Services */
+         .row.text-center {
+             display: flex;
+             flex-wrap: wrap;
+             justify-content: center;
+             gap: 2rem;
+         }
+ 
+         .col-md-4 {
+             flex: 1 1 250px;
+             max-width: 300px;
+             text-align: center;
+         }
+ 
+         .fa-stack {
+             position: relative;
+             display: inline-block;
+             width: 2em;
+             height: 2em;
+         }
+ 
+         .fa-circle {
+             color: #ff6f61;
+         }
+ 
+         .fa-stack-1x {
+             position: absolute;
+             top: 0;
+             left: 0;
+             right: 0;
+             bottom: 0;
+             margin: auto;
+         }
+ 
+         .my-3 {
+             margin-top: 1rem;
+             margin-bottom: 1rem;
+         }
+ 
+         /* Portfolio Grid */
+         .row {
+             display: flex;
+             flex-wrap: wrap;
+             gap: 1rem;
+             justify-content: center;
+         }
+ 
+         .col-lg-4 {
+             flex: 1 1 300px;
+         }
+ 
+         .portfolio-item {
+             overflow: hidden;
+             border-radius: 5px;
+             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+             cursor: pointer;
+         }
+ 
+         .portfolio-item img {
+             width: 100%;
+             transition: transform 0.3s;
+         }
+ 
+         .portfolio-item:hover img {
+             transform: scale(1.1);
+         }
+ 
+         .portfolio-caption {
+             padding: 1rem;
+             text-align: center;
+         }
+ 
+         .portfolio-caption-heading {
+             font-weight: bold;
+         }
+ 
+         /* About Timeline */
+         .timeline {
+             list-style: none;
+             padding: 0;
+         }
+ 
+         .timeline li {
+             position: relative;
+             padding-left: 3rem;
+             margin-bottom: 3rem;
+         }
+ 
+         .timeline-image {
+             position: absolute;
+             left: -60px;
+         }
+ 
+         .timeline-image img {
+             border-radius: 50%;
+             width: 100px;
+         }
+ 
+         .timeline-panel {
+             background: #f1f1f1;
+             padding: 1rem;
+             border-radius: 5px;
+         }
+ 
+         .timeline-inverted .timeline-panel {
+             margin-right: 0;
+             margin-left: 150px;
+         }
+ 
+         /* Team */
+         .team-member {
+             text-align: center;
+             margin-bottom: 2rem;
+         }
+ 
+         .team-member img {
+             width: 150px;
+             height: 150px;
+             object-fit: cover;
+             border-radius: 50%;
+             margin-bottom: 1rem;
+         }
+ 
+         /* Clients */
+         .py-5 {
+             padding: 5rem 0;
+         }
+ 
+         .img-brand {
+             width: 150px;
+             height: auto;
+             filter: grayscale(100%);
+             opacity: 0.6;
+             transition: all 0.3s ease;
+         }
+ 
+         .img-brand:hover {
+             opacity: 1;
+             filter: grayscale(0%);
+         }
+ 
+         /* Contact Form */
+         #contactForm {
+             max-width: 700px;
+             margin: 0 auto;
+         }
+ 
+         #contactForm input,
+         #contactForm textarea {
+             width: 100%;
+             padding: 1rem;
+             margin-bottom: 1rem;
+             border: 1px solid #ccc;
+             border-radius: 4px;
+         }
+ 
+         #contactForm button {
+             background-color: #ff6f61;
+             color: white;
+             padding: 0.75rem 2rem;
+             font-size: 1rem;
+             border: none;
+             border-radius: 4px;
+             cursor: pointer;
+         }
+ 
+         #contactForm button:hover {
+             background-color: #004d4d;
+         }
+ 
+         /* Footer */
+         .footer {
+             background-color: #1a1a1a;
+             color: #ccc;
+             padding: 2rem;
+             text-align: center;
+         }
+ 
+         .footer a {
+             color: #ccc;
+         }
+ 
+         .btn-dark.btn-social {
+             background-color: #222;
+             color: #fff;
+             border: none;
+             border-radius: 50%;
+             width: 40px;
+             height: 40px;
+             display: inline-flex;
+             align-items: center;
+             justify-content: center;
+             margin: 0 0.3rem;
+         }
+ 
+         @media (max-width: 768px) {
+             .nav-links {
+                 position: absolute;
+                 top: 60px;
+                 left: 0;
+                 right: 0;
+                 background-color: #004d4d;
+                 flex-direction: column;
+                 display: none;
+             }
+ 
+             .nav-links.active {
+                 display: flex;
+             }
+ 
+             .menu-toggle {
+                 display: block;
+                 font-size: 1.5rem;
+                 cursor: pointer;
+                 color: white;
+             }
+         }
+ 
+         .menu-toggle {
+             display: none;
+         }
+     </style>
+ </head>
+ <body id="page-top">
+ 
+   <!-- Navigation -->
+ <nav class="navbar navbar-dark fixed-top" id="mainNav">
+   <a class="navbar-brand" href="#page-top">
+     <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px; width: auto;" />
+ </a>    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+ <div class="nav-links" id="navbarResponsive">
+   <a class="nav-link text-uppercase" href="#contact">Bank Account</a>
+   <a class="nav-link text-uppercase hidden" href="#services">Credit</a>
+   <a class="nav-link text-uppercase" href="#services">Portfolio</a>
+   <a class="nav-link text-uppercase" href="#portfolio">Wallet</a>
+   <a class="nav-link text-uppercase hidden" href="#about">Contract</a>
+   <a class="nav-link text-uppercase hidden" href="#team">Guarantor</a>
+   <a class="nav-link text-uppercase" href="#contact">Transaction</a>
+   <a class="nav-link text-uppercase" href="/reclamation/add">Claim</a>
+   <a class="nav-link text-uppercase" href="/profile">Profile</a>
+ 
+ </div>
+ </nav>
+<div *ngIf="updateSuccess" class="alert alert-success mt-3">
+    Profile updated successfully.
+  </div>
+  
+  <!-- ❌ Error alert -->
+  <div *ngIf="updateError" class="alert alert-danger mt-3">
+    {{ updateErrorMessage }}
+  </div>
+  
+<div class="profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-cover">
+       
+      </div>
+      <div class="profile-info">
+        <div class="profile-photo">
+          <img [src]="user.photoUrl" [alt]="user.firstName + ' ' + user.lastName" style="  width: 150px;
+          position: ABSOLUTE;
+          left: 440PX;
+          bottom: 300px;
+          ">
+          <button class="edit-photo-btn" (click)="onEditPhoto()">
+            <i class="fas fa-camera"></i>
+          </button>
+        </div>
+        <div class="profile-details">
+          <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+          <p class="profession">{{ user.role }}</p>
+        
+        </div>
+        <div class="d-flex gap-3">
+            <button class="btn btn-primary" (click)="onEditProfileModal(editProfileModal)">
+              <i class="fas fa-edit"></i> Edit Profile
+            </button>
+          
+            <button class="btn btn-primary" (click)="logout()">
+                <i class="fas fa-cog"></i> Déconnexion
+              </button>
+              
+        
+      </div>
+    </div>
+  
+    <!-- Profile Content -->
+    <div class="profile-content">
+    
+  
+      <!-- Personal Information -->
+      <section class="profile-section personal-info">
+        <h2>Personal Information</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Email  :  </span>
+            <span class="value">{{ user.email }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Phone  :  </span>
+            <span class="value">{{ user.phone }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Address  :  </span>
+            <span class="value">{{ user.address }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Salare :   </span>
+            <span class="value">{{ user.salary }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">  profession  :   </span>
+            <span class="value">{{ user.profession }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Date of Birth :   </span>
+            <span class="value">{{ formatDate(user.dateOfBirth) }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">CIN   :   </span>
+            <span class="value">{{ user.cin }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Tax ID   :  </span>
+            <span class="value">{{ user.taxId }}</span>
+          </div>
+        </div>
+      </section>
+    <!-- Financial Overview -->
+    <section class="profile-section financial-overview">
+        <h2>Financial Overview</h2>
+        <div class="financial-grid">
+          <div class="financial-card">
+            <span class="label">Portfolio Value</span>
+            <span class="value">{{ formatCurrency(user.portfolioValue) }}</span>
+          </div>
+          <div class="financial-card">
+            <span class="label">Available Balance</span>
+            <span class="value">{{ formatCurrency(user.availableBalance) }}</span>
+          </div>
+          <div class="financial-card">
+            <span class="label">Savings</span>
+            <span class="value">{{ formatCurrency(user.savings) }}</span>
+          </div>
+          <div class="financial-card">
+            <span class="label">Investments</span>
+            <span class="value">{{ formatCurrency(user.investments) }}</span>
+          </div>
+        </div>
+      </section>
+  
+     
+      <section class="profile-section bank-accounts">
+        <h2>Bank Accounts</h2>
+        <div class="accounts-grid">
+          <div class="account-card" *ngFor="let account of user.bankAccounts">
+            <div class="account-type">{{ account.type }}</div>
+            <div class="account-details">
+              <div class="detail">
+                <span class="label">IBAN</span>
+                <span class="value">{{ account.iban }}</span>
+              </div>
+              <div class="detail">
+                <span class="label">Balance</span>
+                <span class="value">{{ formatCurrency(account.balance) }}</span>
+              </div>
+              <div class="detail">
+                <span class="label">Bank Code</span>
+                <span class="value">{{ account.bankCode }}</span>
+              </div>
+              <div class="detail">
+                <span class="label">RIB</span>
+                <span class="value">{{ account.rib }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> 
+      <!-- Financial Score -->
+      <section class="profile-section financial-score">
+        <h2>Financial Score</h2>
+        <div class="score-container">
+          <div class="score-circle" [style.background-color]="getFinancialScoreColor(user.financialScore)">
+            <span class="score-value">{{ user.financialScore }}</span>
+            <span class="score-label">Score</span>
+          </div>
+          <div class="score-details">
+            <div class="score-range">
+              <span>Poor</span>
+              <span>Fair</span>
+              <span>Good</span>
+              <span>Excellent</span>
+            </div>
+            <div class="score-bar">
+              <div class="score-progress" [style.width]="(user.financialScore / 1000 * 100) + '%'"
+                   [style.background-color]="getFinancialScoreColor(user.financialScore)"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- Modal pour éditer le profil -->
+  <ng-template #editProfileModal let-modal style="background: aliceblue;">
+    <div class="modal-header" style="background: aliceblue;">
+      <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form (ngSubmit)="onSaveProfile()" style="background: aliceblue;">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input id="firstName" [(ngModel)]="user.firstName" name="firstName" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" [(ngModel)]="user.lastName" name="lastName" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" [(ngModel)]="user.email" name="email" type="email" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input id="phone" [(ngModel)]="user.phone" name="phone" type="tel" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input id="address" [(ngModel)]="user.address" name="address" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="salary">Salary</label>
+          <input id="salary" [(ngModel)]="user.salary" name="salary" type="number" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="profession">Profession   :  </label>
+          <input id="profession" [(ngModel)]="user.profession" name="profession" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth  :  </label>
+          <input id="dateOfBirth" [(ngModel)]="user.dateOfBirth" name="dateOfBirth" type="date" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="cin">CIN  :  </label>
+          <input id="cin" [(ngModel)]="user.cin" name="cin" type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="taxId">Tax ID  :  </label>
+          <input id="taxId" [(ngModel)]="user.taxId" name="taxId" type="text" class="form-control" />
+        </div>
+  
+        <!-- Profile Image -->
+        <div class="form-group">
+          <label for="photo">Profile Photo</label>
+          <input id="photo" type="file" (change)="onFileChange($event)" class="form-control" />
+          <div *ngIf="user.photoUrl">
+            <img [src]="user.photoUrl" alt="Profile Image" width="100" />
+          </div>
+        </div>
+  
+        <!-- Password Change -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" [(ngModel)]="user.password" name="password" type="password" class="form-control" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </ng-template>
+  
+  
+  

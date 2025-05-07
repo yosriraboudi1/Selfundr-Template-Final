@@ -1,0 +1,40 @@
+
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title fw-semibold mb-4">Statistiques des reclamations</h5>
+      <div *ngIf="stats">
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+          <div style="flex: 1 1 30%;">
+            <h4>Par Catégorie</h4>
+            <canvas baseChart
+              [data]="categoryChart.data"
+              [type]="categoryChart.type">
+      </canvas>
+          </div>
+
+          <div style="flex: 1 1 30%;">
+            <h4>Par Statut</h4>
+            <canvas baseChart
+              [data]="statusChart.data"
+              [type]="statusChart.type">
+      </canvas>
+          </div>
+
+          <div style="flex: 1 1 30%;">
+            <h4>Par Urgence</h4>
+            <canvas baseChart
+            [data]="urgencyChart.data"
+            [type]="urgencyChart.type">
+      </canvas>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+          </div>
+  </div>
+</div>
+

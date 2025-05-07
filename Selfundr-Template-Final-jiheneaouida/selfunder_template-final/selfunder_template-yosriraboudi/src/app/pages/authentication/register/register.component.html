@@ -1,0 +1,186 @@
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+  <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="d-flex align-items-center justify-content-center w-100">
+      <div class="row justify-content-center w-100">
+        <div class="col-md-8 col-lg-6 col-xxl-4">
+          <div class="card mb-0">
+            <div class="card-body">
+              <a class="text-nowrap logo-img text-center d-block py-3 w-100">
+                <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
+              </a>
+              <p class="text-center">Create your account</p>
+
+              <!-- ✅ Registration success message -->
+              <div *ngIf="registrationSuccess && !otpValidated" class="alert alert-success text-center">
+                Registration successful. Please enter the OTP sent to your email.
+              </div>
+
+              <!-- ❌ OTP error -->
+              <div *ngIf="otpError" class="alert alert-danger text-center">
+                {{ otpError }}
+              </div>
+
+              <!-- ✅ OTP validated -->
+              <div *ngIf="otpValidated" class="alert alert-success text-center">
+                Email successfully verified. Redirecting...
+              </div>
+
+              <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+
+                <!-- First Name -->
+                <div class="mb-3">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" formControlName="prenom" />
+                  <div *ngIf="signupForm.get('prenom')?.touched && signupForm.get('prenom')?.invalid" class="text-danger">
+                    Prénom requis (min 2 caractères)
+                  </div>
+                </div>
+              
+                <!-- Last Name -->
+                <div class="mb-3">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" formControlName="nom" />
+                  <div *ngIf="signupForm.get('nom')?.touched && signupForm.get('nom')?.invalid" class="text-danger">
+                    Nom requis (min 2 caractères)
+                  </div>
+                </div>
+              
+                <!-- Email -->
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" formControlName="email" />
+                  <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid" class="text-danger">
+                    Email invalide
+                  </div>
+                </div>
+              
+                <!-- Password -->
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" formControlName="password" />
+                  <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="text-danger">
+                    Mot de passe requis (min 6 caractères)
+                  </div>
+                </div>
+              
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                  <label class="form-label">Confirm Password</label>
+                  <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" formControlName="confirmpwd" />
+                  <div *ngIf="signupForm.errors?.['mismatch'] && signupForm.get('confirmpwd')?.touched" class="text-danger">
+                    Les mots de passe ne correspondent pas.
+                  </div>
+                  
+                </div>
+              
+                <div class="mb-3 text-end">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="changetype()">
+                    {{ fieldTextType ? 'Hide' : 'Show' }} Password
+                  </button>
+                </div>
+              
+                <!-- Phone -->
+                <div class="mb-3">
+                  <label class="form-label">Phone</label>
+                  <input type="text" class="form-control" formControlName="telephone" />
+                  <div *ngIf="signupForm.get('telephone')?.touched && signupForm.get('telephone')?.invalid" class="text-danger">
+                    Numéro invalide (8-15 chiffres)
+                  </div>
+                </div>
+              
+                <!-- Mobile Number -->
+                <div class="mb-3">
+                  <label class="form-label">Mobile Number</label>
+                  <input type="text" class="form-control" formControlName="numTel" />
+                  <div *ngIf="signupForm.get('numTel')?.touched && signupForm.get('numTel')?.invalid" class="text-danger">
+                    Mobile invalide (8 chiffres)
+                  </div>
+                </div>
+              
+                <!-- CIN -->
+                <div class="mb-3">
+                  <label class="form-label">National ID (CIN)</label>
+                  <input type="text" class="form-control" formControlName="cin" />
+                  <div *ngIf="signupForm.get('cin')?.touched && signupForm.get('cin')?.invalid" class="text-danger">
+                    CIN invalide (8 chiffres)
+                  </div>
+                </div>
+              
+                <!-- Address -->
+                <div class="mb-3">
+                  <label class="form-label">Address</label>
+                  <input type="text" class="form-control" formControlName="adresse" />
+                  <div *ngIf="signupForm.get('adresse')?.touched && signupForm.get('adresse')?.invalid" class="text-danger">
+                    Adresse requise.
+                  </div>
+                </div>
+              
+                <!-- Profession -->
+                <div class="mb-3">
+                  <label class="form-label">Profession</label>
+                  <input type="text" class="form-control" formControlName="profession" />
+                  <div *ngIf="signupForm.get('profession')?.touched && signupForm.get('profession')?.invalid" class="text-danger">
+                    Profession requise.
+                  </div>
+                </div>
+              
+                <!-- Salary -->
+                <div class="mb-3">
+                  <label class="form-label">Salary</label>
+                  <input type="number" class="form-control" formControlName="salaire" />
+                  <div *ngIf="signupForm.get('salaire')?.touched && signupForm.get('salaire')?.invalid" class="text-danger">
+                    Salaire requis (valeur positive).
+                  </div>
+                </div>
+              
+                <!-- Birthdate -->
+                <div class="mb-3">
+                  <label class="form-label">Birthdate</label>
+                  <input type="date" class="form-control" formControlName="dateNaissance" />
+                  <div *ngIf="signupForm.get('dateNaissance')?.touched && signupForm.get('dateNaissance')?.invalid" class="text-danger">
+                    Date de naissance requise.
+                  </div>
+                </div>
+              
+                <!-- Tax ID -->
+                <div class="mb-3">
+                  <label class="form-label">Tax ID</label>
+                  <input type="text" class="form-control" formControlName="matriculeFiscale" />
+                  <div *ngIf="signupForm.get('matriculeFiscale')?.touched && signupForm.get('matriculeFiscale')?.invalid" class="text-danger">
+                    Matricule fiscale requise.
+                  </div>
+                </div>
+              
+                <!-- Photo -->
+                <div class="mb-3">
+                  <label class="form-label">Photo</label>
+                  <input type="file" class="form-control" (change)="onFileSelected($event)" />
+                </div>
+              
+                <!-- Submit -->
+                <button type="submit" class="btn btn-primary w-100 py-2 fs-5 mb-4 rounded-2" [disabled]="signupForm.invalid">
+                  Register
+                </button>
+              </form>
+              
+
+              <!-- 🔐 OTP Input -->
+              <div *ngIf="otpInputVisible && !otpValidated">
+                <label class="form-label">OTP Code</label>
+                <input type="text" [(ngModel)]="otpCode" class="form-control mb-2" placeholder="Enter the OTP code" />
+                <button (click)="validateOtp()" class="btn btn-success w-100">Verify OTP</button>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-center mt-4">
+                <p class="fs-6 mb-0 fw-bold">Already have an account?</p>
+                <a class="text-primary fw-bold ms-2" routerLink="/auth/login">Sign In</a>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
