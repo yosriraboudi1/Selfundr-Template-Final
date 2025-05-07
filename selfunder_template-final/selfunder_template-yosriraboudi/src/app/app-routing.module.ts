@@ -25,6 +25,8 @@ const routes: Routes = [
   {path: 'homepageinvestisseur', loadChildren: () => import('./pages/homepage-investisseur/homepage-investisseur.module').then(m => m.HomepageInvestisseurModule)},
   {path: 'contacts', loadChildren: () => import('./pages/contacts/contacts.module').then(m => m.ContactsModule)},
   {path: 'transaction', loadChildren: () => import('./pages/transaction/transactions.module').then(m => m.TransactionsModule)},
+  {path: 'comptes', loadChildren: () => import('./pages/compte-bancaire/compte-bancaire-routing.module').then(m => m.CompteBancaireRoutingModule)},
+
 
 
   // {path:'',component:HomeComponent},
