@@ -1,0 +1,112 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="text-center mb-4">
+            <h2 class="mb-3">{{ getTransactionTitle() }}</h2>
+            <p class="text-muted">Fill in the details below to complete your transaction</p>
+          </div>
+
+          <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+            <!-- Amount -->
+            <div class="mb-4">
+              <label class="form-label">Amount</label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number" class="form-control" formControlName="amount" placeholder="Enter amount" step="0.01">
+              </div>
+              @if (transactionForm.get('amount')?.invalid && transactionForm.get('amount')?.touched) {
+                <div class="text-danger mt-1">
+                  Please enter a valid amount
+                </div>
+              }
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter transaction description"></textarea>
+              @if (transactionForm.get('description')?.invalid && transactionForm.get('description')?.touched) {
+                <div class="text-danger mt-1">
+                  Please enter a description
+                </div>
+              }
+            </div>
+
+            <!-- Recipient Account (for transfers) -->
+            @if (showRecipientField) {
+              <div class="mb-4">
+                <label class="form-label">Recipient Account Number</label>
+                <input type="text" class="form-control" formControlName="recipientAccount" placeholder="Enter recipient account number">
+                @if (transactionForm.get('recipientAccount')?.invalid && transactionForm.get('recipientAccount')?.touched) {
+                  <div class="text-danger mt-1">
+                    Please enter recipient account number
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- Payment Details (for payments) -->
+            @if (showPaymentDetails) {
+              <div class="mb-4">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select" formControlName="paymentMethod">
+                  <option value="">Select payment method</option>
+                  <option value="credit">Credit Card</option>
+                  <option value="debit">Debit Card</option>
+                </select>
+                @if (transactionForm.get('paymentMethod')?.invalid && transactionForm.get('paymentMethod')?.touched) {
+                  <div class="text-danger mt-1">
+                    Please select a payment method
+                  </div>
+                }
+              </div>
+
+              <div class="row g-3 mb-4">
+                <div class="col-md-8">
+                  <label class="form-label">Card Number</label>
+                  <input type="text" class="form-control" formControlName="cardNumber" placeholder="Enter card number">
+                  @if (transactionForm.get('cardNumber')?.invalid && transactionForm.get('cardNumber')?.touched) {
+                    <div class="text-danger mt-1">
+                      Please enter card number
+                    </div>
+                  }
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">CVV</label>
+                  <input type="text" class="form-control" formControlName="cvv" placeholder="CVV">
+                  @if (transactionForm.get('cvv')?.invalid && transactionForm.get('cvv')?.touched) {
+                    <div class="text-danger mt-1">
+                      Please enter CVV
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">Expiry Date</label>
+                <input type="month" class="form-control" formControlName="expiryDate">
+                @if (transactionForm.get('expiryDate')?.invalid && transactionForm.get('expiryDate')?.touched) {
+                  <div class="text-danger mt-1">
+                    Please enter expiry date
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- Submit Button -->
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary" [disabled]="!transactionForm.valid">
+                Complete Transaction
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="router.navigate(['/transactions/home'])">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

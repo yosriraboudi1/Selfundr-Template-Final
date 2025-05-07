@@ -24,6 +24,7 @@ const routes: Routes = [
   {path: 'homepageentreproneur', loadChildren: () => import('./pages/homepage-entreproneur/homepage-entreproneur.module').then(m => m.HomepageEntreproneurModule)},
   {path: 'homepageinvestisseur', loadChildren: () => import('./pages/homepage-investisseur/homepage-investisseur.module').then(m => m.HomepageInvestisseurModule)},
   {path: 'contacts', loadChildren: () => import('./pages/contacts/contacts.module').then(m => m.ContactsModule)},
+  {path: 'transaction', loadChildren: () => import('./pages/transaction/transactions.module').then(m => m.TransactionsModule)},
 
 
   // {path:'',component:HomeComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'homepage-investisseur/homepage-investisseur', component: HomepageInvestisseurComponent },
   { path: 'reclamation/listbyuser', component: ReclamationListByuserComponent },
   { path: 'contact/contactlist', component: ContactsListComponent },
+  
 
 ];
 
