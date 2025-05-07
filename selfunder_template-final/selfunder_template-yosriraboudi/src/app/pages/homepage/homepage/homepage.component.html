@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="SELFUNDR - Empowering you with modern, self-directed banking solutions." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SELFUNDR - Empowering your financial future with innovative banking solutions." />
     <meta name="author" content="SELFUNDR" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>SELFUNDR - Your Financial Freedom</title>
+    <title>SELFUNDR - Empower Your Future</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -16,19 +16,21 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
     <!-- Google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
 
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Poppins', sans-serif;
             color: #333;
-            background-color: #fff;
+            line-height: 1.6;
+            background-color: #f4f7fa;
         }
 
         a {
@@ -38,216 +40,308 @@
 
         /* Navbar */
         .navbar {
-            background-color: #004d4d;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-color: transparent;
             padding: 1rem 2rem;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: none;
+            transform: translateY(-100%);
+            animation: slideDown 0.5s ease forwards;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: #1e3a8a;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .navbar-brand img {
-            height: 40px;
+            height: 50px;
         }
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            align-items: center;
+            gap: 2rem;
         }
 
         .nav-link {
-            color: white;
-            text-transform: uppercase;
-            font-size: 0.9rem;
+            color: #fff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #ff6f61;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: #ff6f61;
         }
 
         .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
         .btn-primary {
             background-color: #ff6f61;
-            color: white;
+            color: #fff;
+            border: none;
         }
 
         .btn-secondary {
-            background-color: #6c757d;
-            color: white;
+            background-color: #fff;
+            color: #1e3a8a;
+            border: 2px solid #1e3a8a;
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .btn-primary:hover {
+            background-color: #e65b50;
+            transform: scale(1.05);
         }
 
-        /* Masthead */
+        .btn-secondary:hover {
+            background-color: #1e3a8a;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
         .masthead {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('assets/img/banking-header.jpg') no-repeat center center/cover;
-            color: white;
-            padding: 12rem 2rem 8rem;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5a9e 100%), url('assets/img/hero-bg.jpg') no-repeat center center/cover;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            padding: 0 2rem;
         }
 
-        .masthead-subheading {
+        .masthead .container {
+            max-width: 900px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        .masthead h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        .masthead p {
             font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: slideUp 1s ease forwards 0.5s;
         }
 
-        .masthead-heading {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-        }
-
-        .btn-xl {
-            font-size: 1rem;
+        .hero-actions .btn {
+            margin: 0 1rem;
+            font-size: 1.2rem;
             padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Page Section */
-        .page-section {
+        .hero-actions .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* About Section */
+        .about {
             padding: 4rem 2rem;
-        }
-
-        .bg-light {
-            background-color: #f8f9fa;
-        }
-
-        .section-heading {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
             text-align: center;
+            background-color: #fff;
         }
 
-        .section-subheading {
-            font-size: 1rem;
+        .about h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.2s;
+        }
+
+        .about p {
+            font-size: 1.1rem;
             color: #666;
             margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.4s;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
             text-align: center;
+            background-color: #f4f7fa;
         }
 
-        /* Services */
-        .row.text-center {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-        }
-
-        .col-md-4 {
-            flex: 1 1 250px;
-            max-width: 300px;
-            text-align: center;
-        }
-
-        .fa-stack {
-            position: relative;
-            display: inline-block;
-            width: 2em;
-            height: 2em;
-        }
-
-        .fa-circle {
-            color: #ff6f61;
-        }
-
-        .fa-stack-1x {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-        }
-
-        .my-3 {
-            margin-top: 1rem;
+        .features h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
+            color: #1e3a8a;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.2s;
         }
 
-        /* Portfolio Grid */
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .col-lg-4 {
-            flex: 1 1 300px;
-        }
-
-        .portfolio-item {
-            overflow: hidden;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            cursor: pointer;
-        }
-
-        .portfolio-item img {
-            width: 100%;
-            transition: transform 0.3s;
-        }
-
-        .portfolio-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-caption {
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .portfolio-caption-heading {
-            font-weight: bold;
-        }
-
-        /* About Timeline */
-        .timeline {
-            list-style: none;
-            padding: 0;
-        }
-
-        .timeline li {
-            position: relative;
-            padding-left: 3rem;
+        .features p {
+            font-size: 1.1rem;
+            color: #666;
             margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.4s;
         }
 
-        .timeline-image {
-            position: absolute;
-            left: -60px;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .timeline-image img {
-            border-radius: 50%;
-            width: 100px;
+        .feature-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
         }
 
-        .timeline-panel {
-            background: #f1f1f1;
-            padding: 1rem;
-            border-radius: 5px;
+        .feature-card:nth-child(1) { animation-delay: 0.2s; }
+        .feature-card:nth-child(2) { animation-delay: 0.4s; }
+        .feature-card:nth-child(3) { animation-delay: 0.6s; }
+        .feature-card:nth-child(4) { animation-delay: 0.8s; }
+        .feature-card:nth-child(5) { animation-delay: 1.0s; }
+        .feature-card:nth-child(6) { animation-delay: 1.2s; }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .timeline-inverted .timeline-panel {
-            margin-right: 0;
-            margin-left: 150px;
+        .feature-card i {
+            font-size: 2rem;
+            color: #ff6f61;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
         }
 
-        /* Team */
-        .team-member {
+        .feature-card:hover i {
+            transform: scale(1.2);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #777;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 4rem 2rem;
+            background-color: #fff;
             text-align: center;
-            margin-bottom: 2rem;
+        }
+
+        .team h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.2s;
+        }
+
+        .team p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.4s;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-member {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .team-member:nth-child(1) { animation-delay: 0.2s; }
+        .team-member:nth-child(2) { animation-delay: 0.4s; }
+        .team-member:nth-child(3) { animation-delay: 0.6s; }
+        .team-member:nth-child(4) { animation-delay: 0.8s; }
+        .team-member:nth-child(5) { animation-delay: 1.0s; }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
 
         .team-member img {
@@ -256,27 +350,63 @@
             object-fit: cover;
             border-radius: 50%;
             margin-bottom: 1rem;
+            transition: transform 0.3s ease;
         }
 
-        /* Clients */
-        .py-5 {
-            padding: 5rem 0;
+        .team-member:hover img {
+            transform: scale(1.1);
         }
 
-        .img-brand {
-            width: 150px;
-            height: auto;
-            filter: grayscale(100%);
-            opacity: 0.6;
-            transition: all 0.3s ease;
+        .team-member h4 {
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
         }
 
-        .img-brand:hover {
-            opacity: 1;
-            filter: grayscale(0%);
+        .team-member p {
+            font-size: 0.95rem;
+            color: #777;
+            margin-bottom: 1rem;
         }
 
-        /* Contact Form */
+        .team-member .social-links a {
+            margin: 0 0.5rem;
+            color: #1e3a8a;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .team-member .social-links a:hover {
+            color: #ff6f61;
+            transform: scale(1.2);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 2rem;
+            background-color: #f4f7fa;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.2s;
+        }
+
+        .contact p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.4s;
+        }
+
         #contactForm {
             max-width: 700px;
             margin: 0 auto;
@@ -288,57 +418,128 @@
             padding: 1rem;
             margin-bottom: 1rem;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 25px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        #contactForm input:nth-child(1) { animation-delay: 0.2s; }
+        #contactForm input:nth-child(2) { animation-delay: 0.4s; }
+        #contactForm input:nth-child(3) { animation-delay: 0.6s; }
+        #contactForm textarea { animation-delay: 0.8s; }
+
+        #contactForm input:focus,
+        #contactForm textarea:focus {
+            border-color: #ff6f61;
+            box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
+            outline: none;
         }
 
         #contactForm button {
             background-color: #ff6f61;
-            color: white;
+            color: #fff;
             padding: 0.75rem 2rem;
-            font-size: 1rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 25px;
+            font-size: 1rem;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1s;
         }
 
         #contactForm button:hover {
-            background-color: #004d4d;
+            background-color: #e65b50;
+            transform: scale(1.05);
         }
 
         /* Footer */
         .footer {
-            background-color: #1a1a1a;
-            color: #ccc;
+            background-color: transparent;
+            color: #000000;
             padding: 2rem;
             text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.5s;
         }
 
         .footer a {
-            color: #ccc;
+            color: #ff6f61;
+            margin: 0 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
 
-        .btn-dark.btn-social {
-            background-color: #222;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 0.3rem;
+        .footer a:hover {
+            color: #e65b50;
+            transform: scale(1.1);
         }
 
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            to {
+                text-shadow: 2px 2px 8px rgba(255, 111, 97, 0.5);
+            }
+        }
+
+        /* Media Queries */
         @media (max-width: 768px) {
             .nav-links {
+                display: none;
                 position: absolute;
-                top: 60px;
+                top: 70px;
                 left: 0;
                 right: 0;
-                background-color: #004d4d;
+                background-color: #1e3a8a;
                 flex-direction: column;
-                display: none;
+                padding: 1rem;
+                gap: 1rem;
             }
 
             .nav-links.active {
@@ -348,225 +549,168 @@
             .menu-toggle {
                 display: block;
                 font-size: 1.5rem;
+                color: #fff;
                 cursor: pointer;
-                color: white;
             }
         }
 
-        .menu-toggle {
-            display: none;
+        @media (max-width: 480px) {
+            .masthead h1 {
+                font-size: 2rem;
+            }
+
+            .masthead p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
-<body id="page-top">
+<body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-dark fixed-top" id="mainNav">
-  <a class="navbar-brand" href="#page-top">
-    <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px; width: auto;" />
-</a>    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+<nav class="navbar navbar-dark fixed-top">
+    <a class="navbar-brand" href="#page-top">
+        <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px;" />
+    </a>
+  <div class="menu-toggle" onclick="toggleMenu()">
     <div class="nav-links" id="navbarResponsive">
-        <!-- <a class="nav-link text-uppercase" href="#services">Services</a>
-        <a class="nav-link text-uppercase" href="#portfolio">Accounts</a>
-        <a class="nav-link text-uppercase" href="#about">About</a>
-        <a class="nav-link text-uppercase" href="#team">Team</a>
-        <a class="nav-link text-uppercase" href="#contact">Support</a> -->
-        <a class="btn btn-primary btn-sm mx-2" href="http://localhost:4200/auth/login" role="button">Login</a>
-        <a class="btn btn-secondary btn-sm mx-2" href="http://localhost:4200/auth/register" role="button">Register</a>
-      </div>
+        <!-- <a class="nav-link" href="#about" onclick="scrollToSection(event, 'about')">About</a>
+        <a class="nav-link" href="#features" onclick="scrollToSection(event, 'features')">Features</a>
+        <a class="nav-link" href="#team" onclick="scrollToSection(event, 'team')">Team</a>
+        <a class="nav-link" href="#contact" onclick="scrollToSection(event, 'contact')">Contact</a> -->
+        <a class="btn btn-primary" href="http://localhost:4200/auth/login" role="button">Login</a>
+        <a class="btn btn-secondary" href="http://localhost:4200/auth/register" role="button">Register</a>
+    </div>
+  </div>
 </nav>
 
-<!-- Masthead -->
+<!-- Hero Section -->
 <header class="masthead">
-  <div class="container">
-            <div class="masthead-subheading">Welcome to SELFUNDR!</div>
-
-      <div class="masthead-subheading">Empowering you with modern, self-directed banking solutions</div>
-  </div>
+    <div class="container">
+        <h1>Empower Your Financial Future</h1>
+        <p>Discover a banking experience tailored to your needs with SELFUNDR, offering secure, innovative, and accessible financial solutions designed to help you thrive.</p>
+        <div class="hero-actions">
+            <a href="#about" class="btn btn-primary" onclick="scrollToSection(event, 'about')">Learn More</a>
+            <a href="http://localhost:4200/auth/register" class="btn btn-secondary">Join Now</a>
+        </div>
+    </div>
 </header>
 
-<!-- Services -->
-<section class="page-section" id="services">
-    <div class="container">
-        <div class="text-center">
-            <h2 class="section-heading text-uppercase">Our Services</h2>
-            <h3 class="section-subheading text-muted">Empowering you with tools for financial freedom.</h3>
+<!-- About Section -->
+<section class="about" id="about">
+    <h2>About SELFUNDR</h2>
+    <p>Founded in 2018, SELFUNDR is committed to revolutionizing banking by providing cutting-edge financial tools to underserved communities. Our mission is to empower individuals with easy access to credit, investment opportunities, and comprehensive financial management. With a focus on technology, we connect entrepreneurs and investors through an integrated platform, featuring advanced credit scoring and a state-of-the-art trading room.</p>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <h2>Our Key Features</h2>
+    <p>SELFUNDR offers a suite of powerful tools to simplify and enhance your financial journey, ensuring security, flexibility, and growth.</p>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <i class="fas fa-lock"></i>
+            <h3>Secure Banking</h3>
+            <p>Enjoy top-tier security with encrypted transactions and robust data protection.</p>
         </div>
-        <div class="row text-center">
-            <div class="col-md-4">
-                <span class="fa-stack fa-4x">
-                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                    <i class="fas fa-mobile-alt fa-stack-1x fa-inverse"></i>
-                </span>
-                <h4 class="my-3">Digital Banking</h4>
-                <p class="text-muted">Manage your finances anytime, anywhere with our secure mobile app and online platform.</p>
-            </div>
-            <div class="col-md-4">
-                <span class="fa-stack fa-4x">
-                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                    <i class="fas fa-hand-holding-usd fa-stack-1x fa-inverse"></i>
-                </span>
-                <h4 class="my-3">Personal Loans</h4>
-                <p class="text-muted">Flexible loan options with competitive rates to fund your dreams.</p>
-            </div>
-            <div class="col-md-4">
-                <span class="fa-stack fa-4x">
-                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                    <i class="fas fa-chart-line fa-stack-1x fa-inverse"></i>
-                </span>
-                <h4 class="my-3">Investment Tools</h4>
-                <p class="text-muted">Take control of your wealth with our intuitive investment platforms.</p>
-            </div>
+        <div class="feature-card">
+            <i class="fas fa-chart-pie"></i>
+            <h3>Investment Opportunities</h3>
+            <p>Access intuitive tools to invest wisely and grow your wealth over time.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-hand-holding-usd"></i>
+            <h3>Flexible Credit</h3>
+            <p>Get tailored loan options with competitive rates to support your goals.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-users"></i>
+            <h3>Community Connection</h3>
+            <p>Connect with entrepreneurs and investors through our integrated platform.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-calculator"></i>
+            <h3>Credit Scoring</h3>
+            <p>Benefit from advanced algorithms to assess and improve your credit profile.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Trading Room</h3>
+            <p>Explore real-time trading with our state-of-the-art integrated trading room.</p>
         </div>
     </div>
 </section>
 
-<!-- Portfolio -->
-<section class="page-section bg-light" id="portfolio">
-    <div class="container">
-        <div class="text-center">
-            <h2 class="section-heading text-uppercase">Our Accounts</h2>
-            <h3 class="section-subheading text-muted">Designed for your financial journey.</h3>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="portfolio-item">
-                    <img class="img-fluid" src="assets/img/portfolio/1.jpg" alt="Checking Account" />
-                    <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Checking Account</div>
-                        <div class="portfolio-caption-subheading text-muted">Seamless everyday banking</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="portfolio-item">
-                    <img class="img-fluid" src="assets/img/portfolio/2.jpg" alt="Savings Account" />
-                    <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Savings Account</div>
-                        <div class="portfolio-caption-subheading text-muted">Grow your future</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="portfolio-item">
-                    <img class="img-fluid" src="assets/img/portfolio/3.jpg" alt="Mobile App" />
-                    <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Mobile App</div>
-                        <div class="portfolio-caption-subheading text-muted">Bank from anywhere</div>
-                    </div>
-                </div>
+<!-- Team Section -->
+<section class="team" id="team">
+    <h2>Our Leadership Team</h2>
+    <p>Meet the dedicated professionals driving SELFUNDR’s mission to empower financial independence.</p>
+    <div class="team-grid">
+        <div class="team-member">
+            <img src="assets/img/team/team-member1.jpg" alt="Raboudi Yosri" />
+            <h4>Raboudi Yosri</h4>
+            <p>Lead Designer</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/yosri.raboudi.3" aria-label="Raboudi Yosri Facebook Profile"><i class="fab fa-facebook-f"></i></a>
+                <a href="#!" aria-label="Raboudi Yosri Instagram Profile"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- About -->
-<section class="page-section" id="about">
-    <div class="container">
-        <div class="text-center">
-            <h2 class="section-heading text-uppercase">About SELFUNDR</h2>
-            <h3 class="section-subheading text-muted">Empowering financial independence since 2018.</h3>
-        </div>
-        <ul class="timeline">
-          <li>
-              <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="Founding" /></div>
-              <div class="timeline-panel">
-                  <div class="timeline-heading">
-                      <h4>2025</h4>
-                      <h4 class="subheading">Our Vision Begins</h4>
-                  </div>
-                  <div class="timeline-body"><p class="text-muted">SELFUNDR was founded to revolutionize banking with customer-first, tech-driven solutions.</p></div>
-              </div>
-          </li>
-          <li class="timeline-inverted">
-              <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/2.jpg" alt="Future Vision" /></div>
-              <div class="timeline-panel">
-                  <div class="timeline-heading">
-                      <h4>2027</h4>
-                      <h4 class="subheading">A Bright Future for SELFUNDR</h4>
-                  </div>
-                  <div class="timeline-body"><p class="text-muted">Pioneering innovative financial tools and expanding globally, SELFUNDR is set to redefine banking with seamless, user-centric solutions.</p></div>
-              </div>
-          </li>
-      </ul>
-    </div>
-</section>
-
-<!-- Team -->
-<section class="page-section bg-light" id="team">
-    <div class="container">
-        <div class="text-center">
-            <h2 class="section-heading text-uppercase">Our Leadership</h2>
-            <h3 class="section-subheading text-muted">The team driving SELFUNDR’s mission forward.</h3>
-        </div>
-        <div class="row">
-
-
-          <div class="col-lg-4">
-            <div class="team-member">
-                <img class="mx-auto rounded-circle" src="assets/img/team/team-member1.jpg" alt="hhhhhhhhhh" />
-                <h4>Raboudi Yosri</h4>
-                <p class="text-muted">Lead Designer</p>
-                <a class="btn btn-dark btn-social mx-2" href="https://www.facebook.com/yosri.raboudi.3" aria-label="Raboudi Yosri Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Raboudi Yosri Instagram Profile"><i class="fab fa-instagram"></i></a>
-            </div>
-
-        </div>
-        <div class="col-lg-4">
-            <div class="team-member">
-                <img class="mx-auto rounded-circle" src="assets/img/team/team-member2.jpg" alt="..." />
-                <h4>Trabelsi Maram</h4>
-                <p class="text-muted">Lead Marketer</p>
-                <a class="btn btn-dark btn-social mx-2" href="https://www.facebook.com/profile.php?id=100054944826535" aria-label="Trabelsi Maram Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Trabelsi Maram Instagram Profile"><i class="fab fa-instagram"></i></a>
+        <div class="team-member">
+            <img src="assets/img/team/team-member2.jpg" alt="Trabelsi Maram" />
+            <h4>Trabelsi Maram</h4>
+            <p>Lead Marketer</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100054944826535" aria-label="Trabelsi Maram Facebook Profile"><i class="fab fa-facebook-f"></i></a>
+                <a href="#!" aria-label="Trabelsi Maram Instagram Profile"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="team-member">
-                <img class="mx-auto rounded-circle" src="assets/img/team/team-member3.jpg" alt="..." />
-                <h4>Abidi Sirine</h4>
-                <p class="text-muted">Lead Developer</p>
-                <a class="btn btn-dark btn-social mx-2" href="https://www.facebook.com/sirine.abidi.144" aria-label="Abidi Sirine Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Abidi Sirine Instagram Profile"><i class="fab fa-instagram"></i></a>
+        <div class="team-member">
+            <img src="assets/img/team/team-member3.jpg" alt="Abidi Sirine" />
+            <h4>Abidi Sirine</h4>
+            <p>Lead Developer</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/sirine.abidi.144" aria-label="Abidi Sirine Facebook Profile"><i class="fab fa-facebook-f"></i></a>
+                <a href="#!" aria-label="Abidi Sirine Instagram Profile"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
-        <div class="col-lg-4">
-          <div class="team-member">
-              <img class="mx-auto rounded-circle" src="assets/img/team/team-member5.jpg" alt="..." />
-              <h4>Hamed Marwan</h4>
-              <p class="text-muted">Lead Developer</p>
-              <a class="btn btn-dark btn-social mx-2" href="https://www.facebook.com/marwan.hamed.984349" aria-label="Hamed Marwan Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-              <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Hamed Marwan Instagram Profile"><i class="fab fa-instagram"></i></a>
+        <div class="team-member">
+            <img src="assets/img/team/team-member5.jpg" alt="Hamed Marwan" />
+            <h4>Hamed Marwan</h4>
+            <p>Lead Developer</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/marwan.hamed.984349" aria-label="Hamed Marwan Facebook Profile"><i class="fab fa-facebook-f"></i></a>
+                <a href="#!" aria-label="Hamed Marwan Instagram Profile"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="team-member">
+            <img src="assets/img/team/team-member4.jpg" alt="Aouida Jihene" />
+            <h4>Aouida Jihene</h4>
+            <p>Lead Developer</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/jihene.aouida" aria-label="Aouida Jihene Facebook Profile"><i class="fab fa-facebook-f"></i></a>
+                <a href="#!" aria-label="Aouida Jihene Instagram Profile"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="team-member">
+          <img src="assets/img/team/team-member6.jpg" alt="Aouida Jihene" />
+          <h4>Toumi Dhie Eddine</h4>
+          <p>Lead Developer</p>
+          <div class="social-links">
+              <a href="https://www.facebook.com/jihene.aouida" aria-label="Aouida Jihene Facebook Profile"><i class="fab fa-facebook-f"></i></a>
+              <a href="#!" aria-label="Aouida Jihene Instagram Profile"><i class="fab fa-instagram"></i></a>
           </div>
-      </div>
-        <div class="col-lg-4">
-          <div class="team-member">
-              <img class="mx-auto rounded-circle" src="assets/img/team/team-member4.jpg" alt="..." />
-              <h4>Aouida Jihene</h4>
-              <p class="text-muted">Lead Developer</p>
-              <a class="btn btn-dark btn-social mx-2" href="https://www.facebook.com/jihene.aouida" aria-label="Aouida Jihene Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-              <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Aouida Jihene Instagram Profile"><i class="fab fa-instagram"></i></a>
-          </div>
-      </div>
+      </div><div class="team-member">
+        <img src="assets/img/team/team-member7.jpg" alt="Aouida Jihene" />
+        <h4>Fakhfakh Ilyes</h4>
+        <p>Lead Developer</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/jihene.aouida" aria-label="Aouida Jihene Facebook Profile"><i class="fab fa-facebook-f"></i></a>
+            <a href="#!" aria-label="Aouida Jihene Instagram Profile"><i class="fab fa-instagram"></i></a>
         </div>
+    </div>
     </div>
 </section>
 
-<!-- Clients
-<div class="py-5">
-    <div class="container">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-md-2 col-sm-4 my-2">
-                <a href="#"><img class="img-fluid img-brand" src="assets/img/logos/microsoft.svg" alt="FDIC" /></a>
-            </div>
-            <div class="col-md-2 col-sm-4 my-2">
-                <a href="#"><img class="img-fluid img-brand" src="assets/img/logos/google.svg" alt="MasterCard" /></a>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<!-- Contact -->
+<!-- Contact Section -->
 <section class="page-section" id="contact">
   <div class="container">
       <div class="text-center">
@@ -626,29 +770,36 @@
 </section>
 
 <!-- Footer -->
-<footer class="footer py-4">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-4 text-lg-start">© 2025 SELFUNDR. Member FDIC.</div>
-            <div class="col-lg-4 my-3 my-lg-0">
-                <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                <a class="btn btn-dark btn-social mx-2" href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-            <div class="col-lg-4 text-lg-end">
-                <a class="text-decoration-none me-3" href="#">Privacy Policy</a>
-                <a class="text-decoration-none me-3" href="#">Terms of Use</a>
-                <a class="text-decoration-none" href="#">Security Center</a>
-            </div>
-        </div>
-    </div>
+<footer class="footer">
+    <p>© 2025 SELFUNDR. All rights reserved.</p>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Support</a>
 </footer>
 
 <script>
+    // Toggle Menu Functionality
     function toggleMenu() {
         const navLinks = document.getElementById("navbarResponsive");
         navLinks.classList.toggle("active");
     }
 
+    // Ensure the menu toggle works on click
+    document.querySelector(".menu-toggle").addEventListener("click", toggleMenu);
+
+    // Smooth Scroll Functionality
+    function scrollToSection(event, sectionId) {
+        event.preventDefault();
+        const section = document.getElementById(sectionId);
+        if (section) {
+            window.scrollTo({
+                top: section.offsetTop - 70,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    // Contact Form Submission
     document.getElementById("contactForm").addEventListener("submit", function(event) {
         event.preventDefault();
         const name = document.getElementById("name").value;
@@ -662,6 +813,36 @@
         } else {
             alert("Please fill out all required fields.");
         }
+    });
+
+    // Navbar Scroll Effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Intersection Observer for triggering animations on scroll
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.feature-card, .team-member, .about h2, .about p, .features h2, .features p, .team h2, .team p, .contact h2, .contact p, #contactForm input, #contactForm textarea, #contactForm button').forEach(element => {
+        observer.observe(element);
     });
 </script>
 
