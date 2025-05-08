@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="SELFUNDR - Empowering you with modern, self-directed banking solutions." />
+    <meta name="author" content="SELFUNDR" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>SELFUNDR - Your Financial Freedom</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <!-- Font Awesome icons -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            background-color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #004d4d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #ff6f61;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Masthead */
+        .masthead {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('assets/img/banking-header.jpg') no-repeat center center/cover;
+            color: white;
+            padding: 12rem 2rem 8rem;
+            text-align: center;
+        }
+
+        .masthead-subheading {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .masthead-heading {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .btn-xl {
+            font-size: 1rem;
+            padding: 1rem 2rem;
+        }
+
+        /* Page Section */
+        .page-section {
+            padding: 4rem 2rem;
+        }
+
+        .bg-light {
+            background-color: #f8f9fa;
+        }
+
+        .section-heading {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .section-subheading {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Reclamation Form */
+        .reclamation-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .reclamation-form input,
+        .reclamation-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .reclamation-form label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .reclamation-form .form-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1a1a1a;
+            color: #ccc;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .btn-dark.btn-social {
+            background-color: #222;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: #004d4d;
+                flex-direction: column;
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: white;
+            }
+
+            .reclamation-form .form-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .reclamation-form .form-actions button {
+                width: 100%;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+    </style>
+</head>
+<body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="#page-top">
+            <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px; width: auto;" />
+        </a>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <div class="nav-links" id="navbarResponsive">
+          <a class="nav-link text-uppercase" href="#contact">Bank Account</a>
+          <a class="nav-link text-uppercase" href="#services">Credit</a>
+          <a class="nav-link text-uppercase hidden" href="#services">Portfolio</a>
+          <a class="nav-link text-uppercase" href="#portfolio">Wallet</a>
+          <a class="nav-link text-uppercase" href="#about">Contract</a>
+          <a class="nav-link text-uppercase" href="#team">Guarantor</a>
+          <a class="nav-link text-uppercase" href="#contact">Transaction</a>
+          <a class="nav-link text-uppercase" href="/reclamation/add">Claim</a>
+        </div>
+        </nav>
+
+    <!-- Masthead -->
+    <header class="masthead">
+        <div class="container">
+            <div class="masthead-subheading">Empowering you with modern, self-directed banking solutions</div>
+        </div>
+    </header>
+
+    <!-- Reclamation Form Section -->
+    <section class="page-section bg-light" id="reclamation">
+        <div class="container">
+            <div class="section-heading">Add Claim</div>
+            <div class="section-subheading">Submit your claim details below</div>
+            <form (ngSubmit)="onSubmit()" #reclamationForm="ngForm">
+              <!-- Champ Sujet -->
+              <div class="mb-3">
+                <label for="sujet" class="form-label">Subject</label>
+                <input type="text" class="form-control" id="sujet"
+                       [(ngModel)]="reclamation.sujet" name="sujet" required>
+              </div>
+
+              <!-- Champ Description -->
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="5"
+                          [(ngModel)]="reclamation.description" name="description" required></textarea>
+              </div>
+
+              <!-- Champ Fichier -->
+              <div class="mb-3">
+                <label for="file" class="form-label">Attach a File</label>
+                <input type="file" class="form-control" id="file"
+                       (change)="onFileSelected($event)" accept=".pdf,.doc,.docx,.jpg,.png" required>
+              </div>
+
+              <!-- Boutons Actions -->
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" routerLink="/reclamation/listbyuser">
+                  <i class="ti ti-arrow-left me-2"></i>Check My Claims
+                </button>
+
+                <button type="submit" class="btn btn-primary" [disabled]="!reclamationForm.form.valid">
+                  <i class="ti ti-check me-2"></i>Add Claim
+                </button>
+              </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; SELFUNDR 2023</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li class="list-inline-item">
+                            <a href="https://www.facebook.com/finease.2024?rdid=GFm2ABPyAk3IWw5I&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1C2gUg83TR#" class="btn-dark btn-social"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.instagram.com/selfundr_/" class="btn-dark btn-social"><i class="fab fa-instagram"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                        <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navbarResponsive');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

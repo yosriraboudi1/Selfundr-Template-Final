@@ -1,0 +1,30 @@
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -400px; /* Initialement cachée */
+  width: 400px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease;
+  z-index: 1050;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.sidebar-body {
+  padding: 1rem;
+}
+
+/* Afficher la sidebar */
+.sidebar.open {
+  right: 0;
+}
