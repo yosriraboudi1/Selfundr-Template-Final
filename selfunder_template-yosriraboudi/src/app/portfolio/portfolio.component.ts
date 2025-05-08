@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PortfolioService } from '../services/portfolio.service';
 import { InvestissementService } from '../services/investissement.service';
+import { PortfolioPerformanceService } from '../services/portfolio-performance-service';
 import { Portfolio, StatutProjet } from '../models/portfolio';
 import { Investissement } from '../models/investissement';
+import { PortfolioPerformance } from '../models/portfolio-performance.models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -15,6 +17,8 @@ export class PortfolioComponent implements OnInit {
   portfolios: Portfolio[] = [];
   portfolioForm: FormGroup;
   showForm = false;
+  isEditing = false;
+  editingPortfolioId: number | null = null;
   userId = 1; // Replace with actual user ID (e.g., from auth service)
   statutProjetEnum = StatutProjet;
   errorMessage: string | null = null;
@@ -31,6 +35,7 @@ export class PortfolioComponent implements OnInit {
     inProgressPortfolios: 0,
     averageProgress: 0
   };
+  portfolioPerformances: { [key: number]: PortfolioPerformance } = {};
 
   // Pagination properties
   currentPage = 1;
@@ -41,6 +46,7 @@ export class PortfolioComponent implements OnInit {
   constructor(
     private portfolioService: PortfolioService,
     private investissementService: InvestissementService,
+    private portfolioPerformanceService: PortfolioPerformanceService,
     private fb: FormBuilder
   ) {
     this.portfolioForm = this.fb.group({
@@ -70,6 +76,7 @@ export class PortfolioComponent implements OnInit {
         }
         console.log('Loaded portfolios:', portfolios);
         this.errorMessage = portfolios.length === 0 ? 'No portfolios found.' : null;
+        this.loadPortfolioPerformances();
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error loading portfolios:', err);
@@ -82,7 +89,6 @@ export class PortfolioComponent implements OnInit {
     this.investissementService.getInvestmentCountsByPortfolio().subscribe({
       next: (counts) => {
         if (counts) {
-          // Convertir les clés de string en number
           this.investmentCounts = Object.keys(counts).reduce((acc, key) => {
             acc[Number(key)] = counts[Number(key)];
             return acc;
@@ -95,6 +101,36 @@ export class PortfolioComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         console.error('Error loading investment counts:', err);
         this.investmentCounts = {};
+      }
+    });
+  }
+
+  loadPortfolioPerformances(): void {
+    this.portfolioPerformances = {};
+    this.portfolios.forEach((portfolio) => {
+      if (portfolio.idPortfolio) {
+        const progressPercentage = portfolio.montantRecherche > 0
+          ? Math.min((portfolio.montantCollecte / portfolio.montantRecherche) * 100, 100)
+          : 0;
+        const currentValue = portfolio.montantCollecte;
+        const rendementPrevisionnel = portfolio.rendementPrevisionnel || 0;
+        const forecasts = {
+          '1': currentValue * (1 + rendementPrevisionnel / 100),
+          '2': currentValue * Math.pow(1 + rendementPrevisionnel / 100, 2),
+          '3': currentValue * Math.pow(1 + rendementPrevisionnel / 100, 3)
+        };
+
+        this.portfolioPerformances[portfolio.idPortfolio!] = {
+          portfolioId: portfolio.idPortfolio!,
+          titreProjet: portfolio.titreProjet || '',
+          montantCollecte: portfolio.montantCollecte,
+          montantRecherche: portfolio.montantRecherche,
+          progressPercentage,
+          currentValue,
+          rendementPrevisionnel,
+          forecasts,
+          error: null
+        };
       }
     });
   }
@@ -117,51 +153,81 @@ export class PortfolioComponent implements OnInit {
   }
 
   toggleForm(): void {
-    this.showForm = !this.showForm;
-    if (!this.showForm) {
-      this.portfolioForm.reset({
-        titreProjet: '',
-        descriptionProjet: '',
-        montantRecherche: 0,
-        montantCollecte: 0,
-        rendementPrevisionnel: 0,
-        statutProjet: StatutProjet.En_Cours
-      });
+    if (this.showForm) {
+      this.resetForm();
+    } else {
+      this.showForm = true;
+      this.isEditing = false;
+      this.editingPortfolioId = null;
     }
+  }
+
+  editPortfolio(portfolio: Portfolio): void {
+    this.isEditing = true;
+    this.editingPortfolioId = portfolio.idPortfolio || null;
+    this.showForm = true;
+    
+    this.portfolioForm.patchValue({
+      titreProjet: portfolio.titreProjet,
+      descriptionProjet: portfolio.descriptionProjet,
+      montantRecherche: portfolio.montantRecherche,
+      montantCollecte: portfolio.montantCollecte,
+      rendementPrevisionnel: portfolio.rendementPrevisionnel,
+      statutProjet: portfolio.statutProjet
+    });
   }
 
   onSubmit(): void {
     if (this.portfolioForm.valid) {
-      const portfolio: Portfolio = {
+      const portfolioData: Portfolio = {
         ...this.portfolioForm.value,
         userId: this.userId
       };
-      this.portfolioService.createPortfolio(this.userId, portfolio).subscribe({
-        next: (newPortfolio) => {
-          this.portfolioForm.reset({
-            titreProjet: '',
-            descriptionProjet: '',
-            montantRecherche: 0,
-            montantCollecte: 0,
-            rendementPrevisionnel: 0,
-            statutProjet: StatutProjet.En_Cours
-          });
-          this.showForm = false;
-          this.errorMessage = null;
-          this.loadPortfolios();
-          this.loadInvestmentCounts(); // Refresh counts after creating a new portfolio
-        },
-        error: (err: HttpErrorResponse) => {
-          console.error('Error creating portfolio:', {
-            status: err.status,
-            statusText: err.statusText,
-            message: err.message,
-            error: err.error
-          });
-          this.errorMessage = 'Failed to create portfolio. Please try again.';
-        }
-      });
+
+      if (this.isEditing && this.editingPortfolioId) {
+        this.portfolioService.updatePortfolio(this.editingPortfolioId, portfolioData).subscribe({
+          next: (updatedPortfolio) => {
+            this.portfolios = this.portfolios.map(p => 
+              p.idPortfolio === this.editingPortfolioId ? updatedPortfolio : p
+            );
+            this.resetForm();
+            this.errorMessage = null;
+            this.loadPortfolioPerformances();
+          },
+          error: (err: HttpErrorResponse) => {
+            console.error('Error updating portfolio:', err);
+            this.errorMessage = 'Failed to update portfolio. Please try again.';
+          }
+        });
+      } else {
+        this.portfolioService.createPortfolio(this.userId, portfolioData).subscribe({
+          next: (newPortfolio) => {
+            this.portfolios = [...this.portfolios, newPortfolio];
+            this.resetForm();
+            this.errorMessage = null;
+            this.loadPortfolioPerformances();
+          },
+          error: (err: HttpErrorResponse) => {
+            console.error('Error creating portfolio:', err);
+            this.errorMessage = 'Failed to create portfolio. Please try again.';
+          }
+        });
+      }
     }
+  }
+
+  resetForm(): void {
+    this.portfolioForm.reset({
+      titreProjet: '',
+      descriptionProjet: '',
+      montantRecherche: 0,
+      montantCollecte: 0,
+      rendementPrevisionnel: 0,
+      statutProjet: StatutProjet.En_Cours
+    });
+    this.showForm = false;
+    this.isEditing = false;
+    this.editingPortfolioId = null;
   }
 
   deletePortfolio(id: number | undefined): void {
@@ -170,7 +236,8 @@ export class PortfolioComponent implements OnInit {
         next: () => {
           this.portfolios = this.portfolios.filter(p => p.idPortfolio !== id);
           this.errorMessage = this.portfolios.length === 0 ? 'No portfolios found.' : null;
-          this.loadInvestmentCounts(); // Refresh counts after deletion
+          this.loadInvestmentCounts();
+          this.loadPortfolioPerformances();
         },
         error: (err: HttpErrorResponse) => {
           console.error('Error deleting portfolio:', {
@@ -259,15 +326,13 @@ export class PortfolioComponent implements OnInit {
 
   get pages(): number[] {
     const pages: number[] = [];
-    const maxVisiblePages = 5; // Nombre maximum de pages visibles dans la pagination
+    const maxVisiblePages = 5;
     
     if (this.totalPages <= maxVisiblePages) {
-      // Si le nombre total de pages est inférieur au maximum, afficher toutes les pages
       for (let i = 1; i <= this.totalPages; i++) {
         pages.push(i);
       }
     } else {
-      // Sinon, afficher un sous-ensemble de pages autour de la page courante
       let startPage = Math.max(1, this.currentPage - Math.floor(maxVisiblePages / 2));
       let endPage = startPage + maxVisiblePages - 1;
       
@@ -312,7 +377,6 @@ export class PortfolioComponent implements OnInit {
     this.portfolioProgress.inProgressPortfolios = this.portfolios.filter(p => 
       p.statutProjet === StatutProjet.En_Cours).length;
 
-    // Calculer la progression moyenne
     const totalProgress = this.portfolios.reduce((sum, portfolio) => {
       if (portfolio.montantRecherche > 0) {
         return sum + (portfolio.montantCollecte / portfolio.montantRecherche) * 100;

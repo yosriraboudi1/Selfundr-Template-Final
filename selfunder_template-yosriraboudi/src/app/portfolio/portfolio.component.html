@@ -43,11 +43,10 @@
     </div>
   </div>
 
-  <!-- Form placed here -->
   <form *ngIf="showForm" [formGroup]="portfolioForm" (ngSubmit)="onSubmit()" class="portfolio-form">
     <div class="form-header">
-      <h2>Create New Investment Portfolio</h2>
-      <p class="form-subtitle">Fill in the details below to create a new investment opportunity</p>
+      <h2>{{ isEditing ? 'Edit Portfolio' : 'Create New Investment Portfolio' }}</h2>
+      <p class="form-subtitle">{{ isEditing ? 'Update the details below' : 'Fill in the details below to create a new investment opportunity' }}</p>
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     </div>
 
@@ -131,12 +130,11 @@
         <i class="fas fa-times"></i> Cancel
       </button>
       <button type="submit" class="btn-submit" [disabled]="portfolioForm.invalid">
-        <i class="fas fa-check"></i> Create Portfolio
+        <i class="fas fa-check"></i> {{ isEditing ? 'Update Portfolio' : 'Create Portfolio' }}
       </button>
     </div>
   </form>
 
-  <!-- Grid of portfolios -->
   <div class="portfolio-grid" *ngIf="!showForm">
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
@@ -174,6 +172,36 @@
             <span class="value highlight">{{ portfolio.rendementPrevisionnel || 0 }}%</span>
           </div>
         </div>
+        <div class="performance-metrics" *ngIf="portfolio.idPortfolio">
+          <div *ngIf="!portfolioPerformances[portfolio.idPortfolio]" class="loading-state">
+            Loading performance...
+          </div>
+          <div *ngIf="portfolioPerformances[portfolio.idPortfolio]?.['error']" class="error-message">
+            {{ portfolioPerformances[portfolio.idPortfolio]['error'] }}
+          </div>
+          <div *ngIf="portfolioPerformances[portfolio.idPortfolio] && !portfolioPerformances[portfolio.idPortfolio]['error']" class="performance-content">
+            <div class="metric">
+              <span class="label">Progress</span>
+              <span class="value">{{ portfolioPerformances[portfolio.idPortfolio]['progressPercentage'] | number:'1.1-1' }}%</span>
+            </div>
+            <div class="metric">
+              <span class="label">Current Value</span>
+              <span class="value">{{ portfolioPerformances[portfolio.idPortfolio]['currentValue'] | currency:'USD' }}</span>
+            </div>
+            <div class="metric">
+              <span class="label">1-Year Forecast</span>
+              <span class="value">{{ portfolioPerformances[portfolio.idPortfolio]['forecasts']['1'] | currency:'USD' }}</span>
+            </div>
+            <div class="metric">
+              <span class="label">2-Year Forecast</span>
+              <span class="value">{{ portfolioPerformances[portfolio.idPortfolio]['forecasts']['2'] | currency:'USD' }}</span>
+            </div>
+            <div class="metric">
+              <span class="label">3-Year Forecast</span>
+              <span class="value">{{ portfolioPerformances[portfolio.idPortfolio]['forecasts']['3'] | currency:'USD' }}</span>
+            </div>
+          </div>
+        </div>
         <div class="progress-bar">
           <div class="progress" [style.width.%]="portfolio.montantRecherche > 0 ? (portfolio.montantCollecte / portfolio.montantRecherche) * 100 : 0"></div>
         </div>
@@ -186,6 +214,9 @@
             <button class="btn-view-investments" [routerLink]="['/portfolio', portfolio.idPortfolio, 'investissements']" [disabled]="!portfolio.idPortfolio">
               <i class="fas fa-list"></i> View Investments
             </button>
+            <button class="btn-edit" (click)="editPortfolio(portfolio)" [disabled]="!portfolio.idPortfolio">
+              <i class="fas fa-edit"></i>
+            </button>
             <button class="btn-delete" (click)="deletePortfolio(portfolio.idPortfolio)" [disabled]="!portfolio.idPortfolio">
               <i class="fas fa-trash"></i>
             </button>
@@ -195,7 +226,6 @@
     </div>
   </div>
 
-  <!-- Pagination Controls -->
   <div class="pagination" *ngIf="totalPages > 1">
     <button class="pagination-btn" 
             [disabled]="currentPage === 1"
@@ -217,7 +247,6 @@
     </button>
   </div>
 
-  <!-- Investments Modal -->
   <div class="modal" *ngIf="showInvestmentsModal" (click)="closeInvestmentsModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <div class="modal-header">
@@ -251,11 +280,11 @@
           <tbody>
             <tr *ngFor="let investment of selectedPortfolioInvestments">
               <td>{{ investment.montantInvestissement | currency:'USD' }}</td>
-              <td>{{ investment.pourcentageParticipation }}%</td>
-              <td>{{ investment.rendementEstime }}%</td>
-              <td>{{ investment.dureeEngagement }}</td>
+              <td>{{ investment.pourcentageParticipation || 'N/A' }}%</td>
+              <td>{{ investment.rendementEstime || 'N/A' }}%</td>
+              <td>{{ investment.dureeEngagement || 'N/A' }}</td>
               <td>{{ investment.modePaiement === 'CARTE_BANCAIRE' ? 'Credit Card' : 'Bank Transfer' }}</td>
-              <td>{{ investment.statutInvestissement }}</td>
+              <td>{{ investment.statutInvestissement || 'N/A' }}</td>
             </tr>
           </tbody>
         </table>
