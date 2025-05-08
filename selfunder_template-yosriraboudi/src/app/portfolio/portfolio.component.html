@@ -1,0 +1,265 @@
+<div class="portfolio-container">
+  <div class="portfolio-header">
+    <h1>Investment Portfolios</h1>
+    <div class="header-actions">
+      <button class="btn-progress" (click)="toggleProgressStats()">
+        <i class="fas fa-chart-line"></i>
+        {{ showProgressStats ? 'Hide Progress' : 'Show Progress' }}
+      </button>
+      <button class="btn-create" (click)="toggleForm()">
+        <i class="fas" [class.fa-plus]="!showForm" [class.fa-times]="showForm"></i>
+        {{ showForm ? 'Cancel' : 'Create New Portfolio' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="progress-stats" *ngIf="showProgressStats">
+    <div class="progress-card">
+      <div class="progress-header">
+        <i class="fas fa-chart-pie"></i>
+        <h3>Portfolio Progress Overview</h3>
+      </div>
+      <div class="progress-content">
+        <div class="progress-item">
+          <span class="label">Total Portfolios</span>
+          <span class="value">{{ portfolioProgress.totalPortfolios }}</span>
+        </div>
+        <div class="progress-item">
+          <span class="label">Completed Portfolios</span>
+          <span class="value success">{{ portfolioProgress.completedPortfolios }}</span>
+        </div>
+        <div class="progress-item">
+          <span class="label">In Progress Portfolios</span>
+          <span class="value info">{{ portfolioProgress.inProgressPortfolios }}</span>
+        </div>
+        <div class="progress-item">
+          <span class="label">Average Progress</span>
+          <div class="progress-bar">
+            <div class="progress" [style.width.%]="portfolioProgress.averageProgress"></div>
+          </div>
+          <span class="value">{{ portfolioProgress.averageProgress | number:'1.1-1' }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form placed here -->
+  <form *ngIf="showForm" [formGroup]="portfolioForm" (ngSubmit)="onSubmit()" class="portfolio-form">
+    <div class="form-header">
+      <h2>Create New Investment Portfolio</h2>
+      <p class="form-subtitle">Fill in the details below to create a new investment opportunity</p>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="titreProjet">
+          <i class="fas fa-heading"></i>
+          Project Title
+        </label>
+        <input type="text" id="titreProjet" formControlName="titreProjet" class="form-control" 
+               placeholder="Enter project title" required>
+        <small class="form-hint">Choose a clear and descriptive title</small>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="descriptionProjet">
+          <i class="fas fa-align-left"></i>
+          Project Description
+        </label>
+        <textarea id="descriptionProjet" formControlName="descriptionProjet" class="form-control" 
+                  placeholder="Describe your project in detail" required></textarea>
+        <small class="form-hint">Provide a detailed description of your project</small>
+      </div>
+
+      <div class="form-group">
+        <label for="montantRecherche">
+          <i class="fas fa-dollar-sign"></i>
+          Amount Sought
+        </label>
+        <div class="input-with-icon">
+          <i class="fas fa-dollar-sign"></i>
+          <input type="number" id="montantRecherche" formControlName="montantRecherche" 
+                 class="form-control" placeholder="0.00" required>
+        </div>
+        <small class="form-hint">Total amount needed for the project</small>
+      </div>
+
+      <div class="form-group">
+        <label for="montantCollecte">
+          <i class="fas fa-hand-holding-usd"></i>
+          Amount Collected
+        </label>
+        <div class="input-with-icon">
+          <i class="fas fa-dollar-sign"></i>
+          <input type="number" id="montantCollecte" formControlName="montantCollecte" 
+                 class="form-control" placeholder="0.00" required>
+        </div>
+        <small class="form-hint">Current amount collected</small>
+      </div>
+
+      <div class="form-group">
+        <label for="rendementPrevisionnel">
+          <i class="fas fa-chart-line"></i>
+          Expected Yield
+        </label>
+        <div class="input-with-icon">
+          <i class="fas fa-percentage"></i>
+          <input type="number" id="rendementPrevisionnel" formControlName="rendementPrevisionnel" 
+                 class="form-control" placeholder="0" required>
+        </div>
+        <small class="form-hint">Expected return on investment (%)</small>
+      </div>
+
+      <div class="form-group">
+        <label for="statutProjet">
+          <i class="fas fa-tasks"></i>
+          Project Status
+        </label>
+        <select id="statutProjet" formControlName="statutProjet" class="form-control" required>
+          <option value="" disabled selected>Select status</option>
+          <option *ngFor="let status of statutProjetEnum | keyvalue" [value]="status.value">
+            {{ status.value }}
+          </option>
+        </select>
+        <small class="form-hint">Current status of the project</small>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="toggleForm()">
+        <i class="fas fa-times"></i> Cancel
+      </button>
+      <button type="submit" class="btn-submit" [disabled]="portfolioForm.invalid">
+        <i class="fas fa-check"></i> Create Portfolio
+      </button>
+    </div>
+  </form>
+
+  <!-- Grid of portfolios -->
+  <div class="portfolio-grid" *ngIf="!showForm">
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+      <button class="btn-retry" (click)="retryLoadPortfolios()">Retry</button>
+    </div>
+    <div *ngIf="!errorMessage && portfolios.length === 0" class="empty-state">
+      No portfolios available. Click "Create New Portfolio" to add one.
+    </div>
+    <div *ngFor="let portfolio of paginatedPortfolios" class="portfolio-card">
+      <div class="portfolio-card-header">
+        <h3>
+          {{ portfolio.titreProjet || 'Untitled' }}
+          <span class="investment-count-badge" *ngIf="portfolio.idPortfolio">
+            <i class="fas fa-wallet"></i>
+            {{ investmentCounts[portfolio.idPortfolio] || 0 }}
+          </span>
+        </h3>
+        <span class="status-badge" [ngClass]="portfolio.statutProjet.toLowerCase()">
+          {{ portfolio.statutProjet }}
+        </span>
+      </div>
+      <div class="portfolio-card-body">
+        <p class="description">{{ portfolio.descriptionProjet || 'No description' }}</p>
+        <div class="metrics">
+          <div class="metric">
+            <span class="label">Amount Sought</span>
+            <span class="value">{{ portfolio.montantRecherche | currency:'USD' }}</span>
+          </div>
+          <div class="metric">
+            <span class="label">Amount Collected</span>
+            <span class="value">{{ portfolio.montantCollecte | currency:'USD' }}</span>
+          </div>
+          <div class="metric">
+            <span class="label">Expected Yield</span>
+            <span class="value highlight">{{ portfolio.rendementPrevisionnel || 0 }}%</span>
+          </div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" [style.width.%]="portfolio.montantRecherche > 0 ? (portfolio.montantCollecte / portfolio.montantRecherche) * 100 : 0"></div>
+        </div>
+        <div class="card-footer">
+          <span class="date">Created: {{ portfolio.dateCreation | date:'medium' }}</span>
+          <div class="actions">
+            <button class="btn-invest" [routerLink]="['/investir', portfolio.idPortfolio]" [disabled]="!portfolio.idPortfolio">
+              <i class="fas fa-chart-line"></i> Invest Now
+            </button>
+            <button class="btn-view-investments" [routerLink]="['/portfolio', portfolio.idPortfolio, 'investissements']" [disabled]="!portfolio.idPortfolio">
+              <i class="fas fa-list"></i> View Investments
+            </button>
+            <button class="btn-delete" (click)="deletePortfolio(portfolio.idPortfolio)" [disabled]="!portfolio.idPortfolio">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="pagination-btn" 
+            [disabled]="currentPage === 1"
+            (click)="previousPage()">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    
+    <button class="pagination-btn" 
+            *ngFor="let page of pages"
+            [class.active]="page === currentPage"
+            (click)="changePage(page)">
+      {{ page }}
+    </button>
+    
+    <button class="pagination-btn"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- Investments Modal -->
+  <div class="modal" *ngIf="showInvestmentsModal" (click)="closeInvestmentsModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Investments for Portfolio</h2>
+        <button class="btn-close" (click)="closeInvestmentsModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="isLoading" class="loading-state">
+          Loading investments...
+        </div>
+        <div *ngIf="investmentsErrorMessage" class="error-message">
+          {{ investmentsErrorMessage }}
+          <button class="btn-retry" (click)="retryFetchInvestments()">Retry</button>
+        </div>
+        <div *ngIf="!isLoading && !investmentsErrorMessage && selectedPortfolioInvestments.length === 0" class="empty-state">
+          No investments available for this portfolio.
+        </div>
+        <table *ngIf="!isLoading && selectedPortfolioInvestments.length > 0" class="investments-table">
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Participation (%)</th>
+              <th>Est. Return (%)</th>
+              <th>Duration (months)</th>
+              <th>Payment Method</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let investment of selectedPortfolioInvestments">
+              <td>{{ investment.montantInvestissement | currency:'USD' }}</td>
+              <td>{{ investment.pourcentageParticipation }}%</td>
+              <td>{{ investment.rendementEstime }}%</td>
+              <td>{{ investment.dureeEngagement }}</td>
+              <td>{{ investment.modePaiement === 'CARTE_BANCAIRE' ? 'Credit Card' : 'Bank Transfer' }}</td>
+              <td>{{ investment.statutInvestissement }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

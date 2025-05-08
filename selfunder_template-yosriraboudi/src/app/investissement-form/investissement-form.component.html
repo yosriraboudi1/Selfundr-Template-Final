@@ -1,0 +1,80 @@
+<div class="container">
+  <h2>Make an Investment</h2>
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+  <form [formGroup]="investissementForm" (ngSubmit)="onSubmit()" class="mb-4">
+    <div class="form-group">
+      <label for="montantInvestissement">Investment Amount</label>
+      <div class="input-group">
+        <span class="input-group-text">$</span>
+        <input type="number" id="montantInvestissement" formControlName="montantInvestissement" class="form-control" step="0.01" required>
+      </div>
+      <div *ngIf="investissementForm.get('montantInvestissement')?.invalid && investissementForm.get('montantInvestissement')?.touched" class="text-danger">
+        Please enter a valid amount (minimum $0.01)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pourcentageParticipation">Participation Percentage</label>
+      <div class="input-group">
+        <input type="number" id="pourcentageParticipation" formControlName="pourcentageParticipation" class="form-control" step="0.1" required>
+        <span class="input-group-text">%</span>
+      </div>
+      <div *ngIf="investissementForm.get('pourcentageParticipation')?.invalid && investissementForm.get('pourcentageParticipation')?.touched" class="text-danger">
+        Please enter a valid percentage (0 to 100)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="rendementEstime">Estimated Return (%)</label>
+      <div class="input-group">
+        <input type="number" id="rendementEstime" formControlName="rendementEstime" class="form-control" step="0.1" required>
+        <span class="input-group-text">%</span>
+      </div>
+      <div *ngIf="investissementForm.get('rendementEstime')?.invalid && investissementForm.get('rendementEstime')?.touched" class="text-danger">
+        Please enter a valid return rate (must be positive)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dureeEngagement">Commitment Duration (months)</label>
+      <input type="number" id="dureeEngagement" formControlName="dureeEngagement" class="form-control" required>
+      <div *ngIf="investissementForm.get('dureeEngagement')?.invalid && investissementForm.get('dureeEngagement')?.touched" class="text-danger">
+        Please enter a valid duration (minimum 1 month)
+      </div>
+    </div>
+
+    <div class="form-group payment-section">
+      <label class="payment-label">Payment Method</label>
+      <div class="payment-methods">
+        <div class="payment-card" *ngFor="let mode of modePaiementOptions" 
+             [class.selected]="investissementForm.get('modePaiement')?.value === mode"
+             (click)="investissementForm.patchValue({modePaiement: mode})">
+          <div class="payment-icon">
+            <i [class]="getPaymentIcon(mode)"></i>
+          </div>
+          <div class="payment-details">
+            <h4>{{ getPaymentDisplayName(mode) }}</h4>
+            <p>{{ getPaymentDescription(mode) }}</p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="investissementForm.get('modePaiement')?.invalid && investissementForm.get('modePaiement')?.touched" class="text-danger">
+        Please select a payment method
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="btn btn-success mt-2" [disabled]="investissementForm.invalid || portfolioId <= 0">
+        Submit Investment
+      </button>
+      <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
