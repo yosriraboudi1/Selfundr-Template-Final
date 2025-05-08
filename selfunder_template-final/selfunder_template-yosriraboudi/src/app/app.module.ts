@@ -13,6 +13,7 @@ import { ContactsListComponent } from './pages/contacts/contactslist/contactslis
   declarations: [
     AppComponent,
     HomeComponent,
+    
 
 
 

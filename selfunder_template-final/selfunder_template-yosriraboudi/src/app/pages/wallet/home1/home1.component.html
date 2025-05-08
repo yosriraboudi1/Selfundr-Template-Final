@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="SELFUNDR - Empowering you with modern, self-directed banking solutions." />
+    <meta name="author" content="SELFUNDR" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>SELFUNDR - Your Financial Freedom</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <!-- Font Awesome icons -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: 'Poppins', sans-serif;
+          color: #333;
+          line-height: 1.6;
+          background-color: #f4f7fa;
+      }
+
+      a {
+          text-decoration: none;
+          color: inherit;
+      }
+
+      /* Navbar */
+      .navbar {
+          background-color: transparent;
+          padding: 1rem 2rem;
+          position: fixed;
+          width: 100%;
+          top: 0;
+          z-index: 1000;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: none;
+          transform: translateY(-100%);
+          animation: slideDown 0.5s ease forwards;
+          transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .navbar.scrolled {
+          background-color: #1e3a8a;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand img {
+          height: 50px;
+      }
+
+      .nav-links {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+      }
+
+      .nav-link {
+          color: #fff;
+          font-weight: 500;
+          transition: color 0.3s ease;
+          position: relative;
+      }
+
+      .nav-link::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: -5px;
+          left: 0;
+          background-color: #ff6f61;
+          transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+          width: 100%;
+      }
+
+      .nav-link:hover {
+          color: #ff6f61;
+      }
+
+      .btn {
+          padding: 0.75rem 1.5rem;
+          border-radius: 25px;
+          font-weight: 500;
+          transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+          background-color: #ff6f61;
+          color: #fff;
+          border: none;
+      }
+
+      .btn-secondary {
+          background-color: #fff;
+          color: #1e3a8a;
+          border: 2px solid #1e3a8a;
+      }
+
+      .btn-primary:hover {
+          background-color: #e65b50;
+          transform: scale(1.05);
+      }
+
+      .btn-secondary:hover {
+          background-color: #1e3a8a;
+          color: #fff;
+          transform: scale(1.05);
+      }
+
+      /* Hero Section */
+      .masthead {
+          background: linear-gradient(135deg, #1e3a8a 0%, #2d5a9e 100%), url('assets/img/hero-bg.jpg') no-repeat center center/cover;
+          color: #fff;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 0 2rem;
+      }
+
+      .masthead .container {
+          max-width: 900px;
+          opacity: 0;
+          animation: fadeIn 1.5s ease forwards;
+      }
+
+      .masthead h1 {
+          font-size: 4rem;
+          font-weight: 700;
+          line-height: 1.2;
+          margin-bottom: 1.5rem;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+          background: linear-gradient(45deg, #ffffff, #f0f0f0);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: textGlow 2s ease-in-out infinite alternate;
+      }
+
+      .masthead p {
+          font-size: 1.5rem;
+          font-family: 'Roboto', sans-serif;
+          font-weight: 300;
+          line-height: 1.8;
+          margin-bottom: 2.5rem;
+          max-width: 700px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: slideUp 1s ease forwards 0.5s;
+      }
+
+      .hero-actions .btn {
+          margin: 0 1rem;
+          font-size: 1.2rem;
+          padding: 1rem 2rem;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .hero-actions .btn:hover {
+          transform: scale(1.1);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* About Section */
+      .about {
+          padding: 4rem 2rem;
+          text-align: center;
+          background-color: #fff;
+      }
+
+      .about h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1e3a8a;
+          margin-bottom: 1rem;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.2s;
+      }
+
+      .about p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 2rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.4s;
+      }
+
+      /* Features Section */
+      .features {
+          padding: 4rem 2rem;
+          text-align: center;
+          background-color: #f4f7fa;
+      }
+
+      .features h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          color: #1e3a8a;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.2s;
+      }
+
+      .features p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 3rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.4s;
+      }
+
+      .feature-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
+      }
+
+      .feature-card {
+          background: #fff;
+          padding: 2rem;
+          border-radius: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards;
+      }
+
+      .feature-card:nth-child(1) { animation-delay: 0.2s; }
+      .feature-card:nth-child(2) { animation-delay: 0.4s; }
+      .feature-card:nth-child(3) { animation-delay: 0.6s; }
+      .feature-card:nth-child(4) { animation-delay: 0.8s; }
+      .feature-card:nth-child(5) { animation-delay: 1.0s; }
+      .feature-card:nth-child(6) { animation-delay: 1.2s; }
+
+      .feature-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-card i {
+          font-size: 2rem;
+          color: #ff6f61;
+          margin-bottom: 1rem;
+          transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover i {
+          transform: scale(1.2);
+      }
+
+      .feature-card h3 {
+          font-size: 1.5rem;
+          color: #1e3a8a;
+          margin-bottom: 0.5rem;
+      }
+
+      .feature-card p {
+          font-size: 0.95rem;
+          color: #777;
+      }
+
+      /* Team Section */
+      .team {
+          padding: 4rem 2rem;
+          background-color: #fff;
+          text-align: center;
+      }
+
+      .team h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1e3a8a;
+          margin-bottom: 1rem;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.2s;
+      }
+
+      .team p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 3rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.4s;
+      }
+
+      .team-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
+      }
+
+      .team-member {
+          background: #fff;
+          padding: 1.5rem;
+          border-radius: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards;
+      }
+
+      .team-member:nth-child(1) { animation-delay: 0.2s; }
+      .team-member:nth-child(2) { animation-delay: 0.4s; }
+      .team-member:nth-child(3) { animation-delay: 0.6s; }
+      .team-member:nth-child(4) { animation-delay: 0.8s; }
+      .team-member:nth-child(5) { animation-delay: 1.0s; }
+
+      .team-member:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .team-member img {
+          width: 150px;
+          height: 150px;
+          object-fit: cover;
+          border-radius: 50%;
+          margin-bottom: 1rem;
+          transition: transform 0.3s ease;
+      }
+
+      .team-member:hover img {
+          transform: scale(1.1);
+      }
+
+      .team-member h4 {
+          font-size: 1.5rem;
+          color: #1e3a8a;
+          margin-bottom: 0.5rem;
+      }
+
+      .team-member p {
+          font-size: 0.95rem;
+          color: #777;
+          margin-bottom: 1rem;
+      }
+
+      .team-member .social-links a {
+          margin: 0 0.5rem;
+          color: #1e3a8a;
+          transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .team-member .social-links a:hover {
+          color: #ff6f61;
+          transform: scale(1.2);
+      }
+
+      /* Contact Section */
+      .contact {
+          padding: 4rem 2rem;
+          background-color: #f4f7fa;
+          text-align: center;
+      }
+
+      .contact h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1e3a8a;
+          margin-bottom: 1rem;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.2s;
+      }
+
+      .contact p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 3rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.4s;
+      }
+
+      #contactForm {
+          max-width: 700px;
+          margin: 0 auto;
+      }
+
+      #contactForm input,
+      #contactForm textarea {
+          width: 100%;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 25px;
+          font-family: 'Poppins', sans-serif;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards;
+      }
+
+      #contactForm input:nth-child(1) { animation-delay: 0.2s; }
+      #contactForm input:nth-child(2) { animation-delay: 0.4s; }
+      #contactForm input:nth-child(3) { animation-delay: 0.6s; }
+      #contactForm textarea { animation-delay: 0.8s; }
+
+      #contactForm input:focus,
+      #contactForm textarea:focus {
+          border-color: #ff6f61;
+          box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
+          outline: none;
+      }
+
+      #contactForm button {
+          background-color: #ff6f61;
+          color: #fff;
+          padding: 0.75rem 2rem;
+          border: none;
+          border-radius: 25px;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 1s;
+      }
+
+      #contactForm button:hover {
+          background-color: #e65b50;
+          transform: scale(1.05);
+      }
+
+      /* Footer */
+      .footer {
+            background-color: transparent;
+            color: #000000;
+            padding: 2rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.5s;
+        }
+      .footer a {
+          color: #ff6f61;
+          margin: 0 1rem;
+          transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .footer a:hover {
+          color: #e65b50;
+          transform: scale(1.1);
+      }
+
+      /* Animations */
+      @keyframes slideDown {
+          from {
+              transform: translateY(-100%);
+          }
+          to {
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes fadeIn {
+          from {
+              opacity: 0;
+              transform: translateY(20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes fadeInUp {
+          from {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes slideUp {
+          from {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to {
+              opacity: 0.9;
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes textGlow {
+          from {
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+          }
+          to {
+              text-shadow: 2px 2px 8px rgba(255, 111, 97, 0.5);
+          }
+      }
+
+      /* Media Queries */
+      @media (max-width: 768px) {
+          .nav-links {
+              display: none;
+              position: absolute;
+              top: 70px;
+              left: 0;
+              right: 0;
+              background-color: #1e3a8a;
+              flex-direction: column;
+              padding: 1rem;
+              gap: 1rem;
+          }
+
+          .nav-links.active {
+              display: flex;
+          }
+
+          .menu-toggle {
+              display: block;
+              font-size: 1.5rem;
+              color: #fff;
+              cursor: pointer;
+          }
+      }
+
+      @media (max-width: 480px) {
+          .masthead h1 {
+              font-size: 2rem;
+          }
+
+          .masthead p {
+              font-size: 1rem;
+          }
+      }
+      /* Style général des boutons du dropdown */
+.dropdown-toggle {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.3rem 1rem;
+
+    position: relative;
+    text-align: left;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* Soulignement animé sous chaque bouton */
+.dropdown-toggle::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #ff6f61;
+    transition: width 0.3s ease;
+}
+
+/* Effet au survol */
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
+    color: #ff6f61;
+}
+
+.dropdown-toggle:hover::after,
+.dropdown-toggle:focus::after {
+    width: 100%;
+}
+
+/* Style du menu déroulant */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background-color: #1e3a8a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    z-index: 1000;
+    overflow: hidden;
+    animation: fadeInDown 0.3s ease;
+}
+
+/* Lien dans le menu déroulant */
+.dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: #ff6f61;
+    color: #fff;
+}
+
+/* Affichage du menu au hover ou click */
+.dropdown:hover .dropdown-menu,
+.dropdown.active .dropdown-menu {
+    display: block;
+}
+
+/* Animation d'apparition du dropdown */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+  </style>
+</head>
+<body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="#page-top">
+            <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px; width: auto;" />
+        </a>
+        <div class="menu-toggle" onclick="toggleMenu()"></div>
+        <div class="nav-links" id="navbarResponsive">
+            <div class="dropdown">
+                <button class="dropdown-toggle">Bank Account</button>
+                <div class="dropdown-menu">
+                    <a href="#contact">Open Account</a>
+                    <a href="#contact">Manage Account</a>
+                    <a href="#contact">View Balance</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Credit</button>
+                <div class="dropdown-menu">
+                    <a href="#services">Apply for Credit</a>
+                    <a href="#services">Credit Options</a>
+                    <a href="#services">Credit Status</a>
+                </div>
+            </div>
+            <div class="dropdown hidden">
+                <button class="dropdown-toggle">Portfolio</button>
+                <div class="dropdown-menu">
+                    <a href="#services">View Portfolio</a>
+                    <a href="#services">Manage Investments</a>
+                    <a href="#services">Portfolio Analysis</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Wallet</button>
+                <div class="dropdown-menu">
+                    <a href="#portfolio">Add Funds</a>
+                    <a href="#portfolio">Withdraw Funds</a>
+                    <a href="#portfolio">Wallet Settings</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Contract</button>
+                <div class="dropdown-menu">
+                    <a href="#about">View Contracts</a>
+                    <a href="#about">Sign Contract</a>
+                    <a href="#about">Contract History</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Guarantor</button>
+                <div class="dropdown-menu">
+                    <a href="#team">Add Guarantor</a>
+                    <a href="#team">Guarantor Details</a>
+                    <a href="#team">Guarantor Status</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Transaction</button>
+                <div class="dropdown-menu">
+                    <a href="#contact">Recent Transactions</a>
+                    <a href="#contact">Transfer Funds</a>
+                    <a href="#contact">Transaction History</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Claim</button>
+                <div class="dropdown-menu">
+                    <a href="/reclamation/add">File a Claim</a>
+                    <a href="/reclamation/add">Claim Status</a>
+                    <a href="/reclamation/reclamationclient-list">Claim History</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Masthead -->
+    <header class="masthead">
+      <div class="container">
+        <h1>Empower Your Financial Future</h1>
+        <p>Discover a banking experience tailored to your needs with SELFUNDR, offering secure, innovative, and accessible financial solutions designed to help you thrive.</p>
+      </div>
+  </header>
+<div class="wallet-container" [class.dark-theme]="isDarkTheme">
+    <!-- Modern Navigation -->
+    <nav class="modern-nav">
+      <div class="nav-content">
+        <div class="nav-brand">My Wallet</div>
+        <div class="nav-actions">
+          <a routerLink="/wallet/apply" class="btn-apply">
+            <i class="bi bi-plus-circle"></i> Apply for Wallet
+          </a>
+          <button class="btn-theme" (click)="isDarkTheme = !isDarkTheme">
+            <i class="bi" [class.bi-sun]="isDarkTheme" [class.bi-moon]="!isDarkTheme"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- PIN Authentication -->
+      <div class="auth-container" *ngIf="!isAuthenticated">
+        <div class="auth-card">
+          <h2>Enter Wallet PIN</h2>
+          <div class="wallet-selector" *ngIf="wallets && wallets.length > 0">
+            <label>Choose a wallet:</label>
+            <select class="form-control" (change)="onWalletSelect($event)">
+              <option *ngFor="let wallet of wallets; let i = index" [value]="i">
+                Wallet #{{ wallet.idPortfeuille || wallet.id }}
+              </option>
+            </select>
+          </div>
+          <form [formGroup]="pinForm" (ngSubmit)="verifyPin()">
+            <div class="pin-input">
+              <input type="password" 
+                     class="form-control" 
+                     formControlName="pin" 
+                     placeholder="Enter the wallet PIN"
+                     maxlength="6">
+            </div>
+            <button type="submit" 
+                    class="btn-primary" 
+                    [disabled]="!pinForm.valid">Unlock the wallet</button>
+          </form>
+        </div>
+      </div>
+  
+      <!-- Wallet Dashboard -->
+      <div class="dashboard" *ngIf="isAuthenticated">
+        <!-- Balance Card -->
+        <div class="balance-card">
+          <div class="balance-header">
+            <h3>Total Balance</h3>
+            <span class="currency">{{ walletData.currency }}</span>
+          </div>
+          <div class="balance-amount">
+            {{ dashboardStats.totalBalance | currency:walletData.currency }}
+          </div>
+          <div class="balance-details">
+            <div>
+              <span>Available</span>
+              <strong>{{ dashboardStats.availableBalance | currency:walletData.currency }}</strong>
+            </div>
+            <div>
+              <span>Invested</span>
+              <strong>{{ dashboardStats.investedAmount | currency:walletData.currency }}</strong>
+            </div>
+            <div>
+              <span>Savings</span>
+              <strong>{{ dashboardStats.savingsAmount | currency:walletData.currency }}</strong>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Analyses financières avancées -->
+        <div class="analytics-card">
+          <div class="analytics-header">
+            <h3>Analyses financières avancées</h3>
+            <button class="btn-refresh" (click)="chargerAnalysesFinancieres()">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+          </div>
+          <div class="analytics-grid">
+            <!-- Performance historique -->
+            <div class="analytics-item" (click)="afficherPerformanceHistorique()">
+              <i class="bi bi-graph-up"></i>
+              <h4>Performance historique</h4>
+              <p>Analysez l'évolution de votre portefeuille</p>
+            </div>
+            
+            <!-- Simulation de croissance -->
+            <div class="analytics-item" (click)="afficherSimulationCroissance()">
+              <i class="bi bi-calculator"></i>
+              <h4>Simulation de croissance</h4>
+              <p>Projetez la valeur future de vos investissements</p>
+            </div>
+            
+            <!-- Analyse de diversification -->
+            <div class="analytics-item" (click)="afficherAnalyseDiversification()">
+              <i class="bi bi-pie-chart"></i>
+              <h4>Analyse de diversification</h4>
+              <p>Évaluez la répartition de vos actifs</p>
+            </div>
+            
+            <!-- Analyse de risque -->
+            <div class="analytics-item" (click)="afficherAnalyseRisque()">
+              <i class="bi bi-shield-check"></i>
+              <h4>Analyse de risque</h4>
+              <p>Évaluez le niveau de risque de votre portefeuille</p>
+            </div>
+            
+            <!-- Recommandations d'investissement -->
+            <div class="analytics-item" (click)="afficherRecommandations()">
+              <i class="bi bi-lightbulb"></i>
+              <h4>Recommandations</h4>
+              <p>Obtenez des conseils d'investissement personnalisés</p>
+            </div>
+            
+            <!-- Indicateurs financiers -->
+            <div class="analytics-item" (click)="afficherIndicateursFinanciers()">
+              <i class="bi bi-bar-chart"></i>
+              <h4>Indicateurs financiers</h4>
+              <p>Consultez vos KPIs financiers clés</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modales des analyses financières -->
+        <!-- Performance historique -->
+        <div class="action-modal" *ngIf="selectedType === 'performance-historique'">
+          <div class="modal-header">
+            <h3><i class="bi bi-graph-up"></i> Performance historique</h3>
+            <button class="btn-close" (click)="showForm = false">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <div class="modal-content" *ngIf="donneesPerfHistorique">
+            <div class="results-card">
+              <h4>Rendement total</h4>
+              <div class="result-value">{{ donneesPerfHistorique.rendementTotal | percent }}</div>
+            </div>
+            <div class="results-card">
+              <h4>Rendement mensuel moyen</h4>
+              <div class="result-value">{{ donneesPerfHistorique.rendementMensuelMoyen | percent }}</div>
+            </div>
+            <div class="chart-container">
+              <h4>Évolution de la performance</h4>
+              <!-- Placeholder pour le graphique -->
+              <div class="chart-placeholder">
+                <div class="chart-data" *ngFor="let point of donneesPerfHistorique.historique">
+                  <div>{{ point.mois }}: {{ point.valeur | currency }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulation de croissance -->
+        <div class="action-modal" *ngIf="selectedType === 'simulation-croissance'">
+          <div class="modal-header">
+            <h3><i class="bi bi-calculator"></i> Simulation de croissance</h3>
+            <button class="btn-close" (click)="showForm = false">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <form *ngIf="!donneesSimulation" [formGroup]="form" (ngSubmit)="executerSimulationCroissance()">
+            <div class="form-group">
+              <label><i class="bi bi-currency-dollar"></i> Montant mensuel à investir</label>
+              <input type="number" step="0.01" class="form-control" formControlName="montantMensuel" placeholder="Montant mensuel" required>
+            </div>
+            <div class="form-group">
+              <label><i class="bi bi-calendar"></i> Durée (années)</label>
+              <input type="number" class="form-control" formControlName="dureeAnnees" placeholder="Durée en années" required>
+            </div>
+            <div class="form-group">
+              <label><i class="bi bi-percent"></i> Taux de rendement annuel estimé (%)</label>
+              <input type="number" step="0.01" class="form-control" formControlName="tauxRendement" placeholder="Taux de rendement (%)" required>
+            </div>
+            <button type="submit" class="btn-primary" [disabled]="!form.valid || isLoading">
+              <span *ngIf="!isLoading">Simuler</span>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+            </button>
+          </form>
+          <div class="modal-content" *ngIf="donneesSimulation">
+            <div class="results-card">
+              <h4>Capital final estimé</h4>
+              <div class="result-value">{{ donneesSimulation.capitalFinal | currency }}</div>
+            </div>
+            <div class="results-card">
+              <h4>Gain total</h4>
+              <div class="result-value">{{ donneesSimulation.gainTotal | currency }}</div>
+            </div>
+            <div class="results-card">
+              <h4>Contributions cumulatives</h4>
+              <div class="result-value">{{ donneesSimulation.contributionsCumulatives | currency }}</div>
+            </div>
+            <div class="chart-container">
+              <h4>Projection année par année</h4>
+              <div class="chart-placeholder">
+                <div class="chart-data" *ngFor="let point of donneesSimulation.projections">
+                  <div>Année {{ point.annee }}: {{ point.valeur | currency }}</div>
+                </div>
+              </div>
+            </div>
+            <button class="btn-secondary" (click)="donneesSimulation = null">Nouvelle simulation</button>
+          </div>
+        </div>
+
+        <!-- Analyse de diversification -->
+        <div class="action-modal" *ngIf="selectedType === 'analyse-diversification'">
+          <div class="modal-header">
+            <h3><i class="bi bi-pie-chart"></i> Analyse de diversification</h3>
+            <button class="btn-close" (click)="showForm = false">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <div class="modal-content" *ngIf="donneesDiversification">
+            <div class="results-card">
+              <h4>Indice de diversification</h4>
+              <div class="result-value">{{ donneesDiversification.indiceDiversification | number:'1.2-2' }}</div>
+            </div>
+            <div class="chart-container">
+              <h4>Répartition par catégorie d'actifs</h4>
+              <div class="chart-placeholder">
+                <div class="chart-data" *ngFor="let categorie of donneesDiversification.repartition">
+                  <div>{{ categorie.nom }}: {{ categorie.pourcentage | percent }} ({{ categorie.montant | currency }})</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analyse de risque -->
+        <div class="action-modal" *ngIf="selectedType === 'analyse-risque'">
+          <div class="modal-header">
+            <h3><i class="bi bi-shield-check"></i> Analyse de risque</h3>
+            <button class="btn-close" (click)="showForm = false">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <div class="modal-content" *ngIf="donneesRisque">
+            <div class="results-card">
+              <h4>Score de risque global</h4>
+              <div class="result-value">
+                <div class="risk-score">
+                  <span [ngClass]="{'low': donneesRisque.scoreRisque <= 2, 'medium': donneesRisque.scoreRisque == 3, 'high': donneesRisque.scoreRisque >= 4}">
+                    {{ donneesRisque.scoreRisque }}/5
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="results-section">
+              <h4>Facteurs de risque</h4>
+              <div class="risk-factors">
+                <div class="risk-factor" *ngFor="let facteur of donneesRisque.facteurs">
+                  <div class="factor-name">{{ facteur.nom }}</div>
+                  <div class="factor-impact" [ngClass]="{'low': facteur.impact <= 2, 'medium': facteur.impact == 3, 'high': facteur.impact >= 4}">
+                    Impact: {{ facteur.impact }}/5
+                  </div>
+                  <div class="factor-description">{{ facteur.description }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="results-section">
+              <h4>Recommandations de mitigation</h4>
+              <ul class="recommendations-list">
+                <li *ngFor="let recommandation of donneesRisque.recommandations">{{ recommandation }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommandations d'investissement -->
+        <div class="action-modal" *ngIf="selectedType === 'recommandations'">
+          <div class="modal-header">
+            <h3><i class="bi bi-lightbulb"></i> Recommandations d'investissement</h3>
+            <button class="btn-close" (click)="showForm = false">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <form *ngIf="!donneesRecommandations" [formGroup]="form" (ngSubmit)="afficherRecommandations()">
+            <div class="form-group">
+              <label><i class="bi bi-shield"></i> Profil de risque (1-5)</label>
+              <select class="form-control" formControlName="profilRisque" required>
+                <option value="1">1 - Très prudent</option>
+                <option value="2">2 - Prudent</option>
+                <option value="3">3 - Équilibré</option>
+                <option value="4">4 - Dynamique</option>
+                <option value="5">5 - Agressif</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label><i class="bi bi-flag"></i> Objectifs d'investissement</label>
+              <select class="form-control" formControlName="objectifs" required>
+                <option value="securite">Sécurité</option>
+                <option value="revenu">Revenu régulier</option>
+                <option value="croissance">Croissance</option>
+                <option value="retraite">Préparation retraite</option>
+                <option value="patrimoine">Constitution patrimoine</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary" [disabled]="!form.valid || isLoading">
+              <span *ngIf="!isLoading">Obtenir des recommandations</span>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+            </button>
+          </form>
+          <div class="modal-content" *ngIf="donneesRecommandations">
+            <div class="results-section">
+              <h4>Allocation d'actifs recommandée</h4>
+              <div class="chart-placeholder">
+                <div class="chart-data" *ngFor="let allocation of donneesRecommandations.allocations">
+                  <div>{{ allocation.categorie }}: {{ allocation.pourcentage | percent }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="results-section">
+              <h4>Description de la stratégie</h4>
+              <p>{{ donneesRecommandations.description }}</p>
+            </div>
+            <div class="results-section">
+              <h4>Recommandations spécifiques</h4>
+              <ul class="recommendations-list">
+                <li *ngFor="let recommandation of donneesRecommandations.recommandations">{{ recommandation }}</li>
+              </ul>
+            </div>
+            <button class="btn-secondary" (click)="donneesRecommandations = null">Modifier les préférences</button>
+          </div>
+        </div>
+
+        <!-- Indicateurs financiers -->
+        <div class="action-modal" *ngIf="selectedType === 'indicateurs-financiers'">
+          <div class="modal-header">
+            <h3><i class="bi bi-bar-chart"></i> Indicateurs financiers</h3>
+            <button class="btn-close" (click)="showForm = false">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <div class="modal-content" *ngIf="donneesIndicateurs">
+            <div class="results-grid">
+              <div class="results-card">
+                <h4>ROI (Retour sur investissement)</h4>
+                <div class="result-value">{{ donneesIndicateurs.roi | percent }}</div>
+              </div>
+              <div class="results-card">
+                <h4>Ratio de liquidité</h4>
+                <div class="result-value">{{ donneesIndicateurs.ratioLiquidite | number:'1.2-2' }}</div>
+              </div>
+              <div class="results-card">
+                <h4>Ratio d'épargne</h4>
+                <div class="result-value">{{ donneesIndicateurs.ratioEpargne | percent }}</div>
+              </div>
+              <div class="results-card">
+                <h4>Score financier global</h4>
+                <div class="result-value">{{ donneesIndicateurs.scoreFinancier }}/100</div>
+              </div>
+              <div class="results-card">
+                <h4>Capacité d'emprunt estimée</h4>
+                <div class="result-value">{{ donneesIndicateurs.capaciteEmprunt | currency }}</div>
+              </div>
+              <div class="results-card">
+                <h4>Projection de patrimoine (5 ans)</h4>
+                <div class="result-value">{{ donneesIndicateurs.projectionPatrimoine | currency }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Investment Stats -->
+        <div class="investment-stats">
+          <div class="stat-card">
+            <h4>Expected Return</h4>
+            <div class="stat-value">{{ dashboardStats.expectedReturn | currency:walletData.currency }}</div>
+            <div class="stat-label">Based on current investments</div>
+          </div>
+          <div class="stat-card">
+            <h4>Total Return</h4>
+            <div class="stat-value">{{ dashboardStats.totalReturn | currency:walletData.currency }}</div>
+            <div class="stat-label">Overall profit/loss</div>
+          </div>
+        </div>
+  
+        <!-- Dashboard Stats -->
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <h4>Total Value</h4>
+            <div class="stat-value">{{ dashboardStats.totalValue | currency:walletData.currency }}</div>
+          </div>
+          <div class="stat-card">
+            <h4>Savings</h4>
+            <div class="stat-value">{{ dashboardStats.savingsAmount | currency:walletData.currency }}</div>
+          </div>
+          <div class="stat-card">
+            <h4>Invested</h4>
+            <div class="stat-value">{{ dashboardStats.investedAmount | currency:walletData.currency }}</div>
+          </div>
+          <div class="stat-card">
+            <h4>Available</h4>
+            <div class="stat-value">{{ dashboardStats.availableBalance | currency:walletData.currency }}</div>
+          </div>
+          <div class="stat-card highlight">
+            <h4>Projected Yield</h4>
+            <div class="stat-value">{{ dashboardStats.expectedReturn | currency:walletData.currency }}</div>
+          </div>
+          <div class="stat-card highlight">
+            <h4>Total Return</h4>
+            <div class="stat-value">{{ dashboardStats.totalReturn | currency:walletData.currency }}</div>
+          </div>
+        </div>
+  
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button *ngFor="let action of actions" 
+                  class="action-btn" 
+                  [class.danger]="action.type === 'delete'"  
+                  (click)="handleAction(action.type)">
+            <i [class]="action.icon"></i>
+            <span>{{ action.title }}</span>
+          </button>
+          
+          <button class="action-btn" (click)="handleAction('calculate-yield')">
+            <i class="bi bi-calculator"></i>
+            <span>Calculate Yield</span>
+          </button>
+          
+          <button class="action-btn" (click)="handleAction('export-pdf')">
+            <i class="bi bi-file-earmark-pdf"></i>
+            <span>Export PDF</span>
+          </button>
+          
+          <button class="action-btn" (click)="handleAction('invest')">
+            <i class="bi bi-graph-up"></i>
+            <span>Invest</span>
+          </button>
+          
+          <button class="action-btn" (click)="handleAction('transfer')">
+            <i class="bi bi-arrow-left-right"></i>
+            <span>Transfer</span>
+          </button>
+        </div>
+  
+        <!-- Action Modals -->
+        <div class="modal-overlay" *ngIf="showForm || showQRCode || showDetails">
+          <!-- Invest Modal -->
+          <div class="action-modal" *ngIf="selectedType === 'invest'">
+            <div class="modal-header">
+              <h3><i class="bi bi-graph-up"></i> Invest Money</h3>
+              <button class="btn-close" (click)="showForm = false; showQRCode = false; showDetails = false">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="investMoney()">
+              
+              <div class="form-group">
+                <label><i class="bi bi-currency-dollar"></i> Amount</label>
+                <input type="number" step="0.01" class="form-control" 
+                       formControlName="amount" placeholder="Enter amount" required>
+              </div>
+              <div class="form-group">
+                <label><i class="bi bi-bank"></i> Investment Type</label>
+                <select class="form-control" formControlName="investmentType">
+                  <option value="stocks">Stocks</option>
+                  <option value="bonds">Bonds</option>
+                  <option value="funds">Mutual Funds</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-primary" [disabled]="!form.valid || isLoading">
+                <span *ngIf="!isLoading">Invest</span>
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+              </button>
+            </form>
+          </div>
+  
+          <!-- Transfer Modal -->
+          <div class="action-modal" *ngIf="selectedType === 'transfer'">
+            <div class="modal-header">
+              <h3><i class="bi bi-arrow-left-right"></i> Transfer Money</h3>
+              <button class="btn-close" (click)="showForm = false; showQRCode = false; showDetails = false">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="transferMoney()">
+              <div class="form-group">
+                <label><i class="bi bi-wallet2"></i> Source Wallet</label>
+                <input type="text" class="form-control" 
+                       [value]="selectedWallet ? ('Wallet #' + (selectedWallet.idPortfeuille || selectedWallet.id || 'Current') + ' (' + (selectedWallet.soldeDisponible | currency) + ')') : 'Current wallet'" 
+                       disabled>
+                <!-- Hidden field to store the source wallet ID -->
+                <input type="hidden" formControlName="sourceWallet">
+              </div>
+              <div class="form-group">
+                <label><i class="bi bi-wallet2"></i> Destination Wallet</label>
+                <select class="form-control" formControlName="destinationWallet" required>
+                  <option value="">Select destination wallet</option>
+                  <option *ngFor="let wallet of wallets" 
+                          [value]="wallet.idPortfeuille || wallet.id || 1">
+                    Wallet #{{ wallet.idPortfeuille || wallet.id || 'New' }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label><i class="bi bi-currency-dollar"></i> Amount</label>
+                <input type="number" step="0.01" class="form-control" 
+                       formControlName="amount" placeholder="Enter amount" required>
+              </div>
+              <div class="form-group">
+                <label><i class="bi bi-chat-text"></i> Description</label>
+                <input type="text" class="form-control" 
+                       formControlName="description" placeholder="Optional description">
+              </div>
+              <button type="submit" class="btn-primary" [disabled]="!form.valid || isLoading">
+                <span *ngIf="!isLoading">Transfer</span>
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+              </button>
+            </form>
+          </div>
+  
+          <!-- Update Wallet Modal -->
+          <div class="action-modal" *ngIf="selectedType === 'update'">
+            <div class="modal-header">
+              <h3><i class="bi bi-pencil"></i> Update Wallet</h3>
+              <button class="btn-close" (click)="showForm = false; showQRCode = false; showDetails = false">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <form [formGroup]="updateForm" (ngSubmit)="submitUpdateForm()">
+              <div class="form-group">
+                <label><i class="bi bi-currency-dollar"></i> Total Value</label>
+                <input type="number" 
+                       class="form-control" 
+                       formControlName="valeurTotale" 
+                       placeholder="Enter total value">
+              </div>
+              <div class="form-group">
+                <label><i class="bi bi-piggy-bank"></i> Savings Amount</label>
+                <input type="number" 
+                       class="form-control" 
+                       formControlName="montantEpargne" 
+                       placeholder="Enter savings amount">
+              </div>
+              <div class="form-group">
+                <label><i class="bi bi-graph-up"></i> Invested Amount</label>
+                <input type="number" 
+                       class="form-control" 
+                       formControlName="montantInvestie" 
+                       placeholder="Enter invested amount">
+              </div>
+              <div class="form-group">
+                <label><i class="bi bi-wallet2"></i> Available Balance</label>
+                <input type="number" 
+                       class="form-control" 
+                       formControlName="soldeDisponible" 
+                       placeholder="Enter available balance">
+              </div>
+              <div class="form-group">
+                <label><i class="bi bi-lock"></i> PIN Code</label>
+                <input type="password" 
+                       class="form-control" 
+                       formControlName="codePin" 
+                       placeholder="Enter 4-digit PIN"
+                       maxlength="4">
+              </div>
+              <button type="submit" 
+                      class="btn-primary" 
+                      [disabled]="!updateForm.valid || isLoading">
+                <span *ngIf="!isLoading"><i class="bi bi-check-circle"></i> Update Wallet</span>
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+              </button>
+            </form>
+          </div>
+          
+          <!-- Wallet Details Modal -->
+          <div class="action-modal" *ngIf="showDetails">
+            <div class="modal-header">
+              <h3><i class="bi bi-info-circle"></i> Wallet Details</h3>
+              <button class="btn-close" (click)="showForm = false; showQRCode = false; showDetails = false">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+            <div class="wallet-details-container" *ngIf="selectedWallet">
+              <div class="detail-item">
+                <span class="detail-label"><i class="bi bi-credit-card"></i> Wallet ID:</span>
+                <span class="detail-value">{{ selectedWallet.idPortfeuille || selectedWallet.id }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label"><i class="bi bi-currency-dollar"></i> Total Value:</span>
+                <span class="detail-value">{{ selectedWallet.valeurTotale | currency:'USD' }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label"><i class="bi bi-piggy-bank"></i> Savings Amount:</span>
+                <span class="detail-value">{{ selectedWallet.montantEpargne | currency:'USD' }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label"><i class="bi bi-graph-up"></i> Invested Amount:</span>
+                <span class="detail-value">{{ selectedWallet.montantInvestie | currency:'USD' }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label"><i class="bi bi-wallet2"></i> Available Balance:</span>
+                <span class="detail-value">{{ selectedWallet.soldeDisponible | currency:'USD' }}</span>
+              </div>
+              <div class="detail-item" *ngIf="selectedWallet.montantCredit !== undefined">
+                <span class="detail-label"><i class="bi bi-cash"></i> Credit Amount:</span>
+                <span class="detail-value">{{ selectedWallet.montantCredit | currency:'USD' }}</span>
+              </div>
+              <div class="detail-item" *ngIf="selectedWallet.rendementPrevisionnel !== undefined">
+                <span class="detail-label"><i class="bi bi-bar-chart"></i> Expected Return:</span>
+                <span class="detail-value">{{ selectedWallet.rendementPrevisionnel | currency:'USD' }}</span>
+              </div>
+              <div class="detail-item" *ngIf="selectedWallet.scoreFinancier !== undefined">
+                <span class="detail-label"><i class="bi bi-star"></i> Financial Score:</span>
+                <span class="detail-value">{{ selectedWallet.scoreFinancier }}</span>
+              </div>
+              <div class="detail-item" *ngIf="selectedWallet.dateCreation !== undefined">
+                <span class="detail-label"><i class="bi bi-calendar"></i> Creation Date:</span>
+                <span class="detail-value">{{ selectedWallet.dateCreation | date:'medium' }}</span>
+              </div>
+              <div class="detail-item" *ngIf="selectedWallet.statutPortfeuille !== undefined">
+                <span class="detail-label"><i class="bi bi-check-circle"></i> Status:</span>
+                <span class="detail-value">{{ selectedWallet.statutPortfeuille }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <p>© 2025 SELFUNDR. All rights reserved.</p>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Support</a>
+  </footer>
