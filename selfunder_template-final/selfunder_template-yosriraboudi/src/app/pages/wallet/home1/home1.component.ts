@@ -79,7 +79,8 @@ export class Home1Component implements OnInit {
    
     { type: 'update', title: 'Update', icon: 'bi bi-pencil' },
     { type: 'details', title: 'Details', icon: 'bi bi-info-circle' },
-    { type: 'delete', title: 'Delete', icon: 'bi bi-trash' }
+    { type: 'delete', title: 'Delete', icon: 'bi bi-trash' },
+    { type: 'simulation-croissance', title: 'Simulation', icon: 'bi bi-calculator' }
   ];
   
   // All actions are shown in the same grid now
@@ -99,7 +100,7 @@ export class Home1Component implements OnInit {
   // Données pour les fonctionnalités avancées
   donneesPerfHistorique: any = null;
   donneesSimulation: any = null;
-  donneesDiversification: any = null;
+  // donneesDiversification a été supprimée
   donneesRisque: any = null;
   donneesRecommandations: any = null;
   donneesIndicateurs: any = null;
@@ -513,6 +514,15 @@ export class Home1Component implements OnInit {
         this.initTransferForm();
         break;
         
+      case 'simulation-croissance':
+        if (!this.selectedWallet) {
+          alert('Please select a wallet for simulation');
+          this.showForm = false;
+          return;
+        }
+        this.initSimulationForm();
+        break;
+        
       default:
         this.showForm = false;
         break;
@@ -678,61 +688,24 @@ export class Home1Component implements OnInit {
     });
   }
 
-  // Méthode pour charger toutes les analyses financières
-  chargerAnalysesFinancieres(): void {
-    if (!this.selectedWallet) {
-      this.showError('Aucun portefeuille sélectionné');
-      return;
-    }
-
-    const walletId = this.getWalletId(this.selectedWallet);
-    if (!walletId) {
-      this.showError('ID de portefeuille invalide');
-      return;
-    }
-
-    this.isLoading = true;
-    
-    // Chargement parallèle des données d'analyse
-    const performance$ = this.walletService.calculerPerformanceHistorique(walletId);
-    const diversification$ = this.walletService.analyserDiversification(walletId);
-    const risque$ = this.walletService.analyserRisque(walletId);
-    const indicateurs$ = this.walletService.calculerIndicateursFinanciers(walletId);
-    
-    // Combiner les résultats avec forkJoin
-    import('rxjs').then(({ forkJoin }) => {
-      forkJoin({
-        performance: performance$,
-        diversification: diversification$,
-        risque: risque$,
-        indicateurs: indicateurs$
-      }).subscribe({
-        next: (resultats) => {
-          this.isLoading = false;
-          console.log('Données d\'analyses financières chargées:', resultats);
-          // Stocker les résultats dans le composant pour affichage
-          this.donneesPerfHistorique = resultats.performance;
-          this.donneesDiversification = resultats.diversification;
-          this.donneesRisque = resultats.risque;
-          this.donneesIndicateurs = resultats.indicateurs;
-          
-          this.showSuccess('Analyses financières mises à jour');
-        },
-        error: (error) => {
-          this.isLoading = false;
-          console.error('Erreur lors du chargement des analyses:', error);
-          this.showError(error.message || 'Erreur lors du chargement des analyses financières');
-        }
-      });
-    });
-  }
+  
 
   // Méthode pour afficher la performance historique
   afficherPerformanceHistorique(): void {
     if (!this.donneesPerfHistorique) {
-      // Utiliser directement l'ID 1 pour le développement et les tests
-      const walletId = 1;
-      console.log('Utilisation de l\'ID portefeuille fixe pour performance historique:', walletId);
+      // Utiliser l'ID du portefeuille sélectionné
+      if (!this.selectedWallet) {
+        this.showError('Aucun portefeuille sélectionné');
+        return;
+      }
+      
+      const walletId = this.getWalletId(this.selectedWallet);
+      if (!walletId) {
+        this.showError('ID de portefeuille invalide');
+        return;
+      }
+      
+      console.log('Chargement de la performance pour le portefeuille:', walletId);
 
       this.isLoading = true;
       this.walletService.calculerPerformanceHistorique(walletId).subscribe({
@@ -764,6 +737,30 @@ export class Home1Component implements OnInit {
 
   // Méthode pour lancer la simulation de croissance
   executerSimulationCroissance(): void {
+    console.log('État du formulaire:', this.form);
+    console.log('Le formulaire est-il valide?', this.form.valid);
+    console.log('Valeurs du formulaire:', this.form.value);
+    console.log('Erreurs de formulaire:', this.form.errors);
+    
+    // Log des erreurs spécifiques pour chaque contrôle
+    if (this.form.get('montantMensuel')) {
+      console.log('Contrôle montantMensuel:', this.form.get('montantMensuel')?.valid, this.form.get('montantMensuel')?.errors);
+    } else {
+      console.log('Le contrôle montantMensuel n\'existe pas!');
+    }
+    
+    if (this.form.get('dureeAnnees')) {
+      console.log('Contrôle dureeAnnees:', this.form.get('dureeAnnees')?.valid, this.form.get('dureeAnnees')?.errors);
+    } else {
+      console.log('Le contrôle dureeAnnees n\'existe pas!');
+    }
+    
+    if (this.form.get('tauxRendement')) {
+      console.log('Contrôle tauxRendement:', this.form.get('tauxRendement')?.valid, this.form.get('tauxRendement')?.errors);
+    } else {
+      console.log('Le contrôle tauxRendement n\'existe pas!');
+    }
+    
     if (!this.selectedWallet) {
       this.showError('Aucun portefeuille sélectionné');
       return;
@@ -776,9 +773,9 @@ export class Home1Component implements OnInit {
     }
 
     // Récupérer les valeurs du formulaire
-    const montantMensuel = this.form.get('montantMensuel')?.value || 0;
-    const dureeAnnees = this.form.get('dureeAnnees')?.value || 5;
-    const tauxRendement = this.form.get('tauxRendement')?.value;
+    let montantMensuel = this.form.get('montantMensuel')?.value || 0;
+    let dureeAnnees = this.form.get('dureeAnnees')?.value || 5;
+    let tauxRendement = this.form.get('tauxRendement')?.value;
 
     this.isLoading = true;
     this.walletService.simulerCroissance(walletId, montantMensuel, dureeAnnees, tauxRendement).subscribe({
@@ -795,67 +792,22 @@ export class Home1Component implements OnInit {
     });
   }
 
-  // Méthode pour afficher l'analyse de diversification
-  afficherAnalyseDiversification(): void {
-    if (!this.donneesDiversification) {
-      // Utiliser directement l'ID 1 pour le développement et les tests
-      const walletId = 1;
-      console.log('Utilisation de l\'ID portefeuille fixe pour analyse de diversification:', walletId);
-
-      this.isLoading = true;
-      this.walletService.analyserDiversification(walletId).subscribe({
-        next: (donnees) => {
-          this.isLoading = false;
-          this.donneesDiversification = donnees;
-          this.showForm = true;
-          this.selectedType = 'analyse-diversification';
-        },
-        error: (error) => {
-          this.isLoading = false;
-          console.error('Erreur lors de l\'analyse de diversification:', error);
-          this.showError(error.message || 'Impossible d\'analyser la diversification');
-        }
-      });
-    } else {
-      // Afficher directement les données déjà chargées
-      this.showForm = true;
-      this.selectedType = 'analyse-diversification';
-    }
-  }
-
-  // Méthode pour afficher l'analyse de risque
-  afficherAnalyseRisque(): void {
-    if (!this.donneesRisque) {
-      // Utiliser directement l'ID 1 pour le développement et les tests
-      const walletId = 1;
-      console.log('Utilisation de l\'ID portefeuille fixe pour analyse de risque:', walletId);
-
-      this.isLoading = true;
-      this.walletService.analyserRisque(walletId).subscribe({
-        next: (donnees) => {
-          this.isLoading = false;
-          this.donneesRisque = donnees;
-          this.showForm = true;
-          this.selectedType = 'analyse-risque';
-        },
-        error: (error) => {
-          this.isLoading = false;
-          console.error('Erreur lors de l\'analyse de risque:', error);
-          this.showError(error.message || 'Impossible d\'analyser le risque');
-        }
-      });
-    } else {
-      // Afficher directement les données déjà chargées
-      this.showForm = true;
-      this.selectedType = 'analyse-risque';
-    }
-  }
-
+ 
   // Méthode pour afficher les recommandations
   afficherRecommandations(): void {
-    // Utiliser directement l'ID 1 pour le développement et les tests
-    const walletId = 1;
-    console.log('Utilisation de l\'ID portefeuille fixe pour recommandations:', walletId);
+    // Utiliser l'ID du portefeuille sélectionné
+    if (!this.selectedWallet) {
+      this.showError('Aucun portefeuille sélectionné');
+      return;
+    }
+    
+    const walletId = this.getWalletId(this.selectedWallet);
+    if (!walletId) {
+      this.showError('ID de portefeuille invalide');
+      return;
+    }
+    
+    console.log('Chargement des recommandations pour le portefeuille:', walletId);
 
     this.isLoading = true;
     
@@ -878,33 +830,7 @@ export class Home1Component implements OnInit {
     });
   }
 
-  // Méthode pour afficher les indicateurs financiers
-  afficherIndicateursFinanciers(): void {
-    if (!this.donneesIndicateurs) {
-      // Utiliser directement l'ID 1 pour le développement et les tests
-      const walletId = 1;
-      console.log('Utilisation de l\'ID portefeuille fixe pour indicateurs financiers:', walletId);
-
-      this.isLoading = true;
-      this.walletService.calculerIndicateursFinanciers(walletId).subscribe({
-        next: (donnees) => {
-          this.isLoading = false;
-          this.donneesIndicateurs = donnees;
-          this.showForm = true;
-          this.selectedType = 'indicateurs-financiers';
-        },
-        error: (error) => {
-          this.isLoading = false;
-          console.error('Erreur lors du calcul des indicateurs:', error);
-          this.showError(error.message || 'Impossible de calculer les indicateurs financiers');
-        }
-      });
-    } else {
-      // Afficher directement les données déjà chargées
-      this.showForm = true;
-      this.selectedType = 'indicateurs-financiers';
-    }
-  }
+  
   
   // Export wallet to PDF
   exportToPdf(): void {
@@ -947,13 +873,13 @@ export class Home1Component implements OnInit {
     }
   
     // Robust wallet ID extraction
-    const walletId = this.getWalletId(this.selectedWallet);
+    let walletId = this.getWalletId(this.selectedWallet);
     if (!walletId) {
       this.showError('Invalid wallet selected - missing ID');
       return;
     }
   
-    const amount = this.form.get('amount')?.value;
+    let amount = this.form.get('amount')?.value;
     if (!amount || amount <= 0) {
       this.showError('Please enter a valid investment amount (minimum 0.01)');
       return;
@@ -1101,9 +1027,9 @@ export class Home1Component implements OnInit {
       this.form.get('sourceWallet')?.setValue(sourceId);
     }
     
-    // Get destination wallet ID from form
-    const destinationId = this.form.get('destinationWallet')?.value;
-    const amount = this.form.get('amount')?.value;
+    // Get destination wallet ID directly from form - no DB lookup needed
+    let destinationId = this.form.get('destinationWallet')?.value;
+    let amount = this.form.get('amount')?.value;
     
     // Validate inputs
     if (!sourceId) {
@@ -1115,25 +1041,26 @@ export class Home1Component implements OnInit {
       this.showError('Please select a destination wallet');
       return;
     }
-  
+    
     if (!amount || amount <= 0) {
-      this.showError('Please enter a valid transfer amount');
+      this.showError('Please enter a valid amount');
       return;
     }
-  
-    // Convert to numbers before comparing to ensure consistent type comparison
+    
+    // Convert IDs to numbers for consistent type comparison
     const numericSourceId = Number(sourceId);
     const numericDestId = Number(destinationId);
-
-    console.log('Comparing source ID:', numericSourceId, 'and destination ID:', numericDestId);
     
+    console.log('Transfer attempt from ID:', numericSourceId, 'to ID:', numericDestId, 'amount:', amount);
+    
+    // Validate destination ID is different from source ID
     if (numericSourceId === numericDestId) {
       this.showError('Source and destination wallets cannot be the same');
       return;
     }
-  
+    
+    // Proceed with the transfer directly using the form values
     this.isLoading = true;
-    // Use the numeric IDs we calculated to ensure consistent typing
     this.walletService.transfer(numericSourceId, numericDestId, amount).subscribe({
       next: () => {
         this.isLoading = false;
@@ -1143,12 +1070,12 @@ export class Home1Component implements OnInit {
         // Refresh both source and destination wallets
         this.refreshWalletAfterOperation(numericSourceId, numericDestId);
       },
-      error: (error) => {
+      error: (err) => {
         this.isLoading = false;
-        console.error('Transfer failed:', error);
+        console.error('Transfer failed:', err);
         
         // Extract clear error message
-        let errorMessage = error.message || 'Transfer failed';
+        let errorMessage = err.message || 'Transfer failed';
         this.showError(errorMessage);
       }
     });
@@ -1202,5 +1129,56 @@ export class Home1Component implements OnInit {
       }
     }
   }
-
+  
+  // Initialize simulation form
+  initSimulationForm(): void {
+    this.form.reset();
+    
+    // Initialize the form with all necessary controls for simulation
+    this.form = this.fb.group({
+      montantMensuel: [100, [Validators.required, Validators.min(0)]],
+      dureeAnnees: [5, [Validators.required, Validators.min(1), Validators.max(30)]],
+      tauxRendement: [7, [Validators.required, Validators.min(0), Validators.max(30)]]
+    });
+    
+    console.log('Simulation form initialized with controls:', Object.keys(this.form.controls));
+  }
+  
+  // Méthode de débogage pour diagnostiquer les problèmes du formulaire
+  debugFormulaire(): void {
+    console.log('==== DÉBOGAGE DU FORMULAIRE ====');
+    console.log('Formulaire actuel:', this.form);
+    console.log('Est-il valide?', this.form.valid);
+    console.log('Est-il invalide?', this.form.invalid);
+    console.log('A-t-il été modifié?', this.form.dirty);
+    console.log('Valeurs actuelles:', this.form.value);
+    
+    // Vérifie si les contrôles existent
+    const controls = ['montantMensuel', 'dureeAnnees', 'tauxRendement'];
+    for (const controlName of controls) {
+      const control = this.form.get(controlName);
+      if (control) {
+        console.log(`Contrôle ${controlName}:`, {
+          existe: true,
+          valeur: control.value,
+          valide: control.valid,
+          erreurs: control.errors,
+          touché: control.touched,
+          modifié: control.dirty,
+          pristine: control.pristine
+        });
+      } else {
+        console.log(`Contrôle ${controlName}: N'EXISTE PAS`);
+      }
+    }
+    
+    // Tente de corriger le formulaire
+    if (this.form.invalid) {
+      console.log('Tentative de correction du formulaire...');
+      this.initSimulationForm(); // Réinitialise le formulaire
+      console.log('Formulaire réinitialisé, nouvel état:', this.form.valid);
+    }
+    
+    alert('Vérification du formulaire terminée. Consultez la console pour les détails.');
+  }
 }

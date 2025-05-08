@@ -786,7 +786,7 @@
             <span class="currency">{{ walletData.currency }}</span>
           </div>
           <div class="balance-amount">
-            {{ dashboardStats.totalBalance | currency:walletData.currency }}
+            {{ dashboardStats.totalValue | currency:walletData.currency }}
           </div>
           <div class="balance-details">
             <div>
@@ -808,9 +808,7 @@
         <div class="analytics-card">
           <div class="analytics-header">
             <h3>Analyses financières avancées</h3>
-            <button class="btn-refresh" (click)="chargerAnalysesFinancieres()">
-              <i class="bi bi-arrow-clockwise"></i>
-            </button>
+            <!-- Bouton de rafraîchissement supprimé -->
           </div>
           <div class="analytics-grid">
             <!-- Performance historique -->
@@ -827,19 +825,8 @@
               <p>Projetez la valeur future de vos investissements</p>
             </div>
             
-            <!-- Analyse de diversification -->
-            <div class="analytics-item" (click)="afficherAnalyseDiversification()">
-              <i class="bi bi-pie-chart"></i>
-              <h4>Analyse de diversification</h4>
-              <p>Évaluez la répartition de vos actifs</p>
-            </div>
-            
-            <!-- Analyse de risque -->
-            <div class="analytics-item" (click)="afficherAnalyseRisque()">
-              <i class="bi bi-shield-check"></i>
-              <h4>Analyse de risque</h4>
-              <p>Évaluez le niveau de risque de votre portefeuille</p>
-            </div>
+            <!-- Section d'analyse de diversification supprimée -->
+            <!-- Section d'analyse de risque supprimée -->
             
             <!-- Recommandations d'investissement -->
             <div class="analytics-item" (click)="afficherRecommandations()">
@@ -848,12 +835,7 @@
               <p>Obtenez des conseils d'investissement personnalisés</p>
             </div>
             
-            <!-- Indicateurs financiers -->
-            <div class="analytics-item" (click)="afficherIndicateursFinanciers()">
-              <i class="bi bi-bar-chart"></i>
-              <h4>Indicateurs financiers</h4>
-              <p>Consultez vos KPIs financiers clés</p>
-            </div>
+            <!-- Section d'indicateurs financiers supprimée -->
           </div>
         </div>
 
@@ -870,6 +852,10 @@
             <div class="results-card">
               <h4>Rendement total</h4>
               <div class="result-value">{{ donneesPerfHistorique.rendementTotal | percent }}</div>
+            </div>
+            <div class="results-card">
+              <h4>Progression</h4>
+              <div class="result-value">{{ donneesPerfHistorique.progression | number:'1.2-2' }}%</div>
             </div>
             <div class="results-card">
               <h4>Rendement mensuel moyen</h4>
@@ -908,6 +894,11 @@
               <label><i class="bi bi-percent"></i> Taux de rendement annuel estimé (%)</label>
               <input type="number" step="0.01" class="form-control" formControlName="tauxRendement" placeholder="Taux de rendement (%)" required>
             </div>
+            <div>
+              <button type="button" class="btn-secondary" (click)="debugFormulaire()" style="margin-bottom: 10px;">
+                Vérifier formulaire (Debug)
+              </button>
+            </div>
             <button type="submit" class="btn-primary" [disabled]="!form.valid || isLoading">
               <span *ngIf="!isLoading">Simuler</span>
               <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
@@ -938,29 +929,7 @@
           </div>
         </div>
 
-        <!-- Analyse de diversification -->
-        <div class="action-modal" *ngIf="selectedType === 'analyse-diversification'">
-          <div class="modal-header">
-            <h3><i class="bi bi-pie-chart"></i> Analyse de diversification</h3>
-            <button class="btn-close" (click)="showForm = false">
-              <i class="bi bi-x"></i>
-            </button>
-          </div>
-          <div class="modal-content" *ngIf="donneesDiversification">
-            <div class="results-card">
-              <h4>Indice de diversification</h4>
-              <div class="result-value">{{ donneesDiversification.indiceDiversification | number:'1.2-2' }}</div>
-            </div>
-            <div class="chart-container">
-              <h4>Répartition par catégorie d'actifs</h4>
-              <div class="chart-placeholder">
-                <div class="chart-data" *ngFor="let categorie of donneesDiversification.repartition">
-                  <div>{{ categorie.nom }}: {{ categorie.pourcentage | percent }} ({{ categorie.montant | currency }})</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Espace réservé pour d'autres fonctionnalités futures -->
 
         <!-- Analyse de risque -->
         <div class="action-modal" *ngIf="selectedType === 'analyse-risque'">

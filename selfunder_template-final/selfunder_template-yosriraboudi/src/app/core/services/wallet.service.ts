@@ -289,16 +289,21 @@ export class WalletService {
   calculerPerformanceHistorique(walletId: number, periodeEnMois: number = 12): Observable<any> {
     console.log(`Appel API pour calculer la performance historique - ID: ${walletId}, Période: ${periodeEnMois} mois`);
     
-    // Premier essai avec l'URL standard
-    return this.http.get<any>(`${this.apiUrl}/performance-historique`, {
-      params: {
-        idPortfeuille: walletId.toString(),
+    // Construction correcte de l'URL avec le pattern RESTful
+    return this.http.get<any>(`${this.apiUrl}/${walletId}/performance-historique`, {
+      params: {   
         periode: periodeEnMois.toString()
       }
-    }).pipe(
+    })
+    .pipe(
       tap(data => console.log('Données de performance historique:', data)),
       catchError(error => {
         console.warn('Premier essai échoué pour calculer la performance, tentative alternative...', error);
+        
+        // Log l'erreur spécifique du backend si disponible
+        if (error.error) {
+          console.warn(`Erreur backend: ${typeof error.error === 'string' ? error.error : JSON.stringify(error.error)}`);
+        }
         
         // Si l'API échoue, retourner des données de démo pour les tests
         console.log('Utilisation des données de démo pour la performance historique');
