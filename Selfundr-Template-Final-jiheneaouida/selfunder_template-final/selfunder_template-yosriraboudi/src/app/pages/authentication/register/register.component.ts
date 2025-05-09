@@ -19,6 +19,8 @@ export class RegisterComponent {
   registrationSuccess = false;
   otpValidated = false;
   otpInputVisible = false;
+  roles: string[] = ['CLIENT', 'INVESTISSEUR', 'ENTREPRENEUR']; // 👈 Liste des rôles
+
 
   private userService = inject(UserService);
   private router = inject(Router);
@@ -59,6 +61,8 @@ export class RegisterComponent {
     salaire: ['', [Validators.required, Validators.min(0)]],
     dateNaissance: ['', Validators.required],
     matriculeFiscale: ['', Validators.required],
+    role: ['', Validators.required], // 👈 Champ rôle ajouté
+
     photo: [null] // Géré par onFileSelected
   }, { validators: this.passwordMatchValidator });
   
