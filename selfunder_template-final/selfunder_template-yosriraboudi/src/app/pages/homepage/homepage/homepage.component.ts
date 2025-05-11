@@ -45,7 +45,7 @@ export class HomepageComponent {
       error: (error) => {
         console.error('Erreur lors de l\'envoi', error);
         this.isSubmitting = false;
-        
+
       }
     });
   }

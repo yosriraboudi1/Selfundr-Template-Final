@@ -18,6 +18,7 @@
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <style>
       * {
@@ -126,6 +127,65 @@
           transform: scale(1.05);
       }
 
+      /* Profile Icon and Dropdown */
+      .profile-container {
+          position: relative;
+          display: flex;
+          align-items: center;
+      }
+
+      .profile-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+          cursor: pointer;
+          border: 2px solid #fff;
+          transition: transform 0.3s ease, border-color 0.3s ease;
+      }
+
+      .profile-icon:hover {
+          transform: scale(1.1);
+          border-color: #ff6f61;
+      }
+
+      .profile-dropdown {
+          display: none;
+          position: absolute;
+          top: 100%;
+          right: 0;
+          min-width: 150px;
+          background-color: #1e3a8a;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          border-radius: 6px;
+          z-index: 1000;
+          overflow: hidden;
+          animation: fadeInDown 0.3s ease;
+      }
+
+      .profile-dropdown.active {
+          display: block;
+      }
+
+      .profile-dropdown a,
+      .profile-dropdown span {
+          display: block;
+          padding: 0.75rem 1rem;
+          color: #fff;
+          font-size: 0.85rem;
+          transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .profile-dropdown a:hover {
+          background-color: #ff6f61;
+          color: #fff;
+      }
+
+      .profile-dropdown span {
+          background-color: #2d5a9e;
+          cursor: default;
+      }
+
       /* Hero Section */
       .masthead {
           background: linear-gradient(135deg, #1e3a8a 0%, #2d5a9e 100%), url('assets/img/hero-bg.jpg') no-repeat center center/cover;
@@ -209,14 +269,14 @@
           animation: fadeInUp 1s ease forwards 0.4s;
       }
 
-      /* Features Section */
-      .features {
+      /* Generic Section Styles */
+      .section {
           padding: 4rem 2rem;
           text-align: center;
           background-color: #f4f7fa;
       }
 
-      .features h2 {
+      .section h2 {
           font-size: 2.5rem;
           font-weight: 700;
           margin-bottom: 1rem;
@@ -225,7 +285,7 @@
           animation: fadeInUp 1s ease forwards 0.2s;
       }
 
-      .features p {
+      .section p {
           font-size: 1.1rem;
           color: #666;
           margin-bottom: 3rem;
@@ -257,9 +317,6 @@
       .feature-card:nth-child(1) { animation-delay: 0.2s; }
       .feature-card:nth-child(2) { animation-delay: 0.4s; }
       .feature-card:nth-child(3) { animation-delay: 0.6s; }
-      .feature-card:nth-child(4) { animation-delay: 0.8s; }
-      .feature-card:nth-child(5) { animation-delay: 1.0s; }
-      .feature-card:nth-child(6) { animation-delay: 1.2s; }
 
       .feature-card:hover {
           transform: translateY(-10px);
@@ -337,7 +394,6 @@
       .team-member:nth-child(2) { animation-delay: 0.4s; }
       .team-member:nth-child(3) { animation-delay: 0.6s; }
       .team-member:nth-child(4) { animation-delay: 0.8s; }
-      .team-member:nth-child(5) { animation-delay: 1.0s; }
 
       .team-member:hover {
           transform: translateY(-10px);
@@ -457,13 +513,14 @@
 
       /* Footer */
       .footer {
-            background-color: transparent;
-            color: #000000;
-            padding: 2rem;
-            text-align: center;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 0.5s;
-        }
+          background-color: transparent;
+          color: #000000;
+          padding: 2rem;
+          text-align: center;
+          opacity: 0;
+          animation: fadeIn 1s ease forwards 0.5s;
+      }
+
       .footer a {
           color: #ff6f61;
           margin: 0 1rem;
@@ -527,6 +584,17 @@
           }
       }
 
+      @keyframes fadeInDown {
+          from {
+              opacity: 0;
+              transform: translateY(-10px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
       /* Media Queries */
       @media (max-width: 768px) {
           .nav-links {
@@ -551,202 +619,328 @@
               color: #fff;
               cursor: pointer;
           }
+
+          .profile-container {
+              margin-left: auto;
+          }
+
+          .profile-dropdown {
+              right: 1rem;
+          }
       }
 
       @media (max-width: 480px) {
           .masthead h1 {
-              font-size: 2rem;
+              font-size: 2.5rem;
           }
 
           .masthead p {
               font-size: 1rem;
           }
+
+          .hero-actions .btn {
+              font-size: 1rem;
+              padding: 0.75rem 1.5rem;
+          }
       }
-      /* Style général des boutons du dropdown */
-.dropdown-toggle {
-    background-color: transparent;
-    border: none;
-    color: #ffffff;
-    font-weight: 500;
-    font-size: 0.95rem;
-    padding: 0.3rem 1rem;
-
-    position: relative;
-    text-align: left;
-    width: 100%;
-    transition: all 0.3s ease;
-}
-
-/* Soulignement animé sous chaque bouton */
-.dropdown-toggle::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background-color: #ff6f61;
-    transition: width 0.3s ease;
-}
-
-/* Effet au survol */
-.dropdown-toggle:hover,
-.dropdown-toggle:focus {
-    color: #ff6f61;
-}
-
-.dropdown-toggle:hover::after,
-.dropdown-toggle:focus::after {
-    width: 100%;
-}
-
-/* Style du menu déroulant */
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 200px;
-    background-color: #1e3a8a;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    z-index: 1000;
-    overflow: hidden;
-    animation: fadeInDown 0.3s ease;
-}
-
-/* Lien dans le menu déroulant */
-.dropdown-menu a {
-    display: block;
-    padding: 0.75rem 1rem;
-    color: #fff;
-    font-size: 0.85rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.dropdown-menu a:hover {
-    background-color: #ff6f61;
-    color: #fff;
-}
-
-/* Affichage du menu au hover ou click */
-.dropdown:hover .dropdown-menu,
-.dropdown.active .dropdown-menu {
-    display: block;
-}
-
-/* Animation d'apparition du dropdown */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-  </style>
+    </style>
 </head>
 <body id="page-top">
-
     <!-- Navigation -->
     <nav class="navbar navbar-dark fixed-top" id="mainNav">
         <a class="navbar-brand" href="#page-top">
             <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px; width: auto;" />
         </a>
         <div class="menu-toggle" onclick="toggleMenu()"></div>
+        <!-- In your homepage-client.component.html -->
+        <!-- Your existing homepage content -->
+
+        <!-- Add this button somewhere in your template to open the chatbot -->
+
         <div class="nav-links" id="navbarResponsive">
-            <div class="dropdown">
-                <button class="dropdown-toggle">Bank Account</button>
-                <div class="dropdown-menu">
-                    <a href="#contact">Open Account</a>
-                    <a href="#contact">Manage Account</a>
-                    <a href="#contact">View Balance</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropdown-toggle">Credit</button>
-                <div class="dropdown-menu">
-                    <a href="#services">Apply for Credit</a>
-                    <a href="#services">Credit Options</a>
-                    <a href="#services">Credit Status</a>
-                </div>
-            </div>
-            <div class="dropdown hidden">
-                <button class="dropdown-toggle">Portfolio</button>
-                <div class="dropdown-menu">
-                    <a href="#services">View Portfolio</a>
-                    <a href="#services">Manage Investments</a>
-                    <a href="#services">Portfolio Analysis</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropdown-toggle">Wallet</button>
-                <div class="dropdown-menu">
-                    <a href="#portfolio">Add Funds</a>
-                    <a href="#portfolio">Withdraw Funds</a>
-                    <a href="#portfolio">Wallet Settings</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropdown-toggle">Contract</button>
-                <div class="dropdown-menu">
-                    <a href="#about">View Contracts</a>
-                    <a href="#about">Sign Contract</a>
-                    <a href="#about">Contract History</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropdown-toggle">Guarantor</button>
-                <div class="dropdown-menu">
-                    <a href="#team">Add Guarantor</a>
-                    <a href="#team">Guarantor Details</a>
-                    <a href="#team">Guarantor Status</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropdown-toggle">Transaction</button>
-                <div class="dropdown-menu">
-                    <a href="#contact">Recent Transactions</a>
-                    <a href="#contact">Transfer Funds</a>
-                    <a href="#contact">Transaction History</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropdown-toggle">Claim</button>
-                <div class="dropdown-menu">
-                    <a href="/reclamation/add">File a Claim</a>
-                    <a href="/reclamation/add">Claim Status</a>
-                    <a href="/reclamation/reclamationclient-list">Claim History</a>
-                </div>
+            <div class="profile-container">
+              <a href="/profile">
+                <img src="assets/img/team/team-member1.jpg" alt="User Profile" class="profile-icon">
+              </a>
             </div>
         </div>
-    </nav>
+        </nav>
+
+        <!-- Add the chatbot component at the end of your template -->
+
 
     <!-- Masthead -->
     <header class="masthead">
-      <div class="container">
-        <h1>Empower Your Financial Future</h1>
-        <p>Discover a banking experience tailored to your needs with SELFUNDR, offering secure, innovative, and accessible financial solutions designed to help you thrive.</p>
+        <div class="container">
+            <h1>Empower Your Financial Future</h1>
+            <p>Take control with SELFUNDR's innovative banking solutions. Manage accounts, access credit, and grow your wealth with ease and security.</p>
+        </div>
+    </header>
+
+    <!-- Bank Account Section -->
+    <section class="section" id="bank-account">
+      <h2>Your Bank Account</h2>
+      <p>Experience banking made simple with SELFUNDR. Open, manage, and monitor your account with real-time insights and top-notch security.</p>
+      <div class="feature-grid">
+          <div class="feature-card">
+              <a href="#bank-account">
+                  <i class="fas fa-university"></i>
+                  <h3>Open Account</h3>
+                  <p>Start your journey with a quick and secure account opening process.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#bank-account">
+                  <i class="fas fa-cog"></i>
+                  <h3>Manage Account</h3>
+                  <p>Update details, set preferences, and control your account with ease.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#bank-account">
+                  <i class="fas fa-eye"></i>
+                  <h3>View Balance</h3>
+                  <p>Check your balance and transaction history anytime, anywhere.</p>
+              </a>
+          </div>
       </div>
-  </header>
+  </section>
 
+  <!-- Credit Section -->
+  <section class="section" id="credit">
+      <h2>Credit Solutions</h2>
+      <p>Access flexible credit options tailored to your needs. Apply, explore, and track your credit with transparency and ease.</p>
+      <div class="feature-grid">
+          <div class="feature-card">
+              <a href="#credit">
+                  <i class="fas fa-credit-card"></i>
+                  <h3>Apply for Credit</h3>
+                  <p>Submit your application with a streamlined, user-friendly process.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#credit">
+                  <i class="fas fa-list"></i>
+                  <h3>Credit Options</h3>
+                  <p>Explore a range of credit products designed for your financial goals.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#credit">
+                  <i class="fas fa-check-circle"></i>
+                  <h3>Credit Status</h3>
+                  <p>Monitor your application status and credit details in real time.</p>
+              </a>
+          </div>
+      </div>
+  </section>
 
+  <!-- Portfolio Section -->
+  <section class="section" id="portfolio">
+      <h2>Your Investment Portfolio</h2>
+      <p>Build and manage your wealth with our advanced portfolio tools. Track investments, analyze performance, and make informed decisions.</p>
+      <div class="feature-grid">
+          <div class="feature-card">
+              <a href="#portfolio">
+                  <i class="fas fa-chart-line"></i>
+                  <h3>Portfolio Overview</h3>
+                  <p>Get a comprehensive view of your investments in real time.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#portfolio">
+                  <i class="fas fa-cogs"></i>
+                  <h3>Manage Investments</h3>
+                  <p>Adjust your portfolio with easy-to-use tools and expert insights.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#portfolio">
+                  <i class="fas fa-chart-pie"></i>
+                  <h3>Performance Analysis</h3>
+                  <p>Analyze returns and optimize your strategy with detailed reports.</p>
+              </a>
+          </div>
+      </div>
+  </section>
 
-  <!-- Footer -->
-<footer class="footer">
-  <p>© 2025 SELFUNDR. All rights reserved.</p>
-  <a href="#">Privacy Policy</a>
-  <a href="#">Terms of Use</a>
-  <a href="#">Support</a>
-</footer>
+  <!-- Wallet Section -->
+  <section class="section" id="wallet">
+      <h2>Your Digital Wallet</h2>
+      <p>Manage your funds effortlessly with our secure digital wallet. Add, withdraw, and customize your wallet settings with ease.</p>
+      <div class="feature-grid">
+          <div class="feature-card">
+              <a href="#wallet">
+                  <i class="fas fa-wallet"></i>
+                  <h3>Add Funds</h3>
+                  <p>Top up your wallet quickly using multiple secure payment methods.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#wallet">
+                  <i class="fas fa-money-bill-wave"></i>
+                  <h3>Withdraw Funds</h3>
+                  <p>Transfer funds to your bank account with minimal hassle.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#wallet">
+                  <i class="fas fa-sliders-h"></i>
+                  <h3>Wallet Settings</h3>
+                  <p>Customize security settings and preferences for your wallet.</p>
+              </a>
+          </div>
+      </div>
+  </section>
+
+  <!-- Contract Section -->
+  <section class="section" id="contract">
+      <h2>Contract Management</h2>
+      <p>Streamline your agreements with our intuitive contract management tools. View, sign, and track contracts securely.</p>
+      <div class="feature-grid">
+          <div class="feature-card">
+              <a href="#contract">
+                  <i class="fas fa-file-contract"></i>
+                  <h3>View Contracts</h3>
+                  <p>Access all your contracts in one place with clear summaries.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#contract">
+                  <i class="fas fa-pen"></i>
+                  <h3>Sign Contract</h3>
+                  <p>Sign agreements digitally with secure e-signature technology.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#contract">
+                  <i class="fas fa-history"></i>
+                  <h3>Contract History</h3>
+                  <p>Review past contracts and track their status effortlessly.</p>
+              </a>
+          </div>
+      </div>
+  </section>
+
+  <!-- Guarantor Section -->
+  <section class="section" id="guarantor">
+      <h2>Guarantor Services</h2>
+      <p>Strengthen your financial agreements by adding and managing guarantors with our user-friendly platform.</p>
+      <div class="feature-grid">
+          <div class="feature-card">
+              <a href="#guarantor">
+                  <i class="fas fa-user-plus"></i>
+                  <h3>Add Guarantor</h3>
+                  <p>Invite and assign guarantors to support your agreements.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#guarantor">
+                  <i class="fas fa-info-circle"></i>
+                  <h3>Guarantor Details</h3>
+                  <p>View detailed information about your guarantors.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#guarantor">
+                  <i class="fas fa-check-circle"></i>
+                  <h3>Guarantor Status</h3>
+                  <p>Track the status of guarantor approvals and agreements.</p>
+              </a>
+          </div>
+      </div>
+  </section>
+
+  <!-- Transaction Section -->
+  <section class="section" id="transaction">
+      <h2>Your Transactions</h2>
+      <p>Stay in control of your finances with tools to monitor, transfer, and review your transactions seamlessly.</p>
+      <div class="feature-grid">
+          <div class="feature-card">
+              <a href="#transaction">
+                  <i class="fas fa-receipt"></i>
+                  <h3>Recent Transactions</h3>
+                  <p>View your latest transactions with detailed insights.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#transaction">
+                  <i class="fas fa-exchange-alt"></i>
+                  <h3>Transfer Funds</h3>
+                  <p>Send money securely to accounts or wallets instantly.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="#transaction">
+                  <i class="fas fa-history"></i>
+                  <h3>Transaction History</h3>
+                  <p>Access a complete record of your financial activities.</p>
+              </a>
+          </div>
+      </div>
+  </section>
+
+  <!-- Claim Section -->
+  <section class="section" id="claim">
+      <h2>Claims Management</h2>
+      <p>Resolve issues quickly with our efficient claims process. File, track, and review claims with ease.</p>
+      <div class="feature-grid">
+          <div class="feature-card">
+              <a href="/reclamation/add">
+                  <i class="fas fa-file-alt"></i>
+                  <h3>File a Claim</h3>
+                  <p>Submit claims effortlessly with our guided process.</p>
+              </a>
+          </div>
+          <div class="feature-card">
+              <a href="/reclamation/listbyuser">
+                  <i class="fas fa-archive"></i>
+                  <h3>Claim History</h3>
+                  <p>Review past claims and their resolutions.</p>
+              </a>
+          </div>
+      </div>
+  </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 SELFUNDR. All rights reserved.</p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Support</a>
+    </footer>
 
     <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navbarResponsive');
-            navLinks.classList.toggle('active');
-        }
-    </script>
+      // Toggle mobile menu
+      function toggleMenu() {
+          const navLinks = document.getElementById('navbarResponsive');
+          navLinks.classList.toggle('active');
+      }
+
+      // Toggle profile dropdown
+      window.toggleProfileDropdown = function () { // Attach to the global scope
+          const profileDropdown = document.getElementById('profileDropdown');
+          profileDropdown.classList.toggle('active');
+      };
+
+      // Close profile dropdown when clicking outside
+      document.addEventListener('click', (event) => {
+          const profileContainer = document.querySelector('.profile-container');
+          if (!profileContainer.contains(event.target)) {
+              document.getElementById('profileDropdown').classList.remove('active');
+          }
+      });
+
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+          const navbar = document.getElementById('mainNav');
+          if (window.scrollY > 50) {
+              navbar.classList.add('scrolled');
+          } else {
+              navbar.classList.remove('scrolled');
+          }
+      });
+  </script>
 </body>
 </html>
+

@@ -1,330 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="SELFUNDR - Empowering you with modern, self-directed banking solutions." />
-    <meta name="author" content="SELFUNDR" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>SELFUNDR - Your Financial Freedom</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="SELFUNDR - Empowering you with modern, self-directed banking solutions." />
+  <meta name="author" content="SELFUNDR" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>SELFUNDR - Add Claim</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 
-    <!-- Font Awesome icons -->
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <!-- Font Awesome icons -->
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
-    <!-- Google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            color: #333;
-            background-color: #fff;
-        }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      line-height: 1.6;
+      background: url('assets/img/banking-header.jpg') no-repeat center center/cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+    }
 
-        /* Navbar */
-        .navbar {
-            background-color: #004d4d;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #1e3a8a;
+    }
 
-        .navbar-brand img {
-            height: 40px;
-        }
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-        }
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
 
-        .nav-link {
-            color: white;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
+    .form-control:focus {
+      border-color: #ff6f61;
+      outline: none;
+      box-shadow: 0 0 5px rgba(255, 111, 97, 0.3);
+    }
 
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s;
-        }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-        .btn-primary {
-            background-color: #ff6f61;
-            color: white;
-        }
+    .btn-primary {
+      background-color: #ff6f61;
+      color: #fff;
+      border: none;
+    }
 
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
+    .btn-primary:hover {
+      background-color: #e65b50;
+      transform: scale(1.05);
+    }
 
-        .btn:hover {
-            opacity: 0.9;
-        }
+    .btn-secondary {
+      background-color: #fff;
+      color: #1e3a8a;
+      border: 2px solid #1e3a8a;
+    }
 
-        /* Masthead */
-        .masthead {
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('assets/img/banking-header.jpg') no-repeat center center/cover;
-            color: white;
-            padding: 12rem 2rem 8rem;
-            text-align: center;
-        }
+    .btn-secondary:hover {
+      background-color: #1e3a8a;
+      color: #fff;
+      transform: scale(1.05);
+    }
 
-        .masthead-subheading {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
+    .d-flex {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
 
-        .masthead-heading {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-        }
+    .footer {
+      position: absolute;
+      bottom: 1rem;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
 
-        .btn-xl {
-            font-size: 1rem;
-            padding: 1rem 2rem;
-        }
+    .footer a {
+      color: #ff6f61;
+      margin: 0 0.5rem;
+      text-decoration: none;
+    }
 
-        /* Page Section */
-        .page-section {
-            padding: 4rem 2rem;
-        }
-
-        .bg-light {
-            background-color: #f8f9fa;
-        }
-
-        .section-heading {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .section-subheading {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        /* Reclamation Form */
-        .reclamation-form {
-            max-width: 700px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .reclamation-form input,
-        .reclamation-form textarea {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .reclamation-form label {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .reclamation-form .form-actions {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        /* Footer */
-        .footer {
-            background-color: #1a1a1a;
-            color: #ccc;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .btn-dark.btn-social {
-            background-color: #222;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 0.3rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                position: absolute;
-                top: 60px;
-                left: 0;
-                right: 0;
-                background-color: #004d4d;
-                flex-direction: column;
-                display: none;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .menu-toggle {
-                display: block;
-                font-size: 1.5rem;
-                cursor: pointer;
-                color: white;
-            }
-
-            .reclamation-form .form-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .reclamation-form .form-actions button {
-                width: 100%;
-            }
-        }
-
-        .menu-toggle {
-            display: none;
-        }
-    </style>
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body id="page-top">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="#page-top">
-            <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px; width: auto;" />
-        </a>
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-        <div class="nav-links" id="navbarResponsive">
-          <a class="nav-link text-uppercase" href="#contact">Bank Account</a>
-          <a class="nav-link text-uppercase" href="#services">Credit</a>
-          <a class="nav-link text-uppercase hidden" href="#services">Portfolio</a>
-          <a class="nav-link text-uppercase" href="#portfolio">Wallet</a>
-          <a class="nav-link text-uppercase" href="#about">Contract</a>
-          <a class="nav-link text-uppercase" href="#team">Guarantor</a>
-          <a class="nav-link text-uppercase" href="#contact">Transaction</a>
-          <a class="nav-link text-uppercase" href="/reclamation/add">Claim</a>
-        </div>
-        </nav>
+  <!-- Formulaire centré -->
+  <div class="form-container">
+    <h2>Add Your Claim</h2>
+    <form (ngSubmit)="onSubmit()" #reclamationForm="ngForm">
+      <!-- Champ Sujet -->
+      <div class="mb-3">
+        <label for="sujet" class="form-label">Subject</label>
+        <input type="text" class="form-control" id="sujet"
+               [(ngModel)]="reclamation.sujet" name="sujet" required>
+      </div>
 
-    <!-- Masthead -->
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Empowering you with modern, self-directed banking solutions</div>
-        </div>
-    </header>
+      <!-- Champ Description -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" rows="5"
+                  [(ngModel)]="reclamation.description" name="description" required></textarea>
+      </div>
 
-    <!-- Reclamation Form Section -->
-    <section class="page-section bg-light" id="reclamation">
-        <div class="container">
-            <div class="section-heading">Add Claim</div>
-            <div class="section-subheading">Submit your claim details below</div>
-            <form (ngSubmit)="onSubmit()" #reclamationForm="ngForm">
-              <!-- Champ Sujet -->
-              <div class="mb-3">
-                <label for="sujet" class="form-label">Subject</label>
-                <input type="text" class="form-control" id="sujet"
-                       [(ngModel)]="reclamation.sujet" name="sujet" required>
-              </div>
+      <!-- Champ Fichier -->
+      <div class="mb-3">
+        <label for="file" class="form-label">Attach a File</label>
+        <input type="file" class="form-control" id="file"
+               (change)="onFileSelected($event)" accept=".pdf,.doc,.docx,.jpg,.png" required>
+      </div>
 
-              <!-- Champ Description -->
-              <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" rows="5"
-                          [(ngModel)]="reclamation.description" name="description" required></textarea>
-              </div>
+      <!-- Boutons Actions -->
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" routerLink="/reclamation/listbyuser">
+          <i class="ti ti-arrow-left me-2"></i>Check My Claims
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="!reclamationForm.form.valid">
+          <i class="ti ti-check me-2"></i>Add Claim
+        </button>
+      </div>
+    </form>
+  </div>
 
-              <!-- Champ Fichier -->
-              <div class="mb-3">
-                <label for="file" class="form-label">Attach a File</label>
-                <input type="file" class="form-control" id="file"
-                       (change)="onFileSelected($event)" accept=".pdf,.doc,.docx,.jpg,.png" required>
-              </div>
 
-              <!-- Boutons Actions -->
-              <div class="d-flex justify-content-between">
-                <button type="button" class="btn btn-secondary" routerLink="/reclamation/listbyuser">
-                  <i class="ti ti-arrow-left me-2"></i>Check My Claims
-                </button>
 
-                <button type="submit" class="btn btn-primary" [disabled]="!reclamationForm.form.valid">
-                  <i class="ti ti-check me-2"></i>Add Claim
-                </button>
-              </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; SELFUNDR 2023</span>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline social-buttons">
-                        <li class="list-inline-item">
-                            <a href="https://www.facebook.com/finease.2024?rdid=GFm2ABPyAk3IWw5I&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1C2gUg83TR#" class="btn-dark btn-social"><i class="fab fa-facebook-f"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://www.instagram.com/selfundr_/" class="btn-dark btn-social"><i class="fab fa-instagram"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline quicklinks">
-                        <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-                        <li class="list-inline-item"><a href="#">Terms of Use</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navbarResponsive');
-            navLinks.classList.toggle('active');
-        }
-    </script>
 </body>
 </html>

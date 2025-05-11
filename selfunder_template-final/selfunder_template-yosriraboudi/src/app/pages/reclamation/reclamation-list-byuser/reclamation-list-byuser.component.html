@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,433 +9,403 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>SELFUNDR - Your Financial Freedom</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-
   <!-- Font Awesome icons -->
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
   <!-- Google fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet" type="text/css" />
 
   <style>
       * {
           box-sizing: border-box;
+          margin: 0;
+          padding: 0;
       }
 
       body {
-          margin: 0;
           font-family: 'Montserrat', sans-serif;
           color: #333;
-          background-color: #fff;
-      }
-
-      a {
-          text-decoration: none;
-          color: inherit;
-      }
-
-      /* Navbar */
-      .navbar {
-          background-color: #004d4d;
+          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url('assets/img/banking-header.jpg') no-repeat center center/cover;
+          min-height: 100vh;
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           align-items: center;
-          padding: 1rem 2rem;
-          position: fixed;
-          width: 100%;
-          top: 0;
-          z-index: 1000;
-      }
-
-      .navbar-brand img {
-          height: 40px;
-      }
-
-      .nav-links {
-          display: flex;
-          gap: 1.5rem;
-      }
-
-      .nav-link {
-          color: white;
-          text-transform: uppercase;
-          font-size: 0.9rem;
-      }
-
-      .btn {
-          padding: 0.5rem 1rem;
-          border-radius: 4px;
-          cursor: pointer;
-          border: none;
-          transition: background-color 0.3s;
-      }
-
-      .btn-primary {
-          background-color: #ff6f61;
-          color: white;
-      }
-
-      .btn-secondary {
-          background-color: #6c757d;
-          color: white;
-      }
-
-      .btn:hover {
-          opacity: 0.9;
-      }
-
-      /* Masthead */
-      .masthead {
-          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('assets/img/banking-header.jpg') no-repeat center center/cover;
-          color: white;
-          padding: 12rem 2rem 8rem;
-          text-align: center;
-      }
-
-      .masthead-subheading {
-          font-size: 1.5rem;
-          margin-bottom: 1rem;
-      }
-
-      .masthead-heading {
-          font-size: 2.5rem;
-          font-weight: bold;
-          margin-bottom: 2rem;
-          text-transform: uppercase;
-      }
-
-      .btn-xl {
-          font-size: 1rem;
-          padding: 1rem 2rem;
+          padding: 2rem;
       }
 
       /* Page Section */
       .page-section {
-          padding: 4rem 2rem;
-      }
-
-      .bg-light {
-          background-color: #f8f9fa;
+          width: 100%;
+          max-width: 1300px;
+          color: white;
       }
 
       .section-heading {
-          font-size: 2rem;
-          font-weight: bold;
+          font-size: 2.8rem;
+          font-weight: 700;
           margin-bottom: 1rem;
           text-transform: uppercase;
           text-align: center;
+          color: #fff;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       }
 
       .section-subheading {
-          font-size: 1rem;
-          color: #666;
-          margin-bottom: 2rem;
+          font-size: 1.3rem;
+          font-weight: 400;
+          color: #e0e0e0;
+          margin-bottom: 2.5rem;
           text-align: center;
       }
 
-      /* Reclamation Form */
-      .reclamation-form {
-          max-width: 700px;
-          margin: 0 auto;
-          background-color: #fff;
-          padding: 2rem;
-          border-radius: 8px;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      }
-
-      .reclamation-form input,
-      .reclamation-form textarea {
-          width: 100%;
+      /* Table Container */
+      .table-container {
+          background-color: rgba(255, 255, 255, 0.97);
+          border-radius: 16px;
+          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+          overflow: hidden;
           padding: 1rem;
-          margin-bottom: 1rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-family: 'Montserrat', sans-serif;
       }
 
-      .reclamation-form label {
-          font-weight: bold;
-          margin-bottom: 0.5rem;
-          display: block;
+      .table {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0 0.5rem;
       }
 
-      .reclamation-form .form-actions {
+      .table th,
+      .table td {
+          padding: 1.2rem;
+          text-align: left;
+      }
+
+      .table th {
+          background-color: #005555;
+          color: rgb(0, 0, 0);
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: 0.95rem;
+          letter-spacing: 0.05em;
+      }
+
+      .table tbody tr {
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .table tbody tr:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+          background-color: #f8f9fa;
+      }
+
+      .table tbody td {
+          font-size: 1rem;
+          color: #333;
+          font-weight: 500;
+      }
+
+      .badge {
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          display: inline-block;
+      }
+
+      .bg-warning {
+          background-color: #ffca2c;
+          color: #333;
+      }
+
+      .bg-primary {
+          background-color: #007bff;
+          color: white;
+      }
+
+      .bg-success {
+          background-color: #28a745;
+          color: white;
+      }
+
+      .bg-danger {
+          background-color: #dc3545;
+          color: white;
+      }
+
+      .bg-info {
+          background-color: #17a2b8;
+          color: white;
+      }
+
+      .btn-link {
+          color: #005555;
+          text-decoration: none;
+          font-weight: 600;
+          transition: color 0.2s ease;
+      }
+
+      .btn-link:hover {
+          color: #007bff;
+          text-decoration: underline;
+      }
+
+      .btn-outline-primary {
+          border: 1px solid #005555;
+          color: #005555;
+          padding: 0.4rem 0.8rem;
+          border-radius: 6px;
+          font-weight: 600;
+          transition: all 0.2s ease;
+      }
+
+      .btn-outline-primary:hover {
+          background-color: #005555;
+          color: white;
+      }
+
+      /* Pagination */
+      .pagination {
+          margin-top: 2rem;
+          display: flex;
+          justify-content: center;
+          gap: 0.5rem;
+      }
+
+      .page-item .page-link {
+          background-color: #fff;
+          color: #ff6f61;
+          border: none;
+          border-radius: 8px;
+          padding: 0.6rem 1.2rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .page-item.active .page-link {
+          background-color: #ff6f61;
+          color: white;
+      }
+
+      .page-item:not(.disabled) .page-link:hover {
+          background-color: #ff6f61;
+          color: white;
+          transform: translateY(-2px);
+      }
+
+      .page-item.disabled .page-link {
+          background-color: #f1f1f1;
+          color: #ccc;
+          cursor: not-allowed;
+          box-shadow: none;
+      }
+
+      /* Sidebar */
+      .sidebar {
+          position: fixed;
+          top: 0;
+          right: -400px;
+          width: 400px;
+          height: 100%;
+          background-color: #fff;
+          box-shadow: -4px 0 16px rgba(0, 0, 0, 0.3);
+          transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          z-index: 1050;
+          overflow-y: auto;
+      }
+
+      .sidebar.open {
+          right: 0;
+      }
+
+      .sidebar-header {
+          padding: 1.5rem;
+          background-color: #ffffff;
+          color: white;
           display: flex;
           justify-content: space-between;
-          gap: 1rem;
-      }
-
-      /* Footer */
-      .footer {
-          background-color: #1a1a1a;
-          color: #ccc;
-          padding: 2rem;
-          text-align: center;
-      }
-
-      .btn-dark.btn-social {
-          background-color: #222;
-          color: #fff;
-          border: none;
-          border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          display: inline-flex;
           align-items: center;
-          justify-content: center;
-          margin: 0 0.3rem;
+      }
+
+      .sidebar-content {
+          padding: 1.5rem;
+          color: #333;
+          font-size: 1rem;
+          line-height: 1.6;
+      }
+
+      .close-btn {
+          background: none;
+          border: none;
+          color: rgb(255, 0, 0);
+          font-size: 1.8rem;
+          cursor: pointer;
+          transition: color 0.2s ease;
+      }
+
+      .close-btn:hover {
+          color: #ddd;
+      }
+
+      .overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.6);
+          z-index: 1040;
+          display: none;
+          transition: opacity 0.4s ease;
+      }
+
+      .overlay.active {
+          display: block;
+          opacity: 1;
       }
 
       @media (max-width: 768px) {
-          .nav-links {
-              position: absolute;
-              top: 60px;
-              left: 0;
-              right: 0;
-              background-color: #004d4d;
-              flex-direction: column;
-              display: none;
+          .page-section {
+              padding: 1.5rem;
           }
 
-          .nav-links.active {
-              display: flex;
+          .section-heading {
+              font-size: 2rem;
           }
 
-          .menu-toggle {
-              display: block;
-              font-size: 1.5rem;
-              cursor: pointer;
-              color: white;
+          .section-subheading {
+              font-size: 1.1rem;
           }
 
-          .reclamation-form .form-actions {
-              flex-direction: column;
-              align-items: stretch;
+          .table th,
+          .table td {
+              padding: 0.8rem;
+              font-size: 0.9rem;
           }
 
-          .reclamation-form .form-actions button {
+          .sidebar {
               width: 100%;
+          }
+
+          .pagination {
+              flex-wrap: wrap;
+              gap: 0.3rem;
+          }
+
+          .page-item .page-link {
+              padding: 0.5rem 1rem;
           }
       }
 
-      .menu-toggle {
-          display: none;
+      @media (max-width: 576px) {
+          .table-container {
+              padding: 0.5rem;
+          }
+
+          .table th,
+          .table td {
+              font-size: 0.85rem;
+              padding: 0.6rem;
+          }
       }
   </style>
 </head>
-<!-- Navigation -->
-<nav class="navbar navbar-dark fixed-top" id="mainNav">
-  <a class="navbar-brand" href="#page-top">
-    <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px; width: auto;" />
-  </a>
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  <div class="nav-links" id="navbarResponsive">
-    <a class="nav-link text-uppercase" href="#contact">Bank Account</a>
-    <a class="nav-link text-uppercase" href="#services">Credit</a>
-    <a class="nav-link text-uppercase hidden" href="#services">Portfolio</a>
-    <a class="nav-link text-uppercase" href="#portfolio">Wallet</a>
-    <a class="nav-link text-uppercase" href="#about">Contract</a>
-    <a class="nav-link text-uppercase" href="#team">Guarantor</a>
-    <a class="nav-link text-uppercase" href="#contact">Transaction</a>
-    <a class="nav-link text-uppercase" href="/reclamation/add">Claim</a>
-  </div>
-</nav>
-
-<!-- Masthead -->
-<header class="masthead">
-  <div class="container">
-    <div class="masthead-subheading">Your Claims</div>
-    <div class="masthead-heading">Manage Your Claims Effectively</div>
-  </div>
-</header>
-<!-- Sidebar -->
-<div id="sidebar" class="sidebar" [class.open]="isSidebarOpen">
-  <div class="sidebar-header">
-    <h3>Description</h3>
-    <button class="close-btn" (click)="closeSidebar()">×</button>
-  </div>
-  <div class="sidebar-content">
-    <p>{{ selectedDescription }}</p>
-  </div>
-</div>
-
-<!-- Overlay -->
-<div id="overlay" class="overlay" [class.active]="isSidebarOpen" (click)="closeSidebar()"></div>
-
-<!-- Reclamation List Section -->
-<section class="page-section bg-light" id="reclamation-list">
-  <div class="container">
-    <div class="section-heading">My Claims</div>
-    <div class="section-subheading">View and manage your submitted claims</div>
-    <div class="table-responsive">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Sujet</th>
-            <th>Description</th>
-            <th>Utilisateur</th>
-            <th>Catégorie</th>
-            <th>Statut</th>
-            <th>Niveau d'urgence</th>
-            <th>Date de création</th>
-            <th>Fichier</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let reclamation of reclamations">
-            <td>{{ reclamation.id }}</td>
-            <td>{{ reclamation.sujet }}</td>
-            <td>
-              <button class="btn btn-sm btn-link" (click)="openSidebar(reclamation.description)">
-                Voir description
-              </button>
-            </td>
-            <td>{{ reclamation.user.nom }} {{ reclamation.user.prenom }}</td>
-            <td>{{ reclamation.categorie }}</td>
-            <td>
-              <span class="badge" [ngClass]="{
-                'bg-warning': reclamation.statutReclam === 'EN_COURS',
-                'bg-primary': reclamation.statutReclam === 'OUVERTE',
-                'bg-success': reclamation.statutReclam === 'RESOLU'
-              }">
-                {{ reclamation.statutReclam }}
-              </span>
-            </td>
-            <td>
-              <span class="badge" [ngClass]="{
-                'bg-danger': reclamation.niveauUrgence === 'HAUTE',
-                'bg-warning': reclamation.niveauUrgence === 'MOYENNE',
-                'bg-info': reclamation.niveauUrgence === 'BASSE'
-              }">
-                {{ reclamation.niveauUrgence }}
-              </span>
-            </td>
-            <td>{{ reclamation.createdDate | date:'medium' }}</td>
-            <td>
-              <a *ngIf="reclamation.reclamationFile" [href]="reclamation.reclamationFile" target="_blank" class="btn btn-sm btn-outline-primary">
-                <i class="ti ti-file"></i> Voir fichier
-              </a>
-              <span *ngIf="!reclamation.reclamationFile">-</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<body>
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar" [class.open]="isSidebarOpen">
+    <div class="sidebar-header">
+      <h3>Description</h3>
+      <button class="close-btn" (click)="closeSidebar()">×</button>
     </div>
-    <!-- Pagination -->
-        <nav *ngIf="totalPages > 1" aria-label="Pagination">
-          <ul class="pagination justify-content-center mt-3">
-            <li class="page-item" [class.disabled]="currentPage === 0">
-              <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-
-            <li class="page-item" *ngFor="let page of getPages()" [class.active]="page === currentPage">
-              <a class="page-link" (click)="changePage(page)">{{ page + 1 }}</a>
-            </li>
-
-            <li class="page-item" [class.disabled]="currentPage >= totalPages - 1">
-              <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+    <div class="sidebar-content">
+      <p>{{ selectedDescription }}</p>
+    </div>
   </div>
-</section>
 
-<!-- Styles for Sidebar -->
-<style>
-  .sidebar {
-    position: fixed;
-    top: 0;
-    right: -400px;
-    width: 400px;
-    height: 100%;
-    background-color: #fff;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    transition: right 0.3s ease;
-    z-index: 1050;
-    overflow-y: auto;
-  }
+  <!-- Overlay -->
+  <div id="overlay" class="overlay" [class.active]="isSidebarOpen" (click)="closeSidebar()"></div>
 
-  .sidebar.open {
-    right: 0;
-  }
-
-  .sidebar-header {
-    padding: 1rem;
-    background-color: #ffffff;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .sidebar-content {
-    padding: 1rem;
-  }
-
-  .close-btn {
-    background: none;
-    border: none;
-    color: rgb(0, 0, 0);
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1040;
-    display: none;
-  }
-
-  .overlay.active {
-    display: block;
-  }
-</style>
-
-<!-- Component Logic -->
-
-
-<!-- Footer -->
-<footer class="footer">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-4">
-              <span class="copyright">Copyright &copy; SELFUNDR 2023</span>
-          </div>
-          <div class="col-md-4">
-              <ul class="list-inline social-buttons">
-                  <li class="list-inline-item">
-                      <a href="https://www.facebook.com/finease.2024?rdid=GFm2ABPyAk3IWw5I&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1C2gUg83TR#" class="btn-dark btn-social"><i class="fab fa-facebook-f"></i></a>
-                  </li>
-                  <li class="list-inline-item">
-                      <a href="https://www.instagram.com/selfundr_/" class="btn-dark btn-social"><i class="fab fa-instagram"></i></a>
-                  </li>
-              </ul>
-          </div>
-          <div class="col-md-4">
-              <ul class="list-inline quicklinks">
-                  <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-                  <li class="list-inline-item"><a href="#">Terms of Use</a></li>
-              </ul>
-          </div>
+  <!-- Reclamation List Section -->
+  <section class="page-section" id="reclamation-list">
+    <div class="container">
+      <div class="section-heading">My Claims</div>
+      <div class="section-subheading">View and manage your submitted claims</div>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Sujet</th>
+              <th>Description</th>
+              <th>Utilisateur</th>
+              <th>Catégorie</th>
+              <th>Statut</th>
+              <th>Niveau d'urgence</th>
+              <th>Date de création</th>
+              <th>Fichier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reclamation of reclamations">
+              <td>{{ reclamation.sujet }}</td>
+              <td>
+                <button class="btn btn-sm btn-link" (click)="openSidebar(reclamation.description)">
+                  Voir description
+                </button>
+              </td>
+              <td>{{ reclamation.user.nom }} {{ reclamation.user.prenom }}</td>
+              <td>{{ reclamation.categorie }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-warning': reclamation.statutReclam === 'EN_COURS',
+                  'bg-primary': reclamation.statutReclam === 'OUVERTE',
+                  'bg-success': reclamation.statutReclam === 'RESOLU'
+                }">
+                  {{ reclamation.statutReclam }}
+                </span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-danger': reclamation.niveauUrgence === 'HAUTE',
+                  'bg-warning': reclamation.niveauUrgence === 'MOYENNE',
+                  'bg-info': reclamation.niveauUrgence === 'BASSE'
+                }">
+                  {{ reclamation.niveauUrgence }}
+                </span>
+              </td>
+              <td>{{ reclamation.createdDate | date:'medium' }}</td>
+              <td>
+                <a *ngIf="reclamation.reclamationFile" [href]="reclamation.reclamationFile" target="_blank" class="btn btn-sm btn-outline-primary">
+                  <i class="ti ti-file"></i> Voir fichier
+                </a>
+                <span *ngIf="!reclamation.reclamationFile">-</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-  </div>
-</footer>
-
-<script>
-  function toggleMenu() {
-    const navLinks = document.getElementById('navbarResponsive');
-    navLinks.classList.toggle('active');
-  }
-</script>
+      <!-- Pagination -->
+      <nav *ngIf="totalPages > 1" aria-label="Pagination">
+        <ul class="pagination">
+          <li class="page-item" [class.disabled]="currentPage === 0">
+            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+              <span aria-hidden="true">«</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let page of getPages()" [class.active]="page === currentPage">
+            <a class="page-link" (click)="changePage(page)">{{ page + 1 }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage >= totalPages - 1">
+            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+              <span aria-hidden="true">»</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+</body>
+</html>

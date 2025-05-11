@@ -136,7 +136,7 @@
         <h5 class="modal-title" id="descriptionModalLabel">Description complète</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body bg-white">
         <p>{{ selectedDescription }}</p>
       </div>
       <div class="modal-footer">
@@ -151,7 +151,7 @@
     <h5 class="modal-title">Description complète</h5>
     <button type="button" class="btn-close" (click)="modal.dismiss()" aria-label="Close"></button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body bg-white">
     <p>{{ selectedDescription }}</p>
   </div>
   <div class="modal-footer">
@@ -165,7 +165,7 @@
     <h5 class="modal-title">Confirmation</h5>
     <button type="button" class="btn-close" (click)="modal.dismiss()" aria-label="Close"></button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body bg-white">
     <p>Êtes-vous sûr de vouloir supprimer cette réclamation ?</p>
   </div>
   <div class="modal-footer">
@@ -181,7 +181,7 @@
     <h5 class="modal-title">Modifier le statut</h5>
     <button type="button" class="btn-close" (click)="modal.dismiss()" aria-label="Close"></button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body bg-white">
     <div class="mb-3">
       <label class="form-label">Nouveau statut</label>
       <select class="form-select" [(ngModel)]="selectedStatus">

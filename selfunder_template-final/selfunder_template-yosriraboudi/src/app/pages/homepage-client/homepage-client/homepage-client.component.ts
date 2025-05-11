@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+// In your homepage-client.component.ts
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-homepage-client',
-  standalone: false,
   templateUrl: './homepage-client.component.html',
-  styleUrl: './homepage-client.component.scss'
+  styleUrls: ['./homepage-client.component.scss']
 })
-export class HomepageClientComponent {
+export class HomepageClientComponent  {
+
+
+
 
 }

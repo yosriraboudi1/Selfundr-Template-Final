@@ -39,7 +39,7 @@ export class AddReclamationComponent {
     this.reclamationService.createReclamation(userId, reclamationData, this.reclamation.file).subscribe({
       next: (id) => {
         console.log('Réclamation créée avec ID:', id);
-        this.router.navigate(['/homepage-client/homepage-client']);
+        this.router.navigate(['/reclamation/listbyuser']);
       },
       error: (err) => {
         console.error('Erreur lors de la création de la réclamation:', err);

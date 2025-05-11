@@ -10,7 +10,7 @@ const routes: Routes = [
               path: '', component: HomepageComponent,
               children: [
                 {path:'',redirectTo:'homepage',pathMatch:'full'},
-              
+
 
 
 
