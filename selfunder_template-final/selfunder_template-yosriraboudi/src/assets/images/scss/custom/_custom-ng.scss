@@ -1,0 +1,33 @@
+// Custom - Angular
+
+.arrow-none {
+  &:after {
+    display: none !important;
+  }
+
+  &:before {
+    display: none !important;
+  }
+}
+
+.flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.d-contents {
+  display: contents !important;
+}
+
+.choices__item.choices__item--selectable[data-value="-1"] {
+  @extend .choices__placeholder;
+}
+
+ng-tiny-slider {
+  overflow-x: hidden !important; 
+}

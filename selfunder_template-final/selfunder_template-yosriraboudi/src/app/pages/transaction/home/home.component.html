@@ -1,0 +1,259 @@
+<!-- Navigation Menu -->
+
+
+<div class="digital-banking">
+  <!-- Welcome Header -->
+  <div class="welcome-section">
+    <h1>Welcome to Digital Banking</h1>
+    <p class="subtitle">Manage your transactions securely and efficiently</p>
+    
+    <!-- Balance Display -->
+    <div class="balance-display">
+      <h2>${{ balance }}</h2>
+      <p class="balance-label">Available Balance</p>
+    </div>
+  </div>
+
+  <!-- Main Actions -->
+  <div class="main-actions">
+    <div class="action-row">
+      <button class="action-btn" (click)="openActionModal('send')">
+        <i class="bi bi-send"></i>
+        <span>Send Money</span>
+      </button>
+
+      <button class="action-btn" (click)="openActionModal('receive')">
+        <i class="bi bi-download"></i>
+        <span>Receive Money</span>
+      </button>
+
+      <button class="action-btn" (click)="openActionModal('transfer')">
+        <i class="bi bi-arrow-left-right"></i>
+        <span>Bank Transfer</span>
+      </button>
+
+      <button class="action-btn" (click)="openActionModal('payment')">
+        <i class="bi bi-credit-card"></i>
+        <span>Make Payment</span>
+      </button>
+    </div>
+
+    <div class="action-row secondary-actions">
+      <button class="action-btn" (click)="openActionModal('bills')">
+        <i class="bi bi-receipt"></i>
+        <span>Pay Bills</span>
+      </button>
+
+      <button class="action-btn" (click)="openActionModal('savings')">
+        <i class="bi bi-piggy-bank"></i>
+        <span>Savings Goals</span>
+      </button>
+
+      <button class="action-btn" routerLink="/credit">
+        <i class="bi bi-wallet2"></i>
+        <span>Manage Cards</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Transaction Filters -->
+  <div class="transaction-filters">
+    <button 
+      *ngFor="let filter of transactionFilters" 
+      [class.active]="currentFilter === filter.type"
+      (click)="filterTransactions(filter.type)"
+      class="filter-btn">
+      <i [class]="filter.icon"></i>
+      {{ filter.label }}
+    </button>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="transactions-section">
+    <h3>Recent Transactions</h3>
+    <div class="transaction-list">
+      <table class="table table-striped table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Recipient</th>
+            <th>Reference</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let transaction of transactions">
+            <td>{{transaction.idTransaction}}</td>
+            <td>{{transaction.date}}</td>
+            <td>{{transaction.montant}}</td>
+            <td>{{transaction.typeTransaction}}</td>
+            <td>{{transaction.recipient || '-'}}</td>
+            <td>{{transaction.paymentReference || '-'}}</td>
+           
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+  <!-- Action Modals -->
+  <div class="modal-overlay" *ngIf="activeModal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-icon">
+          <i [class]="getModalIcon()"></i>
+        </div>
+        <h3>{{ getModalTitle() }}</h3>
+        <button class="close-btn" (click)="closeModal()">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+
+      <form [formGroup]="actionForm" (ngSubmit)="submitAction()" class="action-form">
+        <!-- Dynamic Form Content based on Modal Type -->
+        <ng-container [ngSwitch]="activeModal">
+          
+          <!-- Send Money Form -->
+          <ng-container *ngSwitchCase="'send'">
+            <div class="form-group">
+              <label>Recipient</label>
+              <input type="text" formControlName="recipient" placeholder="Enter recipient's name or account">
+            </div>
+            <div class="form-group">
+              <label>montant</label>
+              <div class="montant-input">
+                <span class="currency">USD</span>
+                <input type="number" formControlName="montant" placeholder="Enter montant">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>paymentReference</label>
+              <input type="text" formControlName="paymentReference" placeholder="What's this for?">
+            </div>
+          </ng-container>
+
+          <!-- Receive Money Form -->
+          <ng-container *ngSwitchCase="'receive'">
+            <div class="qr-section">
+              <div class="qr-code">
+                <!-- Add QR Code Component Here -->
+                <img src="assets/images/qr-placeholder.png" alt="QR Code">
+              </div>
+              <p class="qr-info">Scan this QR code to receive money</p>
+            </div>
+            <div class="form-group">
+              <label>Expected montant (Optional)</label>
+              <div class="montant-input">
+                <span class="currency">USD</span>
+                <input type="number" formControlName="montant" placeholder="Enter montant">
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Bank Transfer Form -->
+          <ng-container *ngSwitchCase="'transfer'">
+            <div class="form-group">
+              <label>Bank Account</label>
+              <select formControlName="bankAccount">
+                <option value="">Select Bank Account</option>
+                <option value="savings">Savings Account</option>
+                <option value="checking">Checking Account</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>montant</label>
+              <div class="montant-input">
+                <span class="currency">USD</span>
+                <input type="number" formControlName="montant" placeholder="Enter montant">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>paymentReference</label>
+              <input type="text" formControlName="paymentReference" placeholder="What's this for?">
+            </div>
+          </ng-container>
+
+          <!-- Payment Form -->
+          <ng-container *ngSwitchCase="'payment'">
+            <div class="form-group">
+              <label>Payment For</label>
+              <input type="text" formControlName="paymentFor" placeholder="Enter merchant or service">
+            </div>
+            <div class="form-group">
+              <label>montant</label>
+              <div class="montant-input">
+                <span class="currency">USD</span>
+                <input type="number" formControlName="montant" placeholder="Enter montant">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Payment Method</label>
+              <div class="payment-methods">
+                <label class="method-option">
+                  <input type="radio" formControlName="paymentMethod" value="wallet">
+                  <i class="bi bi-wallet2"></i>
+                  <span>Wallet</span>
+                </label>
+                <label class="method-option">
+                  <input type="radio" formControlName="paymentMethod" value="card">
+                  <i class="bi bi-credit-card"></i>
+                  <span>Card</span>
+                </label>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Bills Form -->
+          <ng-container *ngSwitchCase="'bills'">
+            <div class="form-group">
+              <label>Bill Type</label>
+              <select formControlName="billType">
+                <option value="">Select Bill Type</option>
+                <option value="utility">Utility Bill</option>
+                <option value="internet">Internet</option>
+                <option value="phone">Phone</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>montant</label>
+              <div class="montant-input">
+                <span class="currency">USD</span>
+                <input type="number" formControlName="montant" placeholder="Enter montant">
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Savings Form -->
+          <ng-container *ngSwitchCase="'savings'">
+            <div class="form-group">
+              <label>Goal Name</label>
+              <input type="text" formControlName="goalName" placeholder="Enter your savings goal">
+            </div>
+            <div class="form-group">
+              <label>Target montant</label>
+              <div class="montant-input">
+                <span class="currency">USD</span>
+                <input type="number" formControlName="targetmontant" placeholder="Enter target montant">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Monthly Contribution</label>
+              <div class="montant-input">
+                <span class="currency">USD</span>
+                <input type="number" formControlName="monthlyContribution" placeholder="Enter monthly montant">
+              </div>
+            </div>
+          </ng-container>
+
+        </ng-container>
+
+        <button type="submit" class="submit-btn" [disabled]="!actionForm.valid">
+          Confirm {{ getModalTitle() }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div> 
