@@ -15,8 +15,7 @@ import { ContactsListComponent } from './pages/contacts/contactslist/contactslis
   declarations: [
     AppComponent,
     HomeComponent,
-    // Suppression de ChatbotComponent pour éviter la déclaration multiple
-    // ChatbotComponent,
+
 
 
   ],

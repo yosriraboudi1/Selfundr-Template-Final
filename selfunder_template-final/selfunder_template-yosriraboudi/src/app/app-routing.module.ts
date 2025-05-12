@@ -8,6 +8,7 @@ import { HomepageClientComponent } from './pages/homepage-client/homepage-client
 import { HomepageEntreproneurComponent } from './pages/homepage-entreproneur/homepage-entreproneur/homepage-entreproneur.component';
 import { HomepageInvestisseurComponent } from './pages/homepage-investisseur/homepage-investisseur/homepage-investisseur.component';
 import { ContactsListComponent } from './pages/contacts/contactslist/contactslist.component';
+import { Home1Component } from './pages/wallet/home1/home1.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'transaction', loadChildren: () => import('./pages/transaction/transactions.module').then(m => m.TransactionsModule)},
   {path: 'comptes', loadChildren: () => import('./pages/compte-bancaire/compte-bancaire-routing.module').then(m => m.CompteBancaireRoutingModule)},
 
+  {path: 'wallet', loadChildren: () => import('./pages/wallet/portfeuille.module').then(m => m.PortfeuilleModule)},
 
 
   // {path:'',component:HomeComponent},
@@ -36,7 +38,9 @@ const routes: Routes = [
   { path: 'homepage-investisseur/homepage-investisseur', component: HomepageInvestisseurComponent },
   { path: 'reclamation/listbyuser', component: ReclamationListByuserComponent },
   { path: 'contact/contactlist', component: ContactsListComponent },
-  
+  { path: 'wallet/home1', component: Home1Component },
+  { path: 'wallet/apply', component: HomepageClientComponent },
+
 
 ];
 
