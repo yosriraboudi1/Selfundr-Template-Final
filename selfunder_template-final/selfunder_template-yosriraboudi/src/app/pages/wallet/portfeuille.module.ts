@@ -7,11 +7,7 @@ import { Home1Component } from './home1/home1.component';
 
 
 @NgModule({
-  declarations: [
-
-    
-    
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     PortfeuilleRoutingModule

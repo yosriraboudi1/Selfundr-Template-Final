@@ -1,166 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modernize Signup</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .page-wrapper {
-      overflow: hidden;
-    }
-    .radial-gradient {
-  background-image: url('assets/img/banking-header.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  position: relative;
-}
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+  <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="d-flex align-items-center justify-content-center w-100">
+      <div class="row justify-content-center w-100">
+        <div class="col-md-8 col-lg-6 col-xxl-4">
+          <div class="card mb-0">
+            <div class="card-body">
+              <a class="text-nowrap logo-img text-center d-block py-3 w-100">
+                <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
+              </a>
+              <p class="text-center">Create your account</p>
 
-.radial-gradient::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(240,242,245,0.6) 100%);
-  z-index: 0;
-}
-
-.card {
-  position: relative;
-  z-index: 1;
-}
-    .card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      background: #ffffff;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      display: flex;
-      flex-direction: row;
-      max-width: 800px;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    .logo-section {
-      flex: 1;
-      background: linear-gradient(180deg, #f8f9fa, #e9ecef);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-    .form-section {
-      flex: 1;
-      padding: 2.5rem;
-    }
-    .logo-img img {
-      max-width: 250px; /* Logo plus grand */
-      transition: transform 0.3s ease;
-    }
-    .logo-img img:hover {
-      transform: scale(1.05);
-    }
-    .text-center {
-      color: #333;
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-    .form-label {
-      font-weight: 500;
-      color: #444;
-    }
-    .form-control {
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      border: 1px solid #ddd;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .form-control:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
-      outline: none;
-    }
-    .form-text {
-      font-size: 0.9rem;
-      color: #555;
-    }
-    .btn-primary {
-      background: #ff6f61;
-      border: none;
-      border-radius: 8px;
-      padding: 0.75rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-    .btn-primary:hover {
-      background: #ff6f61;
-      transform: translateY(-2px);
-    }
-    .text-primary {
-      color: #667eea !important;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-    .text-primary:hover {
-      color: #ff6f61 !important;
-    }
-    @media (max-width: 768px) {
-      .card {
-        flex-direction: column;
-        max-width: 400px;
-      }
-      .logo-section,
-      .form-section {
-        padding: 1.5rem;
-      }
-      .logo-img img {
-        max-width: 150px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-    data-sidebar-position="fixed" data-header-position="fixed">
-    <div
-      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
-      <div class="d-flex align-items-center justify-content-center w-100">
-        <div class="row justify-content-center w-100">
-          <div class="col-md-8 col-lg-7 col-xxl-8">
-            <div class="card mb-0">
-              <div class="logo-section">
-                <div class="logo-img text-center">
-                  <img src="assets/img/logos/SELFUNDR.svg" alt="">
-                </div>
+              <!-- ✅ Registration success message -->
+              <div *ngIf="registrationSuccess && !otpValidated" class="alert alert-success text-center">
+                Registration successful. Please enter the OTP sent to your email.
               </div>
-              <div class="form-section">
-                <p class="text-center">Your Social Campaigns</p>
-                <form>
-                  <div class="mb-3">
-                    <label for="exampleInputtext1" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" required>
+
+              <!-- ❌ OTP error -->
+              <div *ngIf="otpError" class="alert alert-danger text-center">
+                {{ otpError }}
+              </div>
+
+              <!-- ✅ OTP validated -->
+              <div *ngIf="otpValidated" class="alert alert-success text-center">
+                Email successfully verified. Redirecting...
+              </div>
+
+              <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+
+                <!-- First Name -->
+                <div class="mb-3">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" formControlName="prenom" />
+                  <div *ngIf="signupForm.get('prenom')?.touched && signupForm.get('prenom')?.invalid" class="text-danger">
+                    Prénom requis (min 2 caractères)
                   </div>
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
-                    <div id="emailHelp" class="form-text">We'll never share your email.</div>
+                </div>
+
+                <!-- Last Name -->
+                <div class="mb-3">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" formControlName="nom" />
+                  <div *ngIf="signupForm.get('nom')?.touched && signupForm.get('nom')?.invalid" class="text-danger">
+                    Nom requis (min 2 caractères)
                   </div>
-                  <div class="mb-4">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" required>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" formControlName="email" />
+                  <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid" class="text-danger">
+                    Email invalide
                   </div>
-                  <button type="submit" class="btn btn-primary w-100 py-3 mb-4">Sign Up</button>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <p class="mb-0 fw-bold">Already have an Account?</p>
-                    <a class="text-primary fw-bold ms-2" href="/auth/login">Sign In</a>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" formControlName="password" />
+                  <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="text-danger">
+                    Mot de passe requis (min 6 caractères)
                   </div>
-                </form>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                  <label class="form-label">Confirm Password</label>
+                  <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" formControlName="confirmpwd" />
+                  <div *ngIf="signupForm.errors?.['mismatch'] && signupForm.get('confirmpwd')?.touched" class="text-danger">
+                    Les mots de passe ne correspondent pas.
+                  </div>
+
+                </div>
+
+                <div class="mb-3 text-end">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="changetype()">
+                    {{ fieldTextType ? 'Hide' : 'Show' }} Password
+                  </button>
+                </div>
+
+                <!-- Phone -->
+                <div class="mb-3">
+                  <label class="form-label">Phone</label>
+                  <input type="text" class="form-control" formControlName="telephone" />
+                  <div *ngIf="signupForm.get('telephone')?.touched && signupForm.get('telephone')?.invalid" class="text-danger">
+                    Numéro invalide (8-15 chiffres)
+                  </div>
+                </div>
+
+                <!-- Mobile Number -->
+                <div class="mb-3">
+                  <label class="form-label">Mobile Number</label>
+                  <input type="text" class="form-control" formControlName="numTel" />
+                  <div *ngIf="signupForm.get('numTel')?.touched && signupForm.get('numTel')?.invalid" class="text-danger">
+                    Mobile invalide (8 chiffres)
+                  </div>
+                </div>
+
+                <!-- CIN -->
+                <div class="mb-3">
+                  <label class="form-label">National ID (CIN)</label>
+                  <input type="text" class="form-control" formControlName="cin" />
+                  <div *ngIf="signupForm.get('cin')?.touched && signupForm.get('cin')?.invalid" class="text-danger">
+                    CIN invalide (8 chiffres)
+                  </div>
+                </div>
+
+                <!-- Address -->
+                <div class="mb-3">
+                  <label class="form-label">Address</label>
+                  <input type="text" class="form-control" formControlName="adresse" />
+                  <div *ngIf="signupForm.get('adresse')?.touched && signupForm.get('adresse')?.invalid" class="text-danger">
+                    Adresse requise.
+                  </div>
+                </div>
+
+                <!-- Profession -->
+                <div class="mb-3">
+                  <label class="form-label">Profession</label>
+                  <input type="text" class="form-control" formControlName="profession" />
+                  <div *ngIf="signupForm.get('profession')?.touched && signupForm.get('profession')?.invalid" class="text-danger">
+                    Profession requise.
+                  </div>
+                </div>
+
+                <!-- Salary -->
+                <div class="mb-3">
+                  <label class="form-label">Salary</label>
+                  <input type="number" class="form-control" formControlName="salaire" />
+                  <div *ngIf="signupForm.get('salaire')?.touched && signupForm.get('salaire')?.invalid" class="text-danger">
+                    Salaire requis (valeur positive).
+                  </div>
+                </div>
+
+                <!-- Birthdate -->
+                <div class="mb-3">
+                  <label class="form-label">Birthdate</label>
+                  <input type="date" class="form-control" formControlName="dateNaissance" />
+                  <div *ngIf="signupForm.get('dateNaissance')?.touched && signupForm.get('dateNaissance')?.invalid" class="text-danger">
+                    Date de naissance requise.
+                  </div>
+                </div>
+
+                <!-- Tax ID -->
+                <div class="mb-3">
+                  <label class="form-label">Tax ID</label>
+                  <input type="text" class="form-control" formControlName="matriculeFiscale" />
+                  <div *ngIf="signupForm.get('matriculeFiscale')?.touched && signupForm.get('matriculeFiscale')?.invalid" class="text-danger">
+                    Matricule fiscale requise.
+                  </div>
+                </div>
+                <!-- Role -->
+                <div class="mb-3">
+                  <label class="form-label">Rôle</label>
+                  <select class="form-select" formControlName="role">
+                    <option value="" disabled selected>Choisir un rôle</option>
+                    <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+                  </select>
+                  <div *ngIf="signupForm.get('role')?.touched && signupForm.get('role')?.invalid" class="text-danger">
+                    Veuillez sélectionner un rôle.
+                  </div>
+                </div>
+
+
+                <!-- Photo -->
+                <div class="mb-3">
+                  <label class="form-label">Photo</label>
+                  <input type="file" class="form-control" (change)="onFileSelected($event)" />
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-primary w-100 py-2 fs-5 mb-4 rounded-2" [disabled]="signupForm.invalid">
+                  Register
+                </button>
+              </form>
+
+
+
+              <!-- 🔐 OTP Input -->
+              <div *ngIf="otpInputVisible && !otpValidated">
+                <label class="form-label">OTP Code</label>
+                <input type="text" [(ngModel)]="otpCode" class="form-control mb-2" placeholder="Enter the OTP code" />
+                <button (click)="validateOtp()" class="btn btn-success w-100">Verify OTP</button>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-center mt-4">
+                <p class="fs-6 mb-0 fw-bold">Already have an account?</p>
+                <a class="text-primary fw-bold ms-2" routerLink="/auth/login">Sign In</a>
+
               </div>
             </div>
           </div>
@@ -168,5 +196,4 @@
       </div>
     </div>
   </div>
-</body>
-</html>
+</div>

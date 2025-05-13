@@ -8,7 +8,7 @@ import { Portfeuille } from '../models/wallet.model';
   providedIn: 'root'
 })
 export class WalletService {
-  private apiUrl = 'http://localhost:8085/portfeuille'; // URL du backend
+  private apiUrl = 'http://localhost:8080/portfeuille'; // URL du backend
 
   constructor(private http: HttpClient) {}
 
@@ -108,7 +108,7 @@ export class WalletService {
       catchError(this.handleError('getAllWallets'))
     );
   }
-  
+
 
   /**
    * Get wallet by ID
@@ -120,7 +120,7 @@ export class WalletService {
       console.error('Invalid wallet ID:', id);
       return throwError(() => new Error('ID de portefeuille invalide'));
     }
-    
+
     return this.http.get<Portfeuille>(`${this.apiUrl}/retrieve-portfeuille/${walletId}`)
       .pipe(
         map(wallet => this.normalizeWalletId(wallet)),
@@ -137,7 +137,7 @@ export class WalletService {
   //     'Content-Type': 'application/json',
   //     'Accept': 'application/json'
   //   });
-    
+
   //   // Create a clean wallet object with just the required fields to avoid any extraneous data
   //   const cleanWalletData = {
   //     idUser: Number(walletData.idUser),
@@ -153,9 +153,9 @@ export class WalletService {
   //     qrCode: walletData.qrCode || 'placeholder-qr-code',
   //     statutPortfeuille: walletData.statutPortfeuille
   //   };
-    
+
   //   console.log('Creating wallet with data:', cleanWalletData);
-    
+
   //   return this.http.post<Portfeuille>(`${this.apiUrl}/ajouter`, cleanWalletData, { headers })
   //     .pipe(
   //       tap(response => console.log('Backend response for wallet creation:', response)),
@@ -176,16 +176,16 @@ export class WalletService {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
-    
+
     // Ensure wallet ID is included properly
     if (!walletData.idPortfeuille && walletData['id']) {
       walletData.idPortfeuille = Number(walletData['id']);
     } else if (walletData.idPortfeuille) {
       walletData.idPortfeuille = Number(walletData.idPortfeuille);
     }
-    
+
     console.log('Updating wallet with data:', walletData);
-    
+
     return this.http.put<Portfeuille>(`${this.apiUrl}/modify-portfeuille`, walletData, { headers })
       .pipe(
         map(wallet => this.normalizeWalletId(wallet)),
@@ -204,9 +204,9 @@ export class WalletService {
       console.error('Invalid wallet ID for deletion:', id);
       return throwError(() => new Error('ID de portefeuille invalide pour la suppression'));
     }
-    
+
     console.log('Deleting wallet with ID:', walletId);
-    
+
     return this.http.delete(`${this.apiUrl}/remove-portfeuille/${walletId}`)
       .pipe(
         tap(() => console.log(`Deleted wallet with ID: ${walletId}`)),
@@ -219,13 +219,13 @@ export class WalletService {
    */
   // private normalizeWalletId(wallet: any): Portfeuille {
   //   if (!wallet) return wallet;
-    
+
   //   // Handle ID mismatch by ensuring idPortfeuille is set
   //   if (!wallet.idPortfeuille && wallet.id) {
   //     wallet.idPortfeuille = Number(wallet.id);
   //     console.log('Normalized wallet ID from id to idPortfeuille:', wallet);
   //   }
-    
+
   //   return wallet;
   // }
 
@@ -244,9 +244,9 @@ export class WalletService {
   //   return (error: HttpErrorResponse): Observable<never> => {
   //     // Log error details
   //     console.error(`${operation} failed:`, error);
-      
+
   //     let errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
-      
+
   //     // Customize error based on status
   //     if (error.status === 404) {
   //       errorMessage = 'Ressource non trouvée.';
@@ -257,7 +257,7 @@ export class WalletService {
   //     } else if (error.status === 0) {
   //       errorMessage = 'Serveur inaccessible. Vérifiez votre connexion.';
   //     }
-      
+
   //     // Return a user-friendly error message
   //     return throwError(() => new Error(`${errorMessage} (${operation})`));
   //   };
@@ -288,10 +288,10 @@ export class WalletService {
    */
   calculerPerformanceHistorique(walletId: number, periodeEnMois: number = 12): Observable<any> {
     console.log(`Appel API pour calculer la performance historique - ID: ${walletId}, Période: ${periodeEnMois} mois`);
-    
+
     // Construction correcte de l'URL avec le pattern RESTful
     return this.http.get<any>(`${this.apiUrl}/${walletId}/performance-historique`, {
-      params: {   
+      params: {
         periode: periodeEnMois.toString()
       }
     })
@@ -299,15 +299,15 @@ export class WalletService {
       tap(data => console.log('Données de performance historique:', data)),
       catchError(error => {
         console.warn('Premier essai échoué pour calculer la performance, tentative alternative...', error);
-        
+
         // Log l'erreur spécifique du backend si disponible
         if (error.error) {
           console.warn(`Erreur backend: ${typeof error.error === 'string' ? error.error : JSON.stringify(error.error)}`);
         }
-        
+
         // Si l'API échoue, retourner des données de démo pour les tests
         console.log('Utilisation des données de démo pour la performance historique');
-        
+
         // Données de démo pour les tests
         const demoData = {
           rendementTotal: 0.15, // 15% de rendement total
@@ -327,7 +327,7 @@ export class WalletService {
             { mois: 'Décembre', valeur: 11800 }
           ]
         };
-        
+
         // Retourner les données de démo comme si elles venaient de l'API
         return new Observable(observer => {
           setTimeout(() => {
@@ -347,18 +347,18 @@ export class WalletService {
    * @param tauxRendementPersonnalise Taux de rendement personnalisé (optionnel)
    * @returns Observable avec les données de simulation
    */
-  simulerCroissance(walletId: number, montantInvestissementMensuel: number = 0, 
+  simulerCroissance(walletId: number, montantInvestissementMensuel: number = 0,
                    dureeEnAnnees: number = 5, tauxRendementPersonnalise?: number): Observable<any> {
     const params: any = {
       idPortfeuille: walletId.toString(),
       montantMensuel: montantInvestissementMensuel.toString(),
       duree: dureeEnAnnees.toString()
     };
-    
+
     if (tauxRendementPersonnalise !== undefined) {
       params.tauxRendement = tauxRendementPersonnalise.toString();
     }
-    
+
     return this.http.post<any>(`${this.apiUrl}/simuler-croissance`, null, {
       params: params
     }).pipe(
@@ -377,7 +377,7 @@ export class WalletService {
    */
   analyserDiversification(walletId: number): Observable<any> {
     console.log(`Appel API pour analyser la diversification - ID: ${walletId}`);
-    
+
     return this.http.get<any>(`${this.apiUrl}/analyser-diversification`, {
       params: {
         idPortfeuille: walletId.toString()
@@ -386,7 +386,7 @@ export class WalletService {
       tap(data => console.log('Analyse de diversification:', data)),
       catchError(error => {
         console.warn('Erreur lors de l\'analyse de diversification, utilisation des données de démo:', error);
-        
+
         // Données de démo pour les tests
         const demoData = {
           indiceDiversification: 0.78, // Indice sur 1, 0.78 = diversification assez bonne
@@ -398,7 +398,7 @@ export class WalletService {
             { nom: 'Matières premières', pourcentage: 0.05, montant: 500 }
           ]
         };
-        
+
         // Retourner les données de démo comme si elles venaient de l'API
         return new Observable(observer => {
           setTimeout(() => {
@@ -417,7 +417,7 @@ export class WalletService {
    */
   analyserRisque(walletId: number): Observable<any> {
     console.log(`Appel API pour analyser le risque - ID: ${walletId}`);
-    
+
     return this.http.get<any>(`${this.apiUrl}/analyser-risque`, {
       params: {
         idPortfeuille: walletId.toString()
@@ -426,25 +426,25 @@ export class WalletService {
       tap(data => console.log('Analyse de risque:', data)),
       catchError(error => {
         console.warn('Erreur lors de l\'analyse de risque, utilisation des données de démo:', error);
-        
+
         // Données de démo pour les tests
         const demoData = {
           scoreRisque: 3, // Score de 1 à 5, 3 = risque modéré
           facteurs: [
-            { 
-              nom: 'Concentration des actifs', 
-              impact: 4, 
-              description: 'Une part importante du portefeuille est investie dans un petit nombre d\'actifs, ce qui augmente la vulnérabilité aux chocs spécifiques.' 
+            {
+              nom: 'Concentration des actifs',
+              impact: 4,
+              description: 'Une part importante du portefeuille est investie dans un petit nombre d\'actifs, ce qui augmente la vulnérabilité aux chocs spécifiques.'
             },
-            { 
-              nom: 'Volatilité du marché', 
-              impact: 3, 
-              description: 'Les actifs sélectionnés présentent une volatilité moyenne, ce qui est acceptable pour un portefeuille équilibré.' 
+            {
+              nom: 'Volatilité du marché',
+              impact: 3,
+              description: 'Les actifs sélectionnés présentent une volatilité moyenne, ce qui est acceptable pour un portefeuille équilibré.'
             },
-            { 
-              nom: 'Liquidité', 
-              impact: 2, 
-              description: 'Le portefeuille contient une bonne proportion d\'actifs facilement convertibles en espèces sans perte significative de valeur.' 
+            {
+              nom: 'Liquidité',
+              impact: 2,
+              description: 'Le portefeuille contient une bonne proportion d\'actifs facilement convertibles en espèces sans perte significative de valeur.'
             }
           ],
           recommandations: [
@@ -453,7 +453,7 @@ export class WalletService {
             'Maintenir un coussin de liquidités d\'au moins 10% de la valeur totale du portefeuille'
           ]
         };
-        
+
         // Retourner les données de démo comme si elles venaient de l'API
         return new Observable(observer => {
           setTimeout(() => {
@@ -474,32 +474,32 @@ export class WalletService {
    */
   obtenirRecommandations(walletId: number, profilRisque?: number, objectifs?: string): Observable<any> {
     console.log(`Appel API pour obtenir des recommandations - ID: ${walletId}, Profil: ${profilRisque}, Objectifs: ${objectifs}`);
-    
+
     const params: any = { idPortfeuille: walletId.toString() };
-    
+
     if (profilRisque !== undefined) {
       params.profilRisque = profilRisque.toString();
     }
-    
+
     if (objectifs) {
       params.objectifs = objectifs;
     }
-    
+
     return this.http.get<any>(`${this.apiUrl}/recommandations`, {
       params: params
     }).pipe(
       tap(data => console.log('Recommandations d\'investissement:', data)),
       catchError(error => {
         console.warn('Erreur lors de l\'obtention des recommandations, utilisation des données de démo:', error);
-        
+
         // Déterminer les recommandations en fonction du profil de risque
         let allocations = [];
         let description = '';
         let recommandations = [];
-        
+
         // Si aucun profil n'est spécifié, utiliser le niveau moyen (3)
         const profil = profilRisque || 3;
-        
+
         // Personnaliser les données en fonction du profil de risque
         if (profil <= 2) { // Profil prudent
           allocations = [
@@ -541,14 +541,14 @@ export class WalletService {
             'Maintenir une petite allocation en actifs alternatifs pour la diversification'
           ];
         }
-        
+
         // Données de démo pour les tests
         const demoData = {
           allocations: allocations,
           description: description,
           recommandations: recommandations
         };
-        
+
         // Retourner les données de démo comme si elles venaient de l'API
         return new Observable(observer => {
           setTimeout(() => {
@@ -567,7 +567,7 @@ export class WalletService {
    */
   calculerIndicateursFinanciers(walletId: number): Observable<any> {
     console.log(`Appel API pour calculer les indicateurs financiers - ID: ${walletId}`);
-    
+
     return this.http.get<any>(`${this.apiUrl}/indicateurs-financiers`, {
       params: {
         idPortfeuille: walletId.toString()
@@ -576,7 +576,7 @@ export class WalletService {
       tap(data => console.log('Indicateurs financiers:', data)),
       catchError(error => {
         console.warn('Erreur lors du calcul des indicateurs financiers, utilisation des données de démo:', error);
-        
+
         // Données de démo pour les tests
         const demoData = {
           roi: 0.085, // 8.5% de retour sur investissement
@@ -586,7 +586,7 @@ export class WalletService {
           capaciteEmprunt: 120000, // Capacité d'emprunt estimée
           projectionPatrimoine: 65000 // Projection de patrimoine à 5 ans
         };
-        
+
         // Retourner les données de démo comme si elles venaient de l'API
         return new Observable(observer => {
           setTimeout(() => {
@@ -625,15 +625,15 @@ invest(walletId: number, amount: number): Observable<any> {
     }),
     catchError(error => {
       console.error('Investment API error:', error);
-      
+
       // Extract the real error message from the response
       let errorMessage = 'An error occurred during investment';
-      
+
       if (error.error && typeof error.error === 'string') {
         // This is a French message from the backend
         errorMessage = error.error;
         console.log('Received French error:', errorMessage);
-        
+
         // Translate exact French error messages based on backend implementation
         if (errorMessage.includes("Fonds insuffisants")) {
           errorMessage = 'Insufficient funds for this investment';
@@ -643,10 +643,10 @@ invest(walletId: number, amount: number): Observable<any> {
       } else if (error.message) {
         errorMessage = error.message;
       }
-      
+
       // Log the extracted message for debugging
       console.error('Extracted error message:', errorMessage);
-      
+
       return throwError(() => new Error(errorMessage));
     })
   );
@@ -662,7 +662,7 @@ invest(walletId: number, amount: number): Observable<any> {
     if (!destinationId || destinationId <= 0) {
       return throwError(() => new Error('Invalid destination wallet ID'));
     }
-    
+
     if (!amount || amount <= 0) {
       return throwError(() => new Error('Transfer amount must be positive'));
     }
@@ -670,9 +670,9 @@ invest(walletId: number, amount: number): Observable<any> {
     if (sourceId === destinationId) {
       return throwError(() => new Error('Source and destination wallets cannot be the same'));
     }
-    
+
     console.log('Transfer attempt from wallet ID:', sourceId, 'to wallet ID:', destinationId, 'amount:', amount);
-  
+
     // Direct approach based on the backend's expectations
     // The API expects 'idSource', 'idDest', and 'montant' as URL parameters
     return this.http.post(`${this.apiUrl}/transferer`, null, {
@@ -688,15 +688,15 @@ invest(walletId: number, amount: number): Observable<any> {
       }),
       catchError(error => {
         console.error('Transfer API error:', error);
-        
+
         // Extract the real error message from the response
         let errorMessage = 'An error occurred during transfer';
-        
+
         if (error.error && typeof error.error === 'string') {
           // This is a French message from the backend
           errorMessage = error.error;
           console.log('Received French error:', errorMessage);
-          
+
           // Translate exact French error messages based on backend implementation
           if (errorMessage.includes("Fonds insuffisants")) {
             errorMessage = 'Insufficient funds for this transfer';
@@ -708,10 +708,10 @@ invest(walletId: number, amount: number): Observable<any> {
         } else if (error.message) {
           errorMessage = error.message;
         }
-        
+
         // Log the extracted message for debugging
         console.error('Extracted error message:', errorMessage);
-        
+
         return throwError(() => new Error(errorMessage));
       })
     );

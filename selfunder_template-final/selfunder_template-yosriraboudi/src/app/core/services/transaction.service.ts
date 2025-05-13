@@ -10,7 +10,7 @@ import { Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class TransactionService {
-  private apiUrl = 'http://localhost:8085/transaction';
+  private apiUrl = 'http://localhost:8080/transaction';
 
   constructor(private http: HttpClient) {}
 
@@ -74,11 +74,11 @@ export class TransactionService {
   // }
   getAllTransactions(): Observable<Transaction[]> {
     const url = `${this.apiUrl}/all`;
-  
+
     // Ensure responseType is JSON to avoid parsing errors
     return this.http.get<Transaction[]>(url, { responseType: 'json' });
   }
-  
+
 
   getTransactionById(id: number): Observable<Transaction> {
     return this.http.get<Transaction>(`${this.apiUrl}/${id}`);
@@ -94,10 +94,10 @@ export class TransactionService {
       ...transactionData,
       toCompteId: transactionData.toCompteId ? Number(transactionData.toCompteId) : undefined // Ensure it's a number
     };
-  
+
     // Set correct headers for JSON request
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  
+
     // Send request with JSON data
     return this.http.post<Transaction>(
       `${this.apiUrl}/createTransaction`,
@@ -105,8 +105,8 @@ export class TransactionService {
       { headers, params: new HttpParams().set('userId', userId.toString()).set('compteId', compteId.toString()) }
     );
   }
-  
-  
+
+
 
   updateTransaction(id: number, transaction: Partial<Transaction>): Observable<Transaction> {
     return this.http.put<Transaction>(`${this.apiUrl}/${id}`, transaction);
@@ -135,6 +135,6 @@ export class TransactionService {
       .replace(/\s+/g, ' '); // Normalize whitespace
   }
 
-  
-  
-} 
+
+
+}

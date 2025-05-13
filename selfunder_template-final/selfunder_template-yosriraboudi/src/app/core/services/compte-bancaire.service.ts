@@ -7,7 +7,7 @@ import { CompteBancaire, User } from '../models/compte-bancaire.model';
   providedIn: 'root'
 })
 export class CompteBancaireService {
-  private apiUrl = 'http://localhost:8085/compteBancaire';
+  private apiUrl = 'http://localhost:8080/compteBancaire';
 
   constructor(private http: HttpClient) {}
 

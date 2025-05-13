@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SELFUNDR - Professional Training and Courses">
+  <title>SELFUNDR - Professional Trainings</title>
+</head>
+<body>
+
+<!-- Formation Header -->
+<header class="formation-masthead">
+  <div class="container">
+    <h1>Empower Your Skills</h1>
+    <p>Discover a wide range of professional courses designed to boost your career and enhance your expertise with SELFUNDR's training platform.</p>
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search for courses..."
+        (input)="searchFormations($event)"
+        class="search-input">
+    </div>
+  </div>
+</header>
+
+<!-- Filters Section -->
+<section class="formation-filters">
+  <div class="container">
+    <h2>Browse Our Courses</h2>
+    <p>Filter by type to find the perfect training for your needs</p>
+
+    <div class="filter-buttons">
+      <button
+        [class.active]="selectedType === 'ALL'"
+        (click)="filterByType('ALL')"
+        class="filter-btn">
+        All Courses
+      </button>
+      <button
+        [class.active]="selectedType === 'TOP_RATED'"
+        (click)="filterByType('TOP_RATED')"
+        class="filter-btn filter-btn-top-rated">
+        Top Rated
+      </button>
+      <button
+        *ngFor="let type of ['WEBINAIR', 'PDF', 'VIDEO']"
+        [class.active]="selectedType === type"
+        (click)="filterByType(type)"
+        class="filter-btn">
+        {{ type }}
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Formations Grid -->
+<section class="formations">
+  <div class="container">
+    <div class="formation-grid">
+      <div class="formation-card" *ngFor="let formation of paginatedFormations; let i = index"
+           [attr.data-index]="i"
+           (click)="openFormationDetails(formation)"
+           data-bs-toggle="modal"
+           data-bs-target="#formationModal">
+        <div class="formation-type-badge" [class]="formation.typeFormation?.toLowerCase() || ''">
+          {{ formation.typeFormation }}
+        </div>
+
+        <div class="formation-content">
+          <h3>{{ formation.titre }}</h3>
+          <p>{{ formation.description }}</p>
+
+          <div class="formation-details">
+            <div class="detail">
+              <i class="fas fa-clock"></i>
+              <span>{{ formation.duree }} hours</span>
+            </div>
+            <div class="detail" *ngIf="formation.certificat">
+              <i class="fas fa-certificate"></i>
+              <span>Certified</span>
+            </div>
+          </div>
+
+          <div class="formation-rating">
+            <div class="stars">
+              <i class="fas fa-star"
+                 *ngFor="let star of [1, 2, 3, 4, 5]"
+                 [class.filled]="star <= (formation.noteMoyenne || 0)"></i>
+            </div>
+            <span>{{ (formation.noteMoyenne || 0).toFixed(1) }} ({{ formation.notesUsers?.length || 0 }} reviews)</span>
+          </div>
+        </div>
+
+        <div class="formation-footer">
+          <div class="price">{{ formation.prix  }} DT </div>
+
+          <button class="btn-enroll">Enroll Now</button>
+        </div>
+        <div class="d-grid gap-2 mt-3">
+          <button class="btn btn-outline-primary" (click)="openFormationDetails(formation)">
+            <i class="bi bi-info-circle me-1"></i> Détails
+          </button>
+          <button class="btn btn-primary">
+            <i class="bi bi-book me-1"></i> S'inscrire
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-container" *ngIf="getTotalPages() > 1">
+      <nav aria-label="Formation pagination">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="javascript:void(0)" (click)="previousPage()" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <li class="page-item" *ngIf="getPageNumbers()[0] > 1">
+            <a class="page-link" href="javascript:void(0)" (click)="goToPage(1)">1</a>
+          </li>
+
+          <li class="page-item disabled" *ngIf="getPageNumbers()[0] > 2">
+            <a class="page-link" href="javascript:void(0)">...</a>
+          </li>
+
+          <li class="page-item" *ngFor="let page of getPageNumbers()" [class.active]="page === currentPage">
+            <a class="page-link" href="javascript:void(0)" (click)="goToPage(page)">{{ page }}</a>
+          </li>
+
+          <li class="page-item disabled" *ngIf="getPageNumbers()[getPageNumbers().length - 1] < getTotalPages() - 1">
+            <a class="page-link" href="javascript:void(0)">...</a>
+          </li>
+
+          <li class="page-item" *ngIf="getPageNumbers()[getPageNumbers().length - 1] < getTotalPages()">
+            <a class="page-link" href="javascript:void(0)" (click)="goToPage(getTotalPages())">{{ getTotalPages() }}</a>
+          </li>
+
+          <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+            <a class="page-link" href="javascript:void(0)" (click)="nextPage()" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="pagination-info text-center mt-2">
+        <small class="text-muted">
+          Affichage de {{ (currentPage - 1) * pageSize + 1 }} à {{ getCurrentPageEnd() }}
+          sur {{ totalItems }} formations
+        </small>
+      </div>
+    </div>
+
+    <!-- No Results Message -->
+    <div class="no-results" *ngIf="filteredFormations.length === 0">
+      <i class="fas fa-search"></i>
+      <h3>No courses found</h3>
+      <p>Try adjusting your search criteria or explore different categories</p>
+      <button class="btn-reset" (click)="filterByType('ALL')">View All Courses</button>
+    </div>
+  </div>
+</section>
+
+<!-- Formation Details Modal -->
+<div class="modal fade" id="formationModal" tabindex="-1" aria-labelledby="formationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-white" *ngIf="selectedFormation">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold" id="formationModalLabel">{{ selectedFormation.titre }}</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <!-- Top section with image banner -->
+        <div class="formation-banner p-4 text-white">
+          <div class="overlay"></div>
+          <div class="banner-content position-relative">
+            <span class="badge rounded-pill" [ngClass]="'badge-' + (selectedFormation.typeFormation?.toLowerCase() || 'default')">
+              {{ selectedFormation.typeFormation || 'Non défini' }}
+            </span>
+            <div class="d-flex align-items-center mt-3">
+              <div class="stars me-2">
+                <i class="fas fa-star"
+                   *ngFor="let star of [1, 2, 3, 4, 5]"
+                   [class.filled]="star <= (selectedFormation.noteMoyenne || 0)"></i>
+              </div>
+              <span>{{ (selectedFormation.noteMoyenne || 0).toFixed(1) }} ({{ selectedFormation.notesUsers?.length || 0 }} avis)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="p-4">
+          <div class="row">
+            <div class="col-md-8">
+              <!-- Description section -->
+              <div class="mb-4">
+                <h6 class="fw-bold text-primary mb-3 border-start border-primary ps-2 border-3">Description</h6>
+                <p class="text-muted">{{ selectedFormation.description }}</p>
+              </div>
+
+              <!-- Details section -->
+              <div class="mb-4">
+                <h6 class="fw-bold text-primary mb-3 border-start border-primary ps-2 border-3">Détails du cours</h6>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="detail-card">
+                      <div class="detail-icon">
+                        <i class="ti ti-clock text-primary"></i>
+                      </div>
+                      <div class="detail-content">
+                        <h6 class="detail-title">Durée</h6>
+                        <p class="detail-value">{{ selectedFormation.duree }} heures</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="detail-card">
+                      <div class="detail-icon">
+                        <i class="ti ti-certificate text-primary"></i>
+                      </div>
+                      <div class="detail-content">
+                        <h6 class="detail-title">Certification</h6>
+                        <p class="detail-value">{{ selectedFormation.certificat ? 'Formation certifiante' : 'Non certifiante' }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="detail-card">
+                      <div class="detail-icon">
+                        <i class="ti ti-activity text-primary"></i>
+                      </div>
+                      <div class="detail-content">
+                        <h6 class="detail-title">Statut</h6>
+                        <span class="badge" [ngClass]="{
+                          'bg-warning': selectedFormation.statutFormation === 'En_Cours',
+                          'bg-success': selectedFormation.statutFormation === 'Complète'
+                        }">{{ selectedFormation.statutFormation }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="detail-card">
+                      <div class="detail-icon">
+                        <i class="ti ti-file-text text-primary"></i>
+                      </div>
+                      <div class="detail-content">
+                        <h6 class="detail-title">Support</h6>
+                        <a *ngIf="selectedFormation.formationFileUrl" [href]="selectedFormation.formationFileUrl" target="_blank" class="btn btn-sm btn-outline-primary">
+                          <i class="ti ti-download me-1"></i> Télécharger
+                        </a>
+                        <span *ngIf="!selectedFormation.formationFileUrl" class="text-muted">
+                          <i class="ti ti-file-off me-1"></i> Non disponible
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Rating Section -->
+              <div class="mb-4">
+                <h6 class="fw-bold text-primary mb-3 border-start border-primary ps-2 border-3">Évaluez cette formation</h6>
+
+                <div *ngIf="!ratingSubmitted; else ratingSuccess">
+                  <div class="user-rating mb-3">
+                    <div class="stars-rating d-flex align-items-center">
+                      <div class="rating-stars">
+                        <i class="fas fa-star rating-star"
+                           *ngFor="let star of [1, 2, 3, 4, 5]"
+                           [class.active]="star <= userRating"
+                           (click)="setUserRating(star)"
+                           (mouseenter)="setUserRating(star)"
+                           style="cursor: pointer; font-size: 1.5rem; color: #ccc; margin-right: 5px;"
+                           [style.color]="star <= userRating ? '#FFD700' : '#ccc'"></i>
+                      </div>
+                      <span class="ms-2 text-muted" *ngIf="userRating > 0">
+                        {{ userRating }} {{ userRating === 1 ? 'étoile' : 'étoiles' }}
+                      </span>
+                    </div>
+
+                    <div class="alert alert-danger mt-2" *ngIf="ratingError">
+                      {{ ratingError }}
+                    </div>
+
+                    <button class="btn btn-primary mt-3" (click)="soumettreNote()" [disabled]="userRating === 0">
+                      <i class="fas fa-paper-plane me-1"></i> Soumettre mon évaluation
+                    </button>
+                  </div>
+                </div>
+
+                <ng-template #ratingSuccess>
+                  <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i> Merci ! Votre évaluation a été soumise avec succès.
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+
+            <!-- Price card -->
+            <div class="col-md-4">
+              <div class="card rounded-3 border-0 shadow-sm price-card">
+                <div class="card-body p-4">
+                  <h5 class="card-title text-center mb-4 fw-bold">Prix</h5>
+                  <div class="text-center mb-4">
+                    <span class="display-6 fw-bold text-primary">{{ selectedFormation.prix }} DT</span>
+                  </div>
+                  <div class="d-grid gap-2">
+                    <button class="btn btn-primary btn-lg">
+                      <i class="ti ti-book me-2"></i> S'inscrire maintenant
+                    </button>
+                    <button class="btn btn-outline-primary">
+                      <i class="ti ti-heart me-2"></i> Ajouter aux favoris
+                    </button>
+                  </div>
+                  <div class="mt-4">
+                    <div class="secure-payment text-center">
+                      <small class="text-muted">
+                        <i class="ti ti-lock me-1"></i> Paiement sécurisé
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">S'inscrire</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Formation Benefits -->
+<section class="benefits">
+  <div class="container">
+    <h2>Why Choose Our Courses</h2>
+    <p>SELFUNDR offers high-quality training designed for your success</p>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <i class="fas fa-laptop"></i>
+        <h3>Learn Anywhere</h3>
+        <p>Access our courses from any device, anytime and anywhere</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-certificate"></i>
+        <h3>Get Certified</h3>
+        <p>Earn recognized certificates to boost your professional profile</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-user-tie"></i>
+        <h3>Expert Instructors</h3>
+        <p>Learn from industry professionals with real-world experience</p>
+      </div>
+      <div class="benefit-card">
+        <i class="fas fa-comments"></i>
+        <h3>Community Support</h3>
+        <p>Connect with fellow learners and instructors for guidance</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

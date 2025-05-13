@@ -674,7 +674,7 @@
                 </div>
             </div>
             <div class="dropdown hidden">
-                <button class="dropdown-toggle">Portfolio</button>
+                <button class="dropdown-toggle">Portfolioss</button>
                 <div class="dropdown-menu">
                     <a href="#services">View Portfolio</a>
                     <a href="#services">Manage Investments</a>
@@ -734,12 +734,12 @@
 
 <form [formGroup]="walletForm" (ngSubmit)="onSubmit()" class="wallet-form">
     <h2>Créer un Portefeuille</h2>
-  
+
     <!-- Afficher le message d'erreur global -->
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
-  
+
     <!-- Page 1 -->
     <div *ngIf="currentPage === 1">
       <div class="form-section">
@@ -748,33 +748,33 @@
         <div *ngIf="walletForm.get('idUser')?.invalid && walletForm.get('idUser')?.touched" class="error">
           L'ID utilisateur est requis et doit être un nombre.
         </div>
-  
+
         <label for="valeurTotale">Valeur Totale :</label>
         <input id="valeurTotale" formControlName="valeurTotale" type="number" placeholder="0.00" step="0.01" />
         <div *ngIf="walletForm.get('valeurTotale')?.invalid && walletForm.get('valeurTotale')?.touched" class="error">
           La valeur totale est requise et doit être positive.
         </div>
-  
+
         <label for="montantEpargne">Montant Épargne :</label>
         <input id="montantEpargne" formControlName="montantEpargne" type="number" placeholder="0.00" step="0.01" />
         <div *ngIf="walletForm.get('montantEpargne')?.invalid && walletForm.get('montantEpargne')?.touched" class="error">
           Le montant épargne est requis et doit être positif.
         </div>
       </div>
-  
+
       <div class="form-section">
         <label for="montantInvestie">Montant Investi :</label>
         <input id="montantInvestie" formControlName="montantInvestie" type="number" placeholder="0.00" step="0.01" />
         <div *ngIf="walletForm.get('montantInvestie')?.invalid && walletForm.get('montantInvestie')?.touched" class="error">
           Le montant investi est requis et doit être positif.
         </div>
-  
+
         <label for="soldeDisponible">Solde Disponible :</label>
         <input id="soldeDisponible" formControlName="soldeDisponible" type="number" placeholder="0.00" step="0.01" />
         <div *ngIf="walletForm.get('soldeDisponible')?.invalid && walletForm.get('soldeDisponible')?.touched" class="error">
           Le solde disponible est requis et doit être positif.
         </div>
-  
+
         <label for="montantCredit">Montant Crédit :</label>
         <input id="montantCredit" formControlName="montantCredit" type="number" placeholder="0.00" step="0.01" />
         <div *ngIf="walletForm.get('montantCredit')?.invalid && walletForm.get('montantCredit')?.touched" class="error">
@@ -782,7 +782,7 @@
         </div>
       </div>
     </div>
-  
+
     <!-- Page 2 -->
     <div *ngIf="currentPage === 2">
       <div class="form-section">
@@ -791,33 +791,33 @@
         <div *ngIf="walletForm.get('rendementPrevisionnel')?.invalid && walletForm.get('rendementPrevisionnel')?.touched" class="error">
           Le rendement prévisionnel est requis et doit être positif.
         </div>
-  
+
         <label for="dateCreation">Date de Création :</label>
         <input id="dateCreation" formControlName="dateCreation" type="date" />
         <div *ngIf="walletForm.get('dateCreation')?.invalid && walletForm.get('dateCreation')?.touched" class="error">
           La date de création est requise.
         </div>
-  
+
         <label for="scoreFinancier">Score Financier :</label>
         <input id="scoreFinancier" formControlName="scoreFinancier" type="text" placeholder="A, B, C, etc." />
         <div *ngIf="walletForm.get('scoreFinancier')?.invalid && walletForm.get('scoreFinancier')?.touched" class="error">
           Le score financier est requis.
         </div>
       </div>
-  
+
       <div class="form-section">
         <label for="codePin">Code PIN :</label>
         <input id="codePin" formControlName="codePin" type="password" placeholder="Code PIN à 4 chiffres" />
         <div *ngIf="walletForm.get('codePin')?.invalid && walletForm.get('codePin')?.touched" class="error">
           Le code PIN doit être exactement 4 chiffres.
         </div>
-  
+
         <label for="qrCode">QR Code :</label>
         <input id="qrCode" formControlName="qrCode" type="text" placeholder="Entrez un QR code valide" />
         <div *ngIf="walletForm.get('qrCode')?.invalid && walletForm.get('qrCode')?.touched" class="error">
           Le QR code est requis.
         </div>
-  
+
         <label for="statutPortfeuille">Statut :</label>
         <select id="statutPortfeuille" formControlName="statutPortfeuille">
           <option value="">-- Sélectionnez un statut --</option>
@@ -830,7 +830,7 @@
         </div>
       </div>
     </div>
-  
+
     <!-- Actions du formulaire -->
     <div class="form-actions">
       <button type="button" *ngIf="currentPage > 1" (click)="previousPage()" class="nav-btn">Précédent</button>
@@ -840,7 +840,7 @@
       </button>
     </div>
   </form>
-  
+
   <!-- Ajout de styles pour les erreurs -->
   <style>
     .wallet-form {
@@ -851,18 +851,18 @@
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
-  
+
     .form-section {
       margin-bottom: 1.5rem;
     }
-  
+
     .form-section label {
       display: block;
       font-weight: 500;
       margin-bottom: 0.5rem;
       color: #1e3a8a;
     }
-  
+
     .form-section input,
     .form-section select {
       width: 100%;
@@ -871,26 +871,26 @@
       border-radius: 5px;
       font-size: 1rem;
     }
-  
+
     .error-message {
       color: #e65b50;
       font-size: 0.9rem;
       margin-bottom: 1rem;
       text-align: center;
     }
-  
+
     .error {
       color: #e65b50;
       font-size: 0.8rem;
       margin-top: 0.25rem;
     }
-  
+
     .form-actions {
       display: flex;
       justify-content: space-between;
       margin-top: 2rem;
     }
-  
+
     .nav-btn,
     .submit-btn {
       padding: 0.75rem 1.5rem;
@@ -902,12 +902,12 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-  
+
     .nav-btn:hover,
     .submit-btn:hover {
       background-color: #e65b50;
     }
-  
+
     .nav-btn:disabled,
     .submit-btn:disabled {
       background-color: #ccc;
