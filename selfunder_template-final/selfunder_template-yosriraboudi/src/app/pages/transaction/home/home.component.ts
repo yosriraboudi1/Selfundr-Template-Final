@@ -74,7 +74,7 @@ export class HomeTrComponent implements OnInit {
     })
   }
 
-  
+
   loadTransactions(): void {
     this.loading = true;
     this.transactionService.getAllTransactions().subscribe({
@@ -92,7 +92,7 @@ export class HomeTrComponent implements OnInit {
 
   filterTransactions(type: string): void {
     this.currentFilter = type
-    
+
     if (type === 'all') {
       this.filteredTransactions = [...this.recentTransactions]
     } else {
@@ -116,7 +116,7 @@ export class HomeTrComponent implements OnInit {
       case 'send':
         this.actionForm.get('recipient')?.setValidators([Validators.required])
         this.actionForm.get('montant')?.setValidators([Validators.required, Validators.min(0)])
-        this.actionForm.get('paymentReference')?.setValidators([Validators.required])
+
         break
       case 'transfer':
         this.actionForm.get('bankAccount')?.setValidators([Validators.required])
@@ -192,14 +192,14 @@ export class HomeTrComponent implements OnInit {
       case 'DEPOT':
       case 'RETRAIT':
         return 'bi bi-arrow-down-circle-fill'
-      
+
       case 'PAIEMENT':
         return 'bi bi-arrow-up-circle-fill'
       case 'VIREMENT':
         return 'bi bi-arrow-left-right'
-      
-     
-      
+
+
+
       default:
         return 'bi bi-question-circle-fill'
     }
@@ -224,14 +224,14 @@ export class HomeTrComponent implements OnInit {
 
       if (this.activeModal === 'payment') {
         transaction.typeTransaction = TypeTransaction.PAIEMENT;
-        
+
       }
       if (this.activeModal === 'receive') {
         transaction.typeTransaction = TypeTransaction.DEPOT;
-        
+
       }
       console.log("Final Transaction Data:", formData); // Debugging
-      
+
       console.log("Données envoyées :", transaction);
 
       this.transactionService.createTransaction(userId, 1, transaction).subscribe({
@@ -256,7 +256,7 @@ export class HomeTrComponent implements OnInit {
       case 'transfer':
         return `Transfer to ${formData.bankAccount} account`
       case 'payment':
-        return `Payment for ${formData.paymentFor}`
+        return `Payment for ${formData.recipient}`
       case 'bills':
         return `${formData.billType} bill payment`
       case 'savings':
@@ -273,5 +273,5 @@ export class HomeTrComponent implements OnInit {
       this.balance -= transaction.montant
     }
   }
-  
-} 
+
+}

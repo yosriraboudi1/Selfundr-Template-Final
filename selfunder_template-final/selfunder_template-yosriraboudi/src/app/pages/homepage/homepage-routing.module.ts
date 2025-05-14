@@ -4,7 +4,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { ReclamationListComponent } from '../reclamation/reclamation-list/reclamation-list.component';
 import { AddReclamationComponent } from '../reclamation/add-reclamation/add-reclamation.component';
 import { ReclamationStatsComponent } from '../reclamation/reclamation-stats/reclamation-stats.component';
-
+import { TransactionFormComponent } from '../transaction/form/transaction-form.component';
 const routes: Routes = [
    {
               path: '', component: HomepageComponent,

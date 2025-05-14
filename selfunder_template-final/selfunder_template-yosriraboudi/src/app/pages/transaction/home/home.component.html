@@ -6,7 +6,7 @@
   <div class="welcome-section">
     <h1>Welcome to Digital Banking</h1>
     <p class="subtitle">Manage your transactions securely and efficiently</p>
-    
+
     <!-- Balance Display -->
     <div class="balance-display">
       <h2>${{ balance }}</h2>
@@ -58,8 +58,8 @@
 
   <!-- Transaction Filters -->
   <div class="transaction-filters">
-    <button 
-      *ngFor="let filter of transactionFilters" 
+    <button
+      *ngFor="let filter of transactionFilters"
       [class.active]="currentFilter === filter.type"
       (click)="filterTransactions(filter.type)"
       class="filter-btn">
@@ -81,7 +81,7 @@
             <th>Type</th>
             <th>Recipient</th>
             <th>Reference</th>
-            <th>Actions</th>
+
           </tr>
         </thead>
         <tbody>
@@ -92,7 +92,7 @@
             <td>{{transaction.typeTransaction}}</td>
             <td>{{transaction.recipient || '-'}}</td>
             <td>{{transaction.paymentReference || '-'}}</td>
-           
+
           </tr>
         </tbody>
       </table>
@@ -114,7 +114,7 @@
       <form [formGroup]="actionForm" (ngSubmit)="submitAction()" class="action-form">
         <!-- Dynamic Form Content based on Modal Type -->
         <ng-container [ngSwitch]="activeModal">
-          
+
           <!-- Send Money Form -->
           <ng-container *ngSwitchCase="'send'">
             <div class="form-group">
@@ -128,10 +128,7 @@
                 <input type="number" formControlName="montant" placeholder="Enter montant">
               </div>
             </div>
-            <div class="form-group">
-              <label>paymentReference</label>
-              <input type="text" formControlName="paymentReference" placeholder="What's this for?">
-            </div>
+
           </ng-container>
 
           <!-- Receive Money Form -->
@@ -256,4 +253,4 @@
       </form>
     </div>
   </div>
-</div> 
+</div>

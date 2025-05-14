@@ -13,6 +13,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { InvestissementFormComponent } from './investissement-form/investissement-form.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { PortfolioInvestissementsComponent } from './portfolio-investissements/portfolio-investissements.component';
+import { CompteFormComponent } from './pages/compte-bancaire/form/compte-form.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -49,6 +51,8 @@ const routes: Routes = [
 
   { path: 'wallet/apply', component: HomepageClientComponent },
 
+  {  path: 'comptes/edit/:id',
+    component: CompteFormComponent}
 
 ];
 

@@ -17,7 +17,7 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
 import { PortfolioInvestissementsComponent } from './portfolio-investissements/portfolio-investissements.component';
 // Suppression de l'import du ChatbotComponent car il est déjà déclaré dans HomepageClientModule
 // import { ChatbotComponent } from './pages/chatbot/chatbot.component';
-
+import { CompteBancaireModule } from './pages/compte-bancaire/compte-bancaire.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +34,7 @@ import { PortfolioInvestissementsComponent } from './portfolio-investissements/p
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    CompteBancaireModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

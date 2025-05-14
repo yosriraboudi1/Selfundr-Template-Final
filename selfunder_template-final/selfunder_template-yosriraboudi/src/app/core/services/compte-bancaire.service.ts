@@ -11,9 +11,11 @@ export class CompteBancaireService {
 
   constructor(private http: HttpClient) {}
 
-  createCompte(userId: number, compte: CompteBancaire): Observable<CompteBancaire> {
-    return this.http.post<CompteBancaire>(`${this.apiUrl}/add-compteBancaire/${userId}`, compte);
-  }
+  createCompte(userId: number, compte: any): Observable<any> {
+  return this.http.post(`http://localhost:8080/compteBancaire/add-compteBancaire?userId=${userId}`, compte);
+}
+
+
 
   getAllComptes(): Observable<CompteBancaire[]> {
     return this.http.get<CompteBancaire[]>(`${this.apiUrl}/retrieve-all-compteBancaires`);
@@ -23,9 +25,7 @@ export class CompteBancaireService {
     return this.http.get<CompteBancaire>(`${this.apiUrl}/retrieve-compteBancaire/${id}`);
   }
 
-  getComptesByUser(userId: number): Observable<CompteBancaire[]> {
-    return this.http.get<CompteBancaire[]>(`${this.apiUrl}/comptes/user/${userId}`);
-  }
+
 
   updateCompte(compte: CompteBancaire): Observable<CompteBancaire> {
     return this.http.put<CompteBancaire>(`${this.apiUrl}/modify-compteBancaire/${compte.idCompte}`, compte);
@@ -33,5 +33,8 @@ export class CompteBancaireService {
 
   deleteCompte(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/remove-compteBancaire/${id}`);
+  }
+  getComptesByUser(userId: number): Observable<CompteBancaire[]> {
+    return this.http.get<CompteBancaire[]>(`${this.apiUrl}/getcomptes/${userId}`);
   }
 }
