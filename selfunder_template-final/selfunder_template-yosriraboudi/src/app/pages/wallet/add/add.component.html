@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="SELFUNDR - Empowering you with modern, self-directed banking solutions." />
+    <meta name="author" content="SELFUNDR" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>SELFUNDR - Your Financial Freedom</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <!-- Font Awesome icons -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: 'Poppins', sans-serif;
+          color: #333;
+          line-height: 1.6;
+          background-color: #f4f7fa;
+      }
+
+      a {
+          text-decoration: none;
+          color: inherit;
+      }
+
+      /* Navbar */
+      .navbar {
+          background-color: transparent;
+          padding: 1rem 2rem;
+          position: fixed;
+          width: 100%;
+          top: 0;
+          z-index: 1000;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: none;
+          transform: translateY(-100%);
+          animation: slideDown 0.5s ease forwards;
+          transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .navbar.scrolled {
+          background-color: #1e3a8a;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand img {
+          height: 50px;
+      }
+
+      .nav-links {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+      }
+
+      .nav-link {
+          color: #fff;
+          font-weight: 500;
+          transition: color 0.3s ease;
+          position: relative;
+      }
+
+      .nav-link::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: -5px;
+          left: 0;
+          background-color: #ff6f61;
+          transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+          width: 100%;
+      }
+
+      .nav-link:hover {
+          color: #ff6f61;
+      }
+
+      .btn {
+          padding: 0.75rem 1.5rem;
+          border-radius: 25px;
+          font-weight: 500;
+          transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+          background-color: #ff6f61;
+          color: #fff;
+          border: none;
+      }
+
+      .btn-secondary {
+          background-color: #fff;
+          color: #1e3a8a;
+          border: 2px solid #1e3a8a;
+      }
+
+      .btn-primary:hover {
+          background-color: #e65b50;
+          transform: scale(1.05);
+      }
+
+      .btn-secondary:hover {
+          background-color: #1e3a8a;
+          color: #fff;
+          transform: scale(1.05);
+      }
+
+      /* Hero Section */
+      .masthead {
+          background: linear-gradient(135deg, #1e3a8a 0%, #2d5a9e 100%), url('assets/img/hero-bg.jpg') no-repeat center center/cover;
+          color: #fff;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 0 2rem;
+      }
+
+      .masthead .container {
+          max-width: 900px;
+          opacity: 0;
+          animation: fadeIn 1.5s ease forwards;
+      }
+
+      .masthead h1 {
+          font-size: 4rem;
+          font-weight: 700;
+          line-height: 1.2;
+          margin-bottom: 1.5rem;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+          background: linear-gradient(45deg, #ffffff, #f0f0f0);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: textGlow 2s ease-in-out infinite alternate;
+      }
+
+      .masthead p {
+          font-size: 1.5rem;
+          font-family: 'Roboto', sans-serif;
+          font-weight: 300;
+          line-height: 1.8;
+          margin-bottom: 2.5rem;
+          max-width: 700px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: slideUp 1s ease forwards 0.5s;
+      }
+
+      .hero-actions .btn {
+          margin: 0 1rem;
+          font-size: 1.2rem;
+          padding: 1rem 2rem;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .hero-actions .btn:hover {
+          transform: scale(1.1);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* About Section */
+      .about {
+          padding: 4rem 2rem;
+          text-align: center;
+          background-color: #fff;
+      }
+
+      .about h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1e3a8a;
+          margin-bottom: 1rem;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.2s;
+      }
+
+      .about p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 2rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.4s;
+      }
+
+      /* Features Section */
+      .features {
+          padding: 4rem 2rem;
+          text-align: center;
+          background-color: #f4f7fa;
+      }
+
+      .features h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          color: #1e3a8a;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.2s;
+      }
+
+      .features p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 3rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.4s;
+      }
+
+      .feature-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
+      }
+
+      .feature-card {
+          background: #fff;
+          padding: 2rem;
+          border-radius: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards;
+      }
+
+      .feature-card:nth-child(1) { animation-delay: 0.2s; }
+      .feature-card:nth-child(2) { animation-delay: 0.4s; }
+      .feature-card:nth-child(3) { animation-delay: 0.6s; }
+      .feature-card:nth-child(4) { animation-delay: 0.8s; }
+      .feature-card:nth-child(5) { animation-delay: 1.0s; }
+      .feature-card:nth-child(6) { animation-delay: 1.2s; }
+
+      .feature-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-card i {
+          font-size: 2rem;
+          color: #ff6f61;
+          margin-bottom: 1rem;
+          transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover i {
+          transform: scale(1.2);
+      }
+
+      .feature-card h3 {
+          font-size: 1.5rem;
+          color: #1e3a8a;
+          margin-bottom: 0.5rem;
+      }
+
+      .feature-card p {
+          font-size: 0.95rem;
+          color: #777;
+      }
+
+      /* Team Section */
+      .team {
+          padding: 4rem 2rem;
+          background-color: #fff;
+          text-align: center;
+      }
+
+      .team h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1e3a8a;
+          margin-bottom: 1rem;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.2s;
+      }
+
+      .team p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 3rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.4s;
+      }
+
+      .team-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
+      }
+
+      .team-member {
+          background: #fff;
+          padding: 1.5rem;
+          border-radius: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards;
+      }
+
+      .team-member:nth-child(1) { animation-delay: 0.2s; }
+      .team-member:nth-child(2) { animation-delay: 0.4s; }
+      .team-member:nth-child(3) { animation-delay: 0.6s; }
+      .team-member:nth-child(4) { animation-delay: 0.8s; }
+      .team-member:nth-child(5) { animation-delay: 1.0s; }
+
+      .team-member:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .team-member img {
+          width: 150px;
+          height: 150px;
+          object-fit: cover;
+          border-radius: 50%;
+          margin-bottom: 1rem;
+          transition: transform 0.3s ease;
+      }
+
+      .team-member:hover img {
+          transform: scale(1.1);
+      }
+
+      .team-member h4 {
+          font-size: 1.5rem;
+          color: #1e3a8a;
+          margin-bottom: 0.5rem;
+      }
+
+      .team-member p {
+          font-size: 0.95rem;
+          color: #777;
+          margin-bottom: 1rem;
+      }
+
+      .team-member .social-links a {
+          margin: 0 0.5rem;
+          color: #1e3a8a;
+          transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .team-member .social-links a:hover {
+          color: #ff6f61;
+          transform: scale(1.2);
+      }
+
+      /* Contact Section */
+      .contact {
+          padding: 4rem 2rem;
+          background-color: #f4f7fa;
+          text-align: center;
+      }
+
+      .contact h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1e3a8a;
+          margin-bottom: 1rem;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.2s;
+      }
+
+      .contact p {
+          font-size: 1.1rem;
+          color: #666;
+          margin-bottom: 3rem;
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 0.4s;
+      }
+
+      #contactForm {
+          max-width: 700px;
+          margin: 0 auto;
+      }
+
+      #contactForm input,
+      #contactForm textarea {
+          width: 100%;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 25px;
+          font-family: 'Poppins', sans-serif;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards;
+      }
+
+      #contactForm input:nth-child(1) { animation-delay: 0.2s; }
+      #contactForm input:nth-child(2) { animation-delay: 0.4s; }
+      #contactForm input:nth-child(3) { animation-delay: 0.6s; }
+      #contactForm textarea { animation-delay: 0.8s; }
+
+      #contactForm input:focus,
+      #contactForm textarea:focus {
+          border-color: #ff6f61;
+          box-shadow: 0 0 8px rgba(255, 111, 97, 0.3);
+          outline: none;
+      }
+
+      #contactForm button {
+          background-color: #ff6f61;
+          color: #fff;
+          padding: 0.75rem 2rem;
+          border: none;
+          border-radius: 25px;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+          opacity: 0;
+          animation: fadeInUp 1s ease forwards 1s;
+      }
+
+      #contactForm button:hover {
+          background-color: #e65b50;
+          transform: scale(1.05);
+      }
+
+      /* Footer */
+      .footer {
+            background-color: transparent;
+            color: #000000;
+            padding: 2rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.5s;
+        }
+      .footer a {
+          color: #ff6f61;
+          margin: 0 1rem;
+          transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .footer a:hover {
+          color: #e65b50;
+          transform: scale(1.1);
+      }
+
+      /* Animations */
+      @keyframes slideDown {
+          from {
+              transform: translateY(-100%);
+          }
+          to {
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes fadeIn {
+          from {
+              opacity: 0;
+              transform: translateY(20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes fadeInUp {
+          from {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes slideUp {
+          from {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to {
+              opacity: 0.9;
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes textGlow {
+          from {
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+          }
+          to {
+              text-shadow: 2px 2px 8px rgba(255, 111, 97, 0.5);
+          }
+      }
+
+      /* Media Queries */
+      @media (max-width: 768px) {
+          .nav-links {
+              display: none;
+              position: absolute;
+              top: 70px;
+              left: 0;
+              right: 0;
+              background-color: #1e3a8a;
+              flex-direction: column;
+              padding: 1rem;
+              gap: 1rem;
+          }
+
+          .nav-links.active {
+              display: flex;
+          }
+
+          .menu-toggle {
+              display: block;
+              font-size: 1.5rem;
+              color: #fff;
+              cursor: pointer;
+          }
+      }
+
+      @media (max-width: 480px) {
+          .masthead h1 {
+              font-size: 2rem;
+          }
+
+          .masthead p {
+              font-size: 1rem;
+          }
+      }
+      /* Style général des boutons du dropdown */
+.dropdown-toggle {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.3rem 1rem;
+
+    position: relative;
+    text-align: left;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* Soulignement animé sous chaque bouton */
+.dropdown-toggle::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #ff6f61;
+    transition: width 0.3s ease;
+}
+
+/* Effet au survol */
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
+    color: #ff6f61;
+}
+
+.dropdown-toggle:hover::after,
+.dropdown-toggle:focus::after {
+    width: 100%;
+}
+
+/* Style du menu déroulant */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background-color: #1e3a8a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    z-index: 1000;
+    overflow: hidden;
+    animation: fadeInDown 0.3s ease;
+}
+
+/* Lien dans le menu déroulant */
+.dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: #ff6f61;
+    color: #fff;
+}
+
+/* Affichage du menu au hover ou click */
+.dropdown:hover .dropdown-menu,
+.dropdown.active .dropdown-menu {
+    display: block;
+}
+
+/* Animation d'apparition du dropdown */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+  </style>
+</head>
+<body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="#page-top">
+            <img src="assets/img/logos/SELFUNDR.svg" alt="SELFUNDR Logo" style="height: 50px; width: auto;" />
+        </a>
+        <div class="menu-toggle" onclick="toggleMenu()"></div>
+        <div class="nav-links" id="navbarResponsive">
+            <div class="dropdown">
+                <button class="dropdown-toggle">Bank Account</button>
+                <div class="dropdown-menu">
+                    <a href="#contact">Open Account</a>
+                    <a href="#contact">Manage Account</a>
+                    <a href="#contact">View Balance</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Credit</button>
+                <div class="dropdown-menu">
+                    <a href="#services">Apply for Credit</a>
+                    <a href="#services">Credit Options</a>
+                    <a href="#services">Credit Status</a>
+                </div>
+            </div>
+            <div class="dropdown hidden">
+                <button class="dropdown-toggle">Portfolioss</button>
+                <div class="dropdown-menu">
+                    <a href="#services">View Portfolio</a>
+                    <a href="#services">Manage Investments</a>
+                    <a href="#services">Portfolio Analysis</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Wallet</button>
+                <div class="dropdown-menu">
+                    <a href="#portfolio">Add Funds</a>
+                    <a href="#portfolio">Withdraw Funds</a>
+                    <a href="#portfolio">Wallet Settings</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Contract</button>
+                <div class="dropdown-menu">
+                    <a href="#about">View Contracts</a>
+                    <a href="#about">Sign Contract</a>
+                    <a href="#about">Contract History</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Guarantor</button>
+                <div class="dropdown-menu">
+                    <a href="#team">Add Guarantor</a>
+                    <a href="#team">Guarantor Details</a>
+                    <a href="#team">Guarantor Status</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Transaction</button>
+                <div class="dropdown-menu">
+                    <a href="#contact">Recent Transactions</a>
+                    <a href="#contact">Transfer Funds</a>
+                    <a href="#contact">Transaction History</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">Claim</button>
+                <div class="dropdown-menu">
+                    <a href="/reclamation/add">File a Claim</a>
+                    <a href="/reclamation/add">Claim Status</a>
+                    <a href="/reclamation/reclamationclient-list">Claim History</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Masthead -->
+    <header class="masthead">
+      <div class="container">
+        <h1>Empower Your Financial Future</h1>
+        <p>Discover a banking experience tailored to your needs with SELFUNDR, offering secure, innovative, and accessible financial solutions designed to help you thrive.</p>
+      </div>
+  </header>
+
+<form [formGroup]="walletForm" (ngSubmit)="onSubmit()" class="wallet-form">
+    <h2>Créer un Portefeuille</h2>
+
+    <!-- Afficher le message d'erreur global -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Page 1 -->
+    <div *ngIf="currentPage === 1">
+      <div class="form-section">
+        <label for="idUser">ID Utilisateur :</label>
+        <input id="idUser" formControlName="idUser" type="text" placeholder="Entrez l'ID utilisateur" />
+        <div *ngIf="walletForm.get('idUser')?.invalid && walletForm.get('idUser')?.touched" class="error">
+          L'ID utilisateur est requis et doit être un nombre.
+        </div>
+
+        <label for="valeurTotale">Valeur Totale :</label>
+        <input id="valeurTotale" formControlName="valeurTotale" type="number" placeholder="0.00" step="0.01" />
+        <div *ngIf="walletForm.get('valeurTotale')?.invalid && walletForm.get('valeurTotale')?.touched" class="error">
+          La valeur totale est requise et doit être positive.
+        </div>
+
+        <label for="montantEpargne">Montant Épargne :</label>
+        <input id="montantEpargne" formControlName="montantEpargne" type="number" placeholder="0.00" step="0.01" />
+        <div *ngIf="walletForm.get('montantEpargne')?.invalid && walletForm.get('montantEpargne')?.touched" class="error">
+          Le montant épargne est requis et doit être positif.
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label for="montantInvestie">Montant Investi :</label>
+        <input id="montantInvestie" formControlName="montantInvestie" type="number" placeholder="0.00" step="0.01" />
+        <div *ngIf="walletForm.get('montantInvestie')?.invalid && walletForm.get('montantInvestie')?.touched" class="error">
+          Le montant investi est requis et doit être positif.
+        </div>
+
+        <label for="soldeDisponible">Solde Disponible :</label>
+        <input id="soldeDisponible" formControlName="soldeDisponible" type="number" placeholder="0.00" step="0.01" />
+        <div *ngIf="walletForm.get('soldeDisponible')?.invalid && walletForm.get('soldeDisponible')?.touched" class="error">
+          Le solde disponible est requis et doit être positif.
+        </div>
+
+        <label for="montantCredit">Montant Crédit :</label>
+        <input id="montantCredit" formControlName="montantCredit" type="number" placeholder="0.00" step="0.01" />
+        <div *ngIf="walletForm.get('montantCredit')?.invalid && walletForm.get('montantCredit')?.touched" class="error">
+          Le montant crédit est requis et doit être positif.
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 2 -->
+    <div *ngIf="currentPage === 2">
+      <div class="form-section">
+        <label for="rendementPrevisionnel">Rendement Prévisionnel :</label>
+        <input id="rendementPrevisionnel" formControlName="rendementPrevisionnel" type="number" placeholder="0.00" step="0.01" />
+        <div *ngIf="walletForm.get('rendementPrevisionnel')?.invalid && walletForm.get('rendementPrevisionnel')?.touched" class="error">
+          Le rendement prévisionnel est requis et doit être positif.
+        </div>
+
+        <label for="dateCreation">Date de Création :</label>
+        <input id="dateCreation" formControlName="dateCreation" type="date" />
+        <div *ngIf="walletForm.get('dateCreation')?.invalid && walletForm.get('dateCreation')?.touched" class="error">
+          La date de création est requise.
+        </div>
+
+        <label for="scoreFinancier">Score Financier :</label>
+        <input id="scoreFinancier" formControlName="scoreFinancier" type="text" placeholder="A, B, C, etc." />
+        <div *ngIf="walletForm.get('scoreFinancier')?.invalid && walletForm.get('scoreFinancier')?.touched" class="error">
+          Le score financier est requis.
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label for="codePin">Code PIN :</label>
+        <input id="codePin" formControlName="codePin" type="password" placeholder="Code PIN à 4 chiffres" />
+        <div *ngIf="walletForm.get('codePin')?.invalid && walletForm.get('codePin')?.touched" class="error">
+          Le code PIN doit être exactement 4 chiffres.
+        </div>
+
+        <label for="qrCode">QR Code :</label>
+        <input id="qrCode" formControlName="qrCode" type="text" placeholder="Entrez un QR code valide" />
+        <div *ngIf="walletForm.get('qrCode')?.invalid && walletForm.get('qrCode')?.touched" class="error">
+          Le QR code est requis.
+        </div>
+
+        <label for="statutPortfeuille">Statut :</label>
+        <select id="statutPortfeuille" formControlName="statutPortfeuille">
+          <option value="">-- Sélectionnez un statut --</option>
+          <option value="Actif">Actif</option>
+          <option value="Suspendu">Suspendu</option>
+          <option value="Cloture">Cloturé</option>
+        </select>
+        <div *ngIf="walletForm.get('statutPortfeuille')?.invalid && walletForm.get('statutPortfeuille')?.touched" class="error">
+          Le statut est requis.
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions du formulaire -->
+    <div class="form-actions">
+      <button type="button" *ngIf="currentPage > 1" (click)="previousPage()" class="nav-btn">Précédent</button>
+      <button type="button" *ngIf="currentPage < totalPages" (click)="nextPage()" class="nav-btn" [disabled]="!isCurrentPageValid()">Suivant</button>
+      <button type="submit" *ngIf="currentPage === totalPages" class="submit-btn" [disabled]="!walletForm.valid || isLoading">
+        {{ isLoading ? 'Création en cours...' : 'Créer le Portefeuille' }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Ajout de styles pour les erreurs -->
+  <style>
+    .wallet-form {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-section label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #1e3a8a;
+    }
+
+    .form-section input,
+    .form-section select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .error-message {
+      color: #e65b50;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .error {
+      color: #e65b50;
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+
+    .nav-btn,
+    .submit-btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #ff6f61;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-btn:hover,
+    .submit-btn:hover {
+      background-color: #e65b50;
+    }
+
+    .nav-btn:disabled,
+    .submit-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+
+  <footer class="footer">
+    <p>© 2025 SELFUNDR. All rights reserved.</p>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Support</a>
+  </footer>

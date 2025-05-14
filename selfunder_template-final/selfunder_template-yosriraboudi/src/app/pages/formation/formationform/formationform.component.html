@@ -1,0 +1,311 @@
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+  <!-- Sidebar Start -->
+  <aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div>
+      <div class="brand-logo d-flex align-items-center justify-content-between">
+        <a routerLink="/extra/dashboard" class="text-nowrap logo-img">
+          <img src="assets/images/logos/46014c34-73ee-4f01-ab3f-bcf5963fa6c2.svg" width="200" style="margin: 20px 18px;" alt="" />
+        </a>
+        <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+          <i class="ti ti-x fs-8"></i>
+        </div>
+      </div>
+      <!-- Sidebar navigation-->
+      <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <ul id="sidebarnav">
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Home</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" routerLink="/reclamation/stats" aria-expanded="false">
+              <span>
+                <i class="ti ti-layout-dashboard"></i>
+              </span>
+              <span class="hide-menu">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">EXTRA</span>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" routerLink="/extra/sample-page" aria-expanded="false">
+              <span>
+                <i class="ti ti-aperture"></i>
+              </span>
+              <span class="hide-menu">Sample Page</span>
+            </a>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">UI COMPONENTS</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+              <span>
+                <i class="ti ti-wallet"></i>
+              </span>
+              <span class="hide-menu">Portfeuille</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+              <span>
+                <i class="ti ti-album"></i>
+              </span>
+              <span class="hide-menu">Portfolioxy</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+              <span>
+                <i class="ti ti-currency-bitcoin"></i>
+              </span>
+              <span class="hide-menu">Credit</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+              <span>
+                <i class="ti ti-transform"></i>
+              </span>
+              <span class="hide-menu">Transaction</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+              <span>
+                <i class="ti ti-building-bank"></i>
+              </span>
+              <span class="hide-menu">Compte Bancaire</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" routerLink="/formation/list" aria-expanded="false">
+              <span>
+                <i class="ti ti-vocabulary"></i>
+              </span>
+              <span class="hide-menu">Formation</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+              <span>
+                <i class="ti ti-user"></i>
+              </span>
+              <span class="hide-menu">Utilisateurs</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+              <span>
+                <i class="ti ti-file-text"></i>
+              </span>
+              <span class="hide-menu">Contrat</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+              <span>
+                <i class="ti ti-award"></i>
+              </span>
+              <span class="hide-menu">Garant</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" routerLink="/reclamation/list" aria-expanded="false">
+              <span>
+                <i class="ti ti-alert-circle"></i>
+              </span>
+              <span class="hide-menu">Reclamation</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" routerLink="/contact/contactlist" aria-expanded="false">
+              <span>
+                <i class="ti ti-world"></i>
+              </span>
+              <span class="hide-menu">Contacts</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+  </aside>
+  <!--  Sidebar End -->
+  <!--  Main wrapper -->
+  <div class="body-wrapper">
+    <!--  Header Start -->
+    <header class="app-header">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <ul class="navbar-nav">
+          <li class="nav-item d-block d-xl-none">
+            <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+              <i class="ti ti-menu-2"></i>
+            </a>
+          </li>
+        </ul>
+        <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+          <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+            <li class="nav-item dropdown">
+              <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                 aria-expanded="false">
+                <img src="assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                <div class="message-body">
+                  <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                    <i class="ti ti-user fs-6"></i>
+                    <p class="mb-0 fs-3">My Profile</p>
+                  </a>
+                  <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                    <i class="ti ti-mail fs-6"></i>
+                    <p class="mb-0 fs-3">My Account</p>
+                  </a>
+                  <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                    <i class="ti ti-list-check fs-6"></i>
+                    <p class="mb-0 fs-3">My Task</p>
+                  </a>
+                  <a routerLink="/auth/login" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!--  Header End -->
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">{{ isEditMode ? 'Modifier la formation' : 'Ajouter une nouvelle formation' }}</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formationForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6">
+                <!-- Titre -->
+                <div class="mb-3">
+                  <label for="titre" class="form-label">Titre <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="titre" formControlName="titre"
+                         [ngClass]="{'is-invalid': formationForm.get('titre')?.invalid && formationForm.get('titre')?.touched}">
+                  <div *ngIf="formationForm.get('titre')?.invalid && formationForm.get('titre')?.touched" class="invalid-feedback">
+                    <div *ngIf="formationForm.get('titre')?.errors?.['required']">Le titre est obligatoire.</div>
+                    <div *ngIf="formationForm.get('titre')?.errors?.['minlength']">Le titre doit contenir au moins 3 caractères.</div>
+                  </div>
+                </div>
+
+                <!-- Prix -->
+                <div class="mb-3">
+                  <label for="prix" class="form-label">Prix (DT) <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="prix" formControlName="prix"
+                           [ngClass]="{'is-invalid': formationForm.get('prix')?.invalid && formationForm.get('prix')?.touched}">
+                    <span class="input-group-text">DT</span>
+                  </div>
+                  <div *ngIf="formationForm.get('prix')?.invalid && formationForm.get('prix')?.touched" class="text-danger small">
+                    <div *ngIf="formationForm.get('prix')?.errors?.['required']">Le prix est obligatoire.</div>
+                    <div *ngIf="formationForm.get('prix')?.errors?.['min']">Le prix doit être égal ou supérieur à 0.</div>
+                  </div>
+                </div>
+
+                <!-- Durée -->
+                <div class="mb-3">
+                  <label for="duree" class="form-label">Durée (heures) <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="duree" formControlName="duree"
+                           [ngClass]="{'is-invalid': formationForm.get('duree')?.invalid && formationForm.get('duree')?.touched}">
+                    <span class="input-group-text">heures</span>
+                  </div>
+                  <div *ngIf="formationForm.get('duree')?.invalid && formationForm.get('duree')?.touched" class="text-danger small">
+                    <div *ngIf="formationForm.get('duree')?.errors?.['required']">La durée est obligatoire.</div>
+                    <div *ngIf="formationForm.get('duree')?.errors?.['min']">La durée doit être supérieure à 0.</div>
+                  </div>
+                </div>
+
+                <!-- Type de formation -->
+                <div class="mb-3">
+                  <label for="typeFormation" class="form-label">Type de formation <span class="text-danger">*</span></label>
+                  <select class="form-select" id="typeFormation" formControlName="typeFormation"
+                          [ngClass]="{'is-invalid': formationForm.get('typeFormation')?.invalid && formationForm.get('typeFormation')?.touched}">
+                    <option *ngFor="let type of typeFormationOptions" [value]="type">{{ type }}</option>
+                  </select>
+                  <div *ngIf="formationForm.get('typeFormation')?.invalid && formationForm.get('typeFormation')?.touched" class="invalid-feedback">
+                    Le type de formation est obligatoire.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <!-- Description -->
+                <div class="mb-3">
+                  <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                  <textarea class="form-control" id="description" rows="4" formControlName="description"
+                            [ngClass]="{'is-invalid': formationForm.get('description')?.invalid && formationForm.get('description')?.touched}"></textarea>
+                  <div *ngIf="formationForm.get('description')?.invalid && formationForm.get('description')?.touched" class="invalid-feedback">
+                    <div *ngIf="formationForm.get('description')?.errors?.['required']">La description est obligatoire.</div>
+                    <div *ngIf="formationForm.get('description')?.errors?.['minlength']">La description doit contenir au moins 10 caractères.</div>
+                  </div>
+                </div>
+
+                <!-- Statut de formation -->
+                <div class="mb-3">
+                  <label for="statutFormation" class="form-label">Statut de formation <span class="text-danger">*</span></label>
+                  <select class="form-select" id="statutFormation" formControlName="statutFormation"
+                          [ngClass]="{'is-invalid': formationForm.get('statutFormation')?.invalid && formationForm.get('statutFormation')?.touched}">
+                    <option *ngFor="let statut of statutFormationOptions" [value]="statut">{{ statut }}</option>
+                  </select>
+                  <div *ngIf="formationForm.get('statutFormation')?.invalid && formationForm.get('statutFormation')?.touched" class="invalid-feedback">
+                    Le statut de formation est obligatoire.
+                  </div>
+                </div>
+
+                <!-- Certificat -->
+                <div class="mb-3 form-check ps-0">
+                  <div class="form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="certificat" formControlName="certificat">
+                    <label class="form-check-label" for="certificat">Formation certifiante</label>
+                  </div>
+                </div>
+
+                <!-- Téléchargement de fichier -->
+                <div class="mb-3">
+                  <label for="file" class="form-label">Fichier de formation</label>
+                  <input type="file" class="form-control" id="file" (change)="onFileSelected($event)">
+                  <div class="form-text text-muted">Format accepté: PDF, vidéo, etc.</div>
+                  <div *ngIf="isEditMode && formationForm.get('formationFileUrl')?.value" class="mt-2">
+                    <div class="d-flex align-items-center">
+                      <i class="ti ti-file text-primary me-2"></i>
+                      <span class="me-2">Fichier actuel:</span>
+                      <span class="text-truncate">{{ formationForm.get('formationFileUrl')?.value }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="d-flex gap-2 justify-content-end mt-4 border-top pt-3">
+              <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+                <i class="ti ti-arrow-back me-1"></i>Retour
+              </button>
+              <button type="button" class="btn btn-outline-warning" (click)="resetForm()">
+                <i class="ti ti-refresh me-1"></i>Réinitialiser
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="formationForm.invalid">
+                <i class="ti ti-device-floppy me-1"></i>{{ isEditMode ? 'Mettre à jour' : 'Enregistrer' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

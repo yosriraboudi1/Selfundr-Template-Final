@@ -1,0 +1,143 @@
+<div class="card border">
+  <div class="card-header border-bottom">
+    <h4 class="card-header-title">Bank Accounts</h4>
+  </div>
+
+  <div class="card-body vstack gap-4">
+    <div class="card" *ngFor="let compte of comptesBancaires">
+      <div class="card-header d-flex justify-content-between align-items-center p-3">
+        <div class="d-flex align-items-center">
+          <div class="icon-lg bg-light rounded-circle">
+            <i class="bi" [class]="getAccountIcon(compte.typeCompteBancaire)"></i>
+          </div>
+
+          <div class="ms-3">
+            <h5 class="mb-0">{{ getAccountTypeLabel(compte.typeCompteBancaire) }}</h5>
+            <p class="mb-0 small text-muted">{{ compte.codeBanque }}</p>
+          </div>
+        </div>
+
+        <div class="text-end">
+          <h4 class="mb-0">{{ compte.solde | number:'1.2-2' }} {{ compte.devise }}</h4>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="row g-4">
+          <div class="col-12">
+            <label class="form-label">IBAN</label>
+            <div class="input-group">
+              <input type="text" class="form-control" [value]="formatIBAN(compte.iban)" readonly />
+              <button class="btn btn-light" type="button">
+                <i class="bi bi-clipboard"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">RIB</label>
+            <div class="input-group">
+              <input type="text" class="form-control" [value]="formatRIB(compte.rib)" readonly />
+              <button class="btn btn-light" type="button">
+                <i class="bi bi-clipboard"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Bank Code</label>
+            <input type="text" class="form-control" [value]="compte.codeBanque" readonly />
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-sm btn-light">
+                <i class="bi bi-download me-2"></i>Account Statement
+              </button>
+              <button
+                class="btn btn-sm btn-outline-primary me-2"
+                [routerLink]="['/comptes/edit', compte.idCompte]">
+                <i class="bi bi-pencil me-2"></i>Edit
+              </button>
+
+
+
+              <button class="btn btn-sm btn-danger" (click)="openDeleteModal(deleteModal, compte)">
+                <i class="bi bi-trash me-2"></i>Delete
+              </button>
+              <ng-template #deleteModal let-modal>
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modal-title-delete">Confirmer la suppression</h5>
+                  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Êtes-vous sûr de vouloir supprimer le compte <strong>{{compteToDelete?.iban}}</strong> ?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteCompte()">
+                    <i class="bi bi-trash"></i> Confirmer
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-end">
+      <button class="btn btn-primary"
+              routerLink="/comptes/add"
+              aria-label="Add new bank account"
+              aria-haspopup="dialog">
+        <i class="bi bi-plus-lg"></i> Add New Account
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-title">Add New Bank Account</h5>
+    <button type="button" class="btn-close"
+            (click)="modal.dismiss('Cross click')"
+            aria-label="Close modal"></button>
+  </div>
+
+  <div class="modal-body p-4">
+    <form [formGroup]="compteForm" (ngSubmit)="onSubmit()">
+      <div class="row g-4">
+        <div class="col-12">
+          <label class="form-label">Account Type</label>
+          <select class="form-select">
+            <option value="">Select account type</option>
+            <option [value]="type.value" *ngFor="let type of TypeCompteBancaire | keyvalue">
+              {{ getAccountTypeLabel(type.value) }}
+            </option>
+          </select>
+        </div>
+
+
+
+
+
+        <div class="col-md-6">
+          <label class="form-label">Solde</label>
+          <input formControlName="solde" type="number" placeholder="Solde">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Devise</label>
+          <input formControlName="devise" placeholder="Devise">
+        </div>
+      </div>
+
+      <div class="text-end mt-4">
+        <button class="btn btn-primary" type="submit">Add Account</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
