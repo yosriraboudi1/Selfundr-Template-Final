@@ -27,7 +27,7 @@
           <div class="col-12">
             <label class="form-label">IBAN</label>
             <div class="input-group">
-              <input type="text" class="form-control" [value]="formatIBAN(compte.IBAN)" readonly />
+              <input type="text" class="form-control" [value]="formatIBAN(compte.iban)" readonly />
               <button class="btn btn-light" type="button">
                 <i class="bi bi-clipboard"></i>
               </button>
@@ -56,9 +56,32 @@
               <button class="btn btn-sm btn-light">
                 <i class="bi bi-download me-2"></i>Account Statement
               </button>
-              <button class="btn btn-sm btn-primary">
-                <i class="bi bi-arrow-right me-2"></i>Make a Transfer
-              </button>
+              <button 
+  class="btn btn-sm btn-outline-primary me-2" 
+  [routerLink]="['/comptes/edit', compte.idCompte]">
+  <i class="bi bi-pencil me-2"></i>Edit
+</button>
+
+
+
+              <button class="btn btn-sm btn-danger" (click)="openDeleteModal(deleteModal, compte)">
+                  <i class="bi bi-trash me-2"></i>Delete
+                </button>
+                <ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-title-delete">Confirmer la suppression</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <p>Êtes-vous sûr de vouloir supprimer le compte <strong>{{compteToDelete?.iban}}</strong> ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+    <button type="button" class="btn btn-danger" (click)="deleteCompte()">
+      <i class="bi bi-trash"></i> Confirmer
+    </button>
+  </div>
+</ng-template>
             </div>
           </div>
         </div>
@@ -66,17 +89,22 @@
     </div>
 
     <div class="text-end">
-      <button class="btn btn-primary mb-0" (click)="openModal(content)" type="button">
-        <i class="bi bi-plus-lg"></i> Add New Account
-      </button>
+      <button class="btn btn-primary" 
+         routerLink="/comptes/add" 
+        aria-label="Add new bank account"
+        aria-haspopup="dialog">
+  <i class="bi bi-plus-lg"></i> Add New Account
+</button>
     </div>
   </div>
 </div>
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h5 class="modal-title">Add New Bank Account</h5>
-    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+    <h5 class="modal-title" id="modal-title">Add New Bank Account</h5>
+    <button type="button" class="btn-close" 
+            (click)="modal.dismiss('Cross click')" 
+            aria-label="Close modal"></button>
   </div>
 
   <div class="modal-body p-4">
@@ -92,21 +120,9 @@
           </select>
         </div>
 
-        <div class="col-12">
-          <label class="form-label">IBAN</label>
-          <input formControlName="IBAN" placeholder="IBAN">
-          <small class="text-muted">Enter the IBAN exactly as provided by your bank</small>
-        </div>
+       
 
-        <div class="col-md-6">
-          <label class="form-label">RIB</label>
-          <input formControlName="rib" placeholder="RIB">
-        </div>
-
-        <div class="col-md-6">
-          <label class="form-label">Bank Code</label>
-          <input formControlName="codeBanque" placeholder="Code Banque">
-        </div>
+        
 
         <div class="col-md-6">
           <label class="form-label">Solde</label>

@@ -6,7 +6,7 @@ export enum TypeCompteBancaire {
 
 export interface CompteBancaire {
   idCompte?: number;
-  IBAN: string;
+  iban: string;
   rib: string;
   codeBanque: string;
   solde: number;

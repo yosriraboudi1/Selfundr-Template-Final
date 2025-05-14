@@ -116,7 +116,7 @@ export class HomeTrComponent implements OnInit {
       case 'send':
         this.actionForm.get('recipient')?.setValidators([Validators.required])
         this.actionForm.get('montant')?.setValidators([Validators.required, Validators.min(0)])
-        this.actionForm.get('paymentReference')?.setValidators([Validators.required])
+        
         break
       case 'transfer':
         this.actionForm.get('bankAccount')?.setValidators([Validators.required])
@@ -256,7 +256,7 @@ export class HomeTrComponent implements OnInit {
       case 'transfer':
         return `Transfer to ${formData.bankAccount} account`
       case 'payment':
-        return `Payment for ${formData.paymentFor}`
+        return `Payment for ${formData.recipient}`
       case 'bills':
         return `${formData.billType} bill payment`
       case 'savings':

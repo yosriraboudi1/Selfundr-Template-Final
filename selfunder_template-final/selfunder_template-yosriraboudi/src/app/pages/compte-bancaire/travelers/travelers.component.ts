@@ -12,8 +12,8 @@ export enum TypeCompteBancaire {
 }
 
 export interface CompteBancaire {
-  idCompte?: number;  // Make it optional
-  IBAN: string;
+  idCompte?: number;
+  iban: string;
   rib: string;
   codeBanque: string;
   solde: number;
@@ -21,21 +21,19 @@ export interface CompteBancaire {
   typeCompteBancaire: TypeCompteBancaire;
 }
 
-
 @Component({
   selector: 'app-bank-accounts',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './travelers.component.html',
   styleUrls: ['./travelers.component.scss']
 })
 export class TravelersComponent {
   compteForm: FormGroup;
   private modalService = inject(NgbModal)
-  comptesBancaires: CompteBancaire[]=[]
-  // Expose enum to template
+  comptesBancaires: CompteBancaire[] = [];
   protected TypeCompteBancaire = TypeCompteBancaire;
-  
+  compteToDelete: CompteBancaire | null = null;
+  editedCompteId: number | null = null;
+
   constructor(
     private fb: FormBuilder,
     private compteService: CompteBancaireService
@@ -51,20 +49,45 @@ export class TravelersComponent {
   }
 
   openModal(content: TemplateRef<any>) {
-    this.modalService.open(content, { size: 'lg' });
+    this.editedCompteId = null; // Reset editing state for creation
+    this.compteForm.reset();     // Clear the form
+    this.modalService.open(content, {
+      size: 'lg',
+      ariaLabelledBy: 'modal-title',
+      keyboard: true,
+      backdrop: 'static'
+    });
   }
 
-  formatIBAN(iban: string | undefined) {
-    if (!iban) {
-      console.error('IBAN is undefined!');
-      return 'Invalid IBAN';
-    }
-    return iban.replace(/(.{4})/g, '$1 ');
+  openEditModal(content: TemplateRef<any>, compte: CompteBancaire): void {
+    this.editedCompteId = compte.idCompte ?? null;
+    this.compteForm.setValue({
+      IBAN: compte.iban,
+      rib: compte.rib,
+      codeBanque: compte.codeBanque,
+      solde: compte.solde,
+      devise: compte.devise,
+      typeCompteBancaire: compte.typeCompteBancaire
+    });
+
+    this.modalService.open(content, {
+      size: 'lg',
+      ariaLabelledBy: 'modal-title-edit',
+      keyboard: true,
+      backdrop: 'static'
+    });
   }
-  
+
+  formatIBAN(iban: string): string {
+    if (!iban) return 'no iban';
+    const cleaned = iban.replace(/\s/g, '');
+    return cleaned.replace(/(.{4})/g, '$1 ').trim();
+  }
 
   formatRIB(rib: string): string {
-    return rib.replace(/(.{5})/g, '$1 ').trim();
+    if (!rib) return '';
+    const cleaned = rib.replace(/[^0-9a-zA-Z]/g, '');
+    return cleaned.replace(/(.{5})/g, '$1 ').trim();
   }
 
   getAccountTypeLabel(type: TypeCompteBancaire): string {
@@ -92,27 +115,83 @@ export class TravelersComponent {
         return 'bi-bank';
     }
   }
+
   onSubmit(): void {
-    if (this.compteForm.valid) {
-      const userId = 1; // <-- Replace with actual user ID (e.g., from login/session)
-      this.compteService.createCompte(userId, this.compteForm.value)
+    if (this.compteForm.invalid) return;
+
+    const compteData = {
+      ...this.compteForm.value,
+      iban: this.compteForm.value.IBAN // Ensure IBAN is mapped correctly
+    };
+
+    const userId = 1; // Replace with real user ID from session/login
+
+    if (this.editedCompteId) {
+      this.compteService.updateCompte({ ...compteData, idCompte: this.editedCompteId })
+
         .subscribe({
-          next: res => alert('Compte créé avec succès!'),
+          next: () => {
+            alert('Compte mis à jour avec succès!');
+            this.loadAccounts();
+            this.modalService.dismissAll();
+            this.editedCompteId = null;
+          },
+          error: err => {
+            console.error('Erreur lors de la mise à jour:', err);
+            alert('Échec de la mise à jour');
+          }
+        });
+    } else {
+      this.compteService.createCompte(userId, compteData)
+        .subscribe({
+          next: () => {
+            alert('Compte créé avec succès!');
+            this.loadAccounts();
+            this.modalService.dismissAll();
+          },
           error: err => console.error('Erreur lors de la création:', err)
         });
     }
-}
-ngOnInit(): void {
-  this.loadAccounts();
-}
-loadAccounts(): void {
-  this.compteService.getAllComptes().subscribe({
-    next: (data) => {
-      this.comptesBancaires = data;
-      console.log('Loaded accounts:', data); // ✅ You'll now see this in the console
-    },
-    error: (err) => console.error('Failed to load accounts:', err)
-  });
-}
+  }
 
+  ngOnInit(): void {
+    this.loadAccounts();
+  }
+
+  loadAccounts(): void {
+    this.compteService.getComptesByUser(1).subscribe({
+      next: (data) => {
+        this.comptesBancaires = data;
+        console.log('Loaded accounts:', data);
+      },
+      error: (err) => console.error('Failed to load accounts:', err)
+    });
+  }
+
+  openDeleteModal(content: TemplateRef<any>, compte: CompteBancaire) {
+    this.compteToDelete = compte;
+    this.modalService.open(content, {
+      centered: true,
+      ariaLabelledBy: 'modal-title-delete'
+    });
+  }
+
+  deleteCompte(): void {
+    if (!this.compteToDelete || !this.compteToDelete.idCompte) return;
+
+    this.compteService.deleteCompte(this.compteToDelete.idCompte)
+      .subscribe({
+        next: () => {
+          this.comptesBancaires = this.comptesBancaires.filter(
+            c => c.idCompte !== this.compteToDelete?.idCompte
+          );
+          this.modalService.dismissAll();
+          alert('Compte supprimé avec succès');
+        },
+        error: (err) => {
+          console.error('Erreur lors de la suppression:', err);
+          alert('Échec de la suppression');
+        }
+      });
+  }
 }

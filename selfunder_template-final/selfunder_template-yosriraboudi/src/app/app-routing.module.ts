@@ -8,6 +8,7 @@ import { HomepageClientComponent } from './pages/homepage-client/homepage-client
 import { HomepageEntreproneurComponent } from './pages/homepage-entreproneur/homepage-entreproneur/homepage-entreproneur.component';
 import { HomepageInvestisseurComponent } from './pages/homepage-investisseur/homepage-investisseur/homepage-investisseur.component';
 import { ContactsListComponent } from './pages/contacts/contactslist/contactslist.component';
+import { CompteFormComponent } from './pages/compte-bancaire/form/compte-form.component';
 
 
 const routes: Routes = [
@@ -25,7 +26,7 @@ const routes: Routes = [
   {path: 'homepageinvestisseur', loadChildren: () => import('./pages/homepage-investisseur/homepage-investisseur.module').then(m => m.HomepageInvestisseurModule)},
   {path: 'contacts', loadChildren: () => import('./pages/contacts/contacts.module').then(m => m.ContactsModule)},
   {path: 'transaction', loadChildren: () => import('./pages/transaction/transactions.module').then(m => m.TransactionsModule)},
-  {path: 'comptes', loadChildren: () => import('./pages/compte-bancaire/compte-bancaire-routing.module').then(m => m.CompteBancaireRoutingModule)},
+  {path: 'comptes', loadChildren: () => import('./pages/compte-bancaire/compte-bancaire.module').then(m => m.CompteBancaireModule)},
 
 
 
@@ -36,6 +37,9 @@ const routes: Routes = [
   { path: 'homepage-investisseur/homepage-investisseur', component: HomepageInvestisseurComponent },
   { path: 'reclamation/listbyuser', component: ReclamationListByuserComponent },
   { path: 'contact/contactlist', component: ContactsListComponent },
+  {  path: 'comptes/edit/:id',
+  component: CompteFormComponent}
+  
   
 
 ];

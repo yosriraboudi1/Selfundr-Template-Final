@@ -1,0 +1,81 @@
+<div class="container py-4">
+  <div class="card border">
+    <div class="card-header border-bottom">
+      <h2 class="mb-0">
+        {{ editedCompteId ? 'Edit Bank Account' : 'Add New Bank Account' }}
+      </h2>
+    </div>
+
+    <div class="card-body p-4">
+      <form [formGroup]="compteForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row g-4">
+          <!-- Type de compte -->
+          <div class="col-12">
+            <label class="form-label">Account Type</label>
+            <select
+              class="form-select"
+              formControlName="typeCompteBancaire"
+              [class.is-invalid]="(f.typeCompteBancaire.touched || submitted) && f.typeCompteBancaire.invalid"
+            >
+              <option value="">Select account type</option>
+              <option *ngFor="let type of typesCompte" [value]="type.value">
+                {{ type.label }}
+              </option>
+            </select>
+            <div *ngIf="(f.typeCompteBancaire.touched || submitted) && f.typeCompteBancaire.invalid" class="invalid-feedback">
+              Le type de compte est requis.
+            </div>
+          </div>
+
+          <!-- Solde -->
+          <div class="col-md-6">
+            <label class="form-label">Solde</label>
+            <input
+              class="form-control"
+              formControlName="solde"
+              type="number"
+              step="0.01"
+              min="0"
+              placeholder="0.00"
+              [class.is-invalid]="(f.solde.touched || submitted) && f.solde.invalid"
+            />
+            <div *ngIf="(f.solde.touched || submitted) && f.solde.invalid" class="invalid-feedback">
+              <div *ngIf="f.solde.errors?.['required']">Le solde est requis.</div>
+              <div *ngIf="f.solde.errors?.['min']">Le solde doit être ≥ 0.</div>
+              <div *ngIf="f.solde.errors?.['decimalPlaces']">
+                Le solde ne peut avoir plus de {{ f.solde.errors?.['decimalPlaces'].requiredDecimalPlaces }} décimales.
+              </div>
+            </div>
+          </div>
+
+          <!-- Devise -->
+          <div class="col-md-6">
+            <label class="form-label">Devise</label>
+            <select
+              class="form-select"
+              formControlName="devise"
+              [class.is-invalid]="(f.devise.touched || submitted) && f.devise.invalid"
+            >
+              <option value="">Sélectionnez une devise</option>
+              <option *ngFor="let devise of devises" [value]="devise">{{ devise }}</option>
+            </select>
+            <div *ngIf="(f.devise.touched || submitted) && f.devise.invalid" class="invalid-feedback">
+              <div *ngIf="f.devise.errors?.['required']">La devise est requise.</div>
+              <div *ngIf="f.devise.errors?.['pattern']">La devise doit être un code de 3 lettres majuscules.</div>
+              <div *ngIf="f.devise.errors?.['invalidDevise']">Veuillez sélectionner une devise valide.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-end mt-4">
+          <button type="button" class="btn btn-secondary me-2" routerLink="/comptes">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            {{ editedCompteId ? 'Update Account' : 'Add Account' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
